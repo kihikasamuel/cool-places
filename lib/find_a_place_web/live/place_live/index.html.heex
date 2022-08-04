@@ -1,0 +1,25 @@
+<%# <h1>Listing Places</h1> %>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.place_index_path(@socket, :index)}>
+    <.live_component
+      module={FindAPlaceWeb.PlaceLive.FormComponent}
+      id={@place.id || :new}
+      title={@page_title}
+      action={@live_action}
+      place={@place}
+      return_to={Routes.place_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<div class="flex justify-center pt-10 bg-gray-100">
+  <span><%= live_patch "New Place", to: Routes.place_index_path(@socket, :new), class: "bg-blue-300 px-3 py-2 rounded" %></span>
+</div>
+
+<div id="places" phx-update="append" class="grid grid-cols-12 flex-direction-row pt-5 mb-4 bg-gray-100">
+  <%= for place <- @places do %>
+    <.live_component @socket, module={FindAPlaceWeb.PlaceLive.PlaceComponent}, id={place.id}, place={place} >
+    </.live_component>
+  <% end %>
+</div>

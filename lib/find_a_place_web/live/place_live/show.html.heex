@@ -1,0 +1,41 @@
+<h1>Show Place</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.place_show_path(@socket, :show, @place)}>
+    <.live_component
+      module={FindAPlaceWeb.PlaceLive.FormComponent}
+      id={@place.id}
+      title={@page_title}
+      action={@live_action}
+      place={@place}
+      return_to={Routes.place_show_path(@socket, :show, @place)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @place.name %>
+  </li>
+
+  <li>
+    <strong>Address:</strong>
+    <%= @place.address %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @place.description %>
+  </li>
+
+  <li>
+    <strong>Cost:</strong>
+    <%= @place.cost %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.place_show_path(@socket, :edit, @place), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.place_index_path(@socket, :index) %></span>
