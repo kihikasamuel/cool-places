@@ -1,5 +1,5 @@
-<div>
-  <h2><%= @title %></h2>
+<div class="p-1">
+  <h2 class="text-center"><%= @title %></h2>
 
   <.form
     let={f}
@@ -8,27 +8,27 @@
     phx-target={@myself}
     phx-change="validate"
     phx-submit="save"
-    class="grid grid-col-1 grid-flow-row"
+    class="flex flex-col text-bold"
     >
   
-    <%= label f, :name %>
-    <%= text_input f, :name %>
+    <%= label f, :name, class: "pt-2 pb-2" %>
+    <%= text_input f, :name, class: "mb-3" %>
     <%= error_tag f, :name %>
   
-    <%= label f, :address %>
-    <%= text_input f, :address %>
+    <%= label f, :address, class: "pt-2 pb-2" %>
+    <%= text_input f, :address, class: "mb-3" %>
     <%= error_tag f, :address %>
   
-    <%= label f, :description %>
-    <%= textarea f, :description %>
+    <%= label f, :description, class: "pt-2 pb-2" %>
+    <%= textarea f, :description, class: "mb-3" %>
     <%= error_tag f, :description %>
   
-    <%= label f, :cost %>
-    <%= number_input f, :cost, step: "any" %>
+    <%= label f, :cost, class: "pt-2 pb-2" %>
+    <%= number_input f, :cost, step: "any", class: "mb-3" %>
     <%= error_tag f, :cost %>
   
-    <div>
-      <%= submit "Save", phx_disable_with: "Saving..." %>
+    <div class="mt-4 text-center place-content-center">
+      <%= submit "Save", phx_disable_with: "Saving...", class: "bg-blue-100 rounded min-w-full py-2" %>
     </div>
   </.form>
 </div>

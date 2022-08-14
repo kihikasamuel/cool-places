@@ -47,11 +47,11 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
   end
 
   @impl true
-  def handle_event("upvote_place", like_params, socket) do
-    upvote(socket, like_params)
+  def handle_event("like_place", like_params, socket) do
+    like(socket, like_params)
   end
 
-  defp upvote(socket, params) do
+  defp like(socket, params) do
     place_id = params["id"]
     new_params = Map.put(params, "place_id", place_id)
 
@@ -91,7 +91,4 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
     end)
   end
 
-  # defp list_all_likes() do
-  #   Places.list_likes()
-  # end
 end

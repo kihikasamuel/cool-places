@@ -14,7 +14,7 @@
 <% end %>
 
 <div class="flex justify-center pt-10 bg-gray-100">
-  <span><%= live_patch "New Place", to: Routes.place_index_path(@socket, :new), class: "bg-blue-300 px-3 py-2 rounded" %></span>
+  <span><%= live_patch "List Places", to: Routes.place_index_path(@socket, :new), class: "bg-blue-300 px-3 py-2 rounded" %></span>
 </div>
 
 <div id="places" phx-update="append" class="grid grid-cols-12 flex-direction-row pt-5 mb-4 bg-gray-100">

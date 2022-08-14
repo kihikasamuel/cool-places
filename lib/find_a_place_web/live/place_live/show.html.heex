@@ -1,4 +1,4 @@
-<h1>Show Place</h1>
+<h1></h1>
 
 <%= if @live_action in [:edit] do %>
   <.modal return_to={Routes.place_show_path(@socket, :show, @place)}>
@@ -13,29 +13,86 @@
   </.modal>
 <% end %>
 
-<ul>
+<section>
+  <div class="px-4 py-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 lg:h-screen">
+      <div class="relative z-10 lg:py-16">
+        <div class="relative h-64 sm:h-80 lg:h-full">
+          <img
+            class="absolute inset-0 object-cover w-full h-full"
+            src="https://www.hyperui.dev/photos/house-1.jpeg"
+            alt="Indoors house"
+          />
+        </div>
+      </div>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @place.name %>
-  </li>
+      <div class="relative flex items-center bg-gray-100">
+        <span
+          class="hidden lg:inset-y-0 lg:absolute lg:w-16 lg:bg-gray-100 lg:block lg:-left-16"
+        ></span>
 
-  <li>
-    <strong>Address:</strong>
-    <%= @place.address %>
-  </li>
+        <div class="p-8 sm:p-16 lg:p-24">
+          <h2 class="text-2xl font-bold sm:text-3xl capitalize">
+            <%= @place.name %>
+          </h2>
 
-  <li>
-    <strong>Description:</strong>
-    <%= @place.description %>
-  </li>
-
-  <li>
-    <strong>Cost:</strong>
-    <%= @place.cost %>
-  </li>
-
-</ul>
-
-<span><%= live_patch "Edit", to: Routes.place_show_path(@socket, :edit, @place), class: "button" %></span> |
-<span><%= live_redirect "Back", to: Routes.place_index_path(@socket, :index) %></span>
+          <p class="mt-4 text-gray-600 capitalize">
+            <%= @place.description %>
+          </p>
+          <%# actions on a place %>
+          <dl class="flex justify-between items-center mt-6 space-x-6 text-xs">
+            <div class="sm:inline-flex sm:items-center sm:shrink-0">
+              <div class="sm:ml-3 mt-1.5 sm:mt-0">
+                <dt class="text-gray-500">
+                  <button phx-click="delete" phx-value-id={@place.id} data={[confirm: "Are you sure?"]}, disabled>
+                    <svg class="w-6 h-6" fill="none" stroke="gray" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                  </button>
+                </dt>
+              </div>
+            </div>
+            <div class="sm:inline-flex sm:items-center sm:shrink-0">
+              <!--svg
+                class="w-4 h-4 text-indigo-700"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+              </svg-->
+              <div class="sm:ml-3 mt-1.5 sm:mt-0">
+                <dt class="text-sm">
+                  Loved
+                  <span class="font-bold">
+                  <%= if is_list(@place.likes), do: Enum.count(@place.likes), else: 0%>
+                  </span>
+                  times
+                </dt>
+              </div>
+              <div class="sm:ml-3 mt-1.5 sm:mt-0">
+                <dt class="text-gray-500">
+                  <button phx-click="like_place" phx-value-id={@place.id} phx-value-vote={1}>
+                    <svg class="w-6 h-6" fill="violet" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                    </svg>
+                  </button>
+                </dt>
+              </div>
+            </div>
+          </dl>
+          <a
+            data-to="/places"
+            data-method="get"
+            class="inline-block px-12 py-3 mt-8 text-sm font-medium text-white bg-indigo-600 border border-indigo-600 rounded active:text-indigo-500 hover:bg-transparent hover:text-indigo-600 focus:outline-none focus:ring"
+          >
+            <span class="text-xs">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+              </svg>
+            </span>
+            Back
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
