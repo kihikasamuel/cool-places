@@ -20,11 +20,11 @@ config :logger, level: :info
 # to the previous section and set your `:url` port to 443:
 #
     config :find_a_place, FindAPlaceWeb.Endpoint,
-      ...,
+      # ...,
       url: [scheme: "https", host: "vast-eyrie-92316.herokuapp.com", port: 443],
       force_ssl: [rewrite_on: [:x_forwaded_proto]],
       https: [
-        ...,
+        # ...,
         port: 443,
         cipher_suite: :strong,
         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
