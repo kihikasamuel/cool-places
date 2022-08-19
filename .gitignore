@@ -32,3 +32,5 @@ find_a_place-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# circleci
+.circleci/
