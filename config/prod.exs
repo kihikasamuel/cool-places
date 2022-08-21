@@ -21,7 +21,8 @@ config :logger, level: :info
 #
     config :find_a_place, FindAPlaceWeb.Endpoint,
       # ...,
-      url: [scheme: "https", host: "vast-eyrie-92316.herokuapp.com", port: 443],
+      url: [scheme: "https", host: "vast-eyrie-92316.herokuapp.com"],
+      # , port: 443
       # force_ssl: [rewrite_on: [:x_forwaded_proto]],
       # https: [
       #   # ...,
