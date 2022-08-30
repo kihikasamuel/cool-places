@@ -24,13 +24,13 @@ config :logger, level: :info
       url: [scheme: "https", host: "vast-eyrie-92316.herokuapp.com", port: 443],
       # , port: 443
       force_ssl: [rewrite_on: [:x_forwaded_proto]],
-      # https: [
-      #   # ...,
-      #   port: 443,
-      #   cipher_suite: :strong,
-      #   keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-      #   certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
-      # ]
+      https: [
+        # ...,
+        port: 443,
+        # cipher_suite: :strong,
+        # keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+        # certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
+      ]
 #
 # The `cipher_suite` is set to `:strong` to support only the
 # latest and more secure SSL ciphers. This means old browsers
