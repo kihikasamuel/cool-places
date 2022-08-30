@@ -2,8 +2,8 @@ import Config
 
 # Configure your database
 config :find_a_place, FindAPlace.Repo,
-  username: "postgres",
-  password: "demo123*",
+  username: "erpuser",
+  password: "Incorrect@12",
   hostname: "localhost",
   database: "find_a_place_dev",
   stacktrace: true,
