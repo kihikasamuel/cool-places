@@ -19,7 +19,7 @@
 
 <div id="places" phx-update="append" class="grid grid-cols-12 flex-direction-row pt-5 mb-4 bg-gray-100">
   <%= for place <- @places do %>
-    <.live_component @socket, module={FindAPlaceWeb.PlaceLive.PlaceComponent}, id={place.id}, place={place} >
+    <.live_component @socket module={FindAPlaceWeb.PlaceLive.PlaceComponent} id={place.id} place={place} >
     </.live_component>
   <% end %>
 </div>

@@ -27,9 +27,10 @@ config :logger, level: :info
       https: [
         # ...,
         port: 443,
-        # cipher_suite: :strong,
-        # keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-        # certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
+        cipher_suite: :strong,
+        otp_app: :find_a_place,
+        keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+        certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
       ]
 #
 # The `cipher_suite` is set to `:strong` to support only the

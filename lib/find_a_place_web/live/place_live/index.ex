@@ -1,7 +1,7 @@
 defmodule FindAPlaceWeb.PlaceLive.Index do
   use FindAPlaceWeb, :live_view
 
-  import Logger
+  # import Logger
 
   alias FindAPlace.Places
   alias FindAPlace.Places.Place
