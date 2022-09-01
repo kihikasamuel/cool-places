@@ -28,9 +28,9 @@ config :logger, level: :info
         port: 443,
         cipher_suite: :strong,
         otp_app: :find_a_place,
-        keyfile: "priv/ssl/server.key"
+        keyfile: "priv/ssl/server.key",
         # System.get_env("SOME_APP_SSL_KEY_PATH"),
-        certfile: "priv/ssl/server.crt"
+        certfile: "priv/ssl/server.crt",
         # System.get_env("SOME_APP_SSL_CERT_PATH")
         cacertfile: System.get_env("INTERMEDIATE_CERTFILE_PATH")
       ]
