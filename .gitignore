@@ -35,4 +35,5 @@ npm-debug.log
 # circleci
 .circleci/
 
-ssl/
+ssl
+ssl/*
