@@ -21,19 +21,18 @@ config :logger, level: :info
 #
     config :find_a_place, FindAPlaceWeb.Endpoint,
       # ...,
-      url: [scheme: "https", host: "example.com", port: 443],
+      url: [scheme: "https", host: "vast-eyrie-92316.herokuapp.com", port: 443],
       # , port: 443
-      # force_ssl: [rewrite_on: [:x_forwaded_proto], host: nil],
-      # https: [
-        # port: 443,
-        # cipher_suite: :strong,
-        # otp_app: :find_a_place,
-        # keyfile: "priv/ssl/server.key",
-        # System.get_env("SOME_APP_SSL_KEY_PATH"),
-        # certfile: "priv/ssl/server.crt",
-        # System.get_env("SOME_APP_SSL_CERT_PATH")
+      force_ssl: [rewrite_on: [:x_forwaded_proto], host: nil],
+      https: [
+        port: 443,
+        cipher_suite: :strong,
+        otp_app: :find_a_place,
+        keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+        # "priv/ssl/server.key",
+        certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
         # cacertfile: System.get_env("INTERMEDIATE_CERTFILE_PATH")
-      # ]
+      ]
 #
 # The `cipher_suite` is set to `:strong` to support only the
 # latest and more secure SSL ciphers. This means old browsers
