@@ -12,7 +12,7 @@ config :find_a_place,
 
 # Configures the endpoint
 config :find_a_place, FindAPlaceWeb.Endpoint,
-  url: [host: "vast-eyrie-92316.herokuapp.com"],
+  url: [host: "localhost"],
   render_errors: [view: FindAPlaceWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: FindAPlace.PubSub,
   live_view: [signing_salt: "hQu1WzPq"]
