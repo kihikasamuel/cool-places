@@ -1,0 +1,26 @@
+<h1>Show Tag</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.tag_show_path(@socket, :show, @tag)}>
+    <.live_component
+      module={FindAPlaceWeb.TagLive.FormComponent}
+      id={@tag.id}
+      title={@page_title}
+      action={@live_action}
+      tag={@tag}
+      return_to={Routes.tag_show_path(@socket, :show, @tag)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @tag.name %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.tag_show_path(@socket, :edit, @tag), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.tag_index_path(@socket, :index) %></span>

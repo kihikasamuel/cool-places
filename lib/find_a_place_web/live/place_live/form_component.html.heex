@@ -1,6 +1,4 @@
 <div class="p-1">
-  <h2 class="text-center"><%= @title %></h2>
-
   <.form
     let={f}
     for={@changeset}
@@ -8,27 +6,90 @@
     phx-target={@myself}
     phx-change="validate"
     phx-submit="save"
-    class="flex flex-col text-bold"
+    class="text-bold"
     >
-  
-    <%= label f, :name, class: "pt-2 pb-2" %>
-    <%= text_input f, :name, class: "mb-3" %>
-    <%= error_tag f, :name %>
-  
-    <%= label f, :address, class: "pt-2 pb-2" %>
-    <%= text_input f, :address, class: "mb-3" %>
-    <%= error_tag f, :address %>
-  
-    <%= label f, :description, class: "pt-2 pb-2" %>
-    <%= textarea f, :description, class: "mb-3" %>
-    <%= error_tag f, :description %>
-  
-    <%= label f, :cost, class: "pt-2 pb-2" %>
-    <%= number_input f, :cost, step: "any", class: "mb-3" %>
-    <%= error_tag f, :cost %>
-  
-    <div class="mt-4 text-center place-content-center">
-      <%= submit "Save", phx_disable_with: "Saving...", class: "bg-blue-100 rounded min-w-full py-2" %>
+    <div class="grid grid-cols-8 justify-center">
+      <h2 class="text-center col-span-8  mt-4"><%= @title %></h2>
+      <div class="col-span-8 mt-6 flex flex-row gap-1">
+        <div>
+          <%= label f, :name, class: "w-full pt-2 mb-2" %>
+          <%= text_input f, :name, class: "w-full mb-3 rounded-md text-sm font-normal" %>
+          <%= error_tag f, :name %>
+        </div>
+        <div>
+          <%= label f, :address, class: "w-full pt-2 pb-2" %>
+          <%= text_input f, :address, class: "w-full rounded-md text-sm font-normal mb-3" %>
+          <%= error_tag f, :address %>
+        </div>
+      </div>
+      <%!-- <div class="col-span-6">
+        <%= label f, :address, class: "w-full pt-2 pb-2" %>
+        <%= text_input f, :address, class: "w-full rounded-md text-sm font-normal mb-3" %>
+        <%= error_tag f, :address %>
+      </div> --%>
+      <div class="col-span-8">
+        <%= label f, :description, class: "w-full pt-2 pb-2" %>
+        <%= textarea f, :description, class: "w-full rounded-md mb-3" %>
+        <%= error_tag f, :description %>
+      </div>
+      <div class="col-span-8" phx-drop-target={@uploads.image.ref}>
+        <label class="w-full flex border-2 border-dashed border-black justify-center rounded-md">
+          <div class="">
+            <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+            </svg>
+            <p class="text-sm text-gray-500">Upload or Drag & Drop a file</p>
+            <p class="text-sm text-gray-500">PNG, JGP, JPEG upto 2MB</p>
+          </div>
+          <%= live_file_input @uploads.image, type: "file", class: "hidden" %>
+        </label>
+      </div>
+
+      <%!-- BEGIN preview images --%>
+      <div class="col-span-8 flex flex-col">
+        <div class="flex flex-row overflow-auto">
+          <%= for entry <- @uploads.image.entries do%>
+            <figure>
+              <%!-- <div class="w-32 h-32"> --%>
+
+                <%= live_img_preview entry, class: "min-w-32 max-w-32 min-h-32 max-h-32 p-4"%>
+                <figcaption class="text-xs p-4"> <%= entry.client_name %></figcaption>
+                
+                <%!-- progress --%>
+                <%!-- <progress value={entry.progress} max="100"> <%= entry.progress %>% </progress> --%>
+
+                <%!-- remove image --%>
+                <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}>
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+
+                <%!-- If errors is a list --%>
+                <%= for error <- upload_errors(@uploads.image, entry) do%>
+                  <p class="alert alert-danger"><%= error_to_string(error) %></p>
+                <% end %>
+
+              <%!-- </div> --%>
+            </figure>
+          <% end %>
+        </div>
+        <%!-- single upload error/overall error --%>
+        <%= for err <- upload_errors(@uploads.image) do %>
+          <p class="alert alert-danger"><%= error_to_string(err) %></p>
+        <% end %>
+      </div>
+      <%!-- END preview images --%>
+
+      <div class="col-span-8 pt-4">
+        <label for="cost" class="w-full">Aprox. Cost</label>
+        <%= number_input f, :cost, step: "any", class: "w-full rounded-md mb-3" %>
+        <%= error_tag f, :cost %>
+      </div>
+
+      <div class="mt-4 col-span-8">
+        <%= submit "Save", phx_disable_with: "Saving...", class: "min-w-full bg-blue-300 hover:bg-blue-400 text-white rounded py-2" %>
+      </div>
     </div>
   </.form>
 </div>
