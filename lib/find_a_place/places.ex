@@ -19,7 +19,7 @@ defmodule FindAPlace.Places do
   """
   def list_places do
     Repo.all(Place)
-    |> Repo.preload([:likes])
+    |> Repo.preload([:likes, :images, places_tags: [:tag]])
   end
 
   @doc """
@@ -36,7 +36,7 @@ defmodule FindAPlace.Places do
       ** (Ecto.NoResultsError)
 
   """
-  def get_place!(id), do: Repo.get!(Place, id)|> Repo.preload([:likes])
+  def get_place!(id), do: Repo.get!(Place, id)|> Repo.preload([:likes, :images, places_tags: [:tag]])
 
   @doc """
   Creates a place.
@@ -51,10 +51,33 @@ defmodule FindAPlace.Places do
 
   """
   def create_place(attrs \\ %{}) do
-    %Place{}
-    |> Place.changeset(attrs)
-    |> Repo.insert()
+
+    # images = Enum.map(attrs["images"], fn image -> %{url: image.url, alt: image.alt} end)
+
+    # tags = Enum.map(attrs["tags"], fn tag -> %{name: tag.name, id: tag.id, inserted_at: tag.inserted_at, updated_at: tag.updated_at} end)
+    places_tags = Enum.map(attrs["tags"], fn tag -> %{tag_id: tag.id} end)
+
+    place = Place.changeset(%Place{}, %{
+      name: attrs["name"],
+      address: attrs["address"],
+      description: attrs["description"],
+      cost: attrs["cost"] |> Decimal.new(),
+      images: attrs["images"],
+      places_tags: places_tags
+    })
+
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:insert, place)
+    |> Repo.transaction()
+    |> case do
+      {:ok, result} -> {:ok, result}
+      {:error, name, value, _changes_so_far} -> {:error, {name, value}}
+    end
     |> broadcast(:updates)
+    # %Place{}
+    # |> Place.changeset(attrs)
+    # |> Repo.insert()
+    # |> broadcast(:updates)
   end
 
   @doc """
@@ -163,7 +186,7 @@ defmodule FindAPlace.Places do
     %Like{}
     |> Like.changeset(attrs)
     |> Repo.insert()
-    |> broadcast(:liked)
+    |> broadcast(:updates)
   end
 
   @doc """
@@ -182,7 +205,7 @@ defmodule FindAPlace.Places do
     like
     |> Like.changeset(attrs)
     |> Repo.update()
-    |> broadcast(:liked)
+    |> broadcast(:updates)
   end
 
   @doc """
@@ -222,6 +245,7 @@ defmodule FindAPlace.Places do
   # end
 
   alias FindAPlace.Places.Tag
+  alias FindAPlace.Places.PlacesTags
 
   @doc """
   Returns the list of tags.
@@ -252,6 +276,16 @@ defmodule FindAPlace.Places do
   """
   def get_tag!(id), do: Repo.get!(Tag, id)
 
+  @spec get_tag_by(any) :: any
+  def get_tag_by(name) do
+    Repo.get_by(Tag, name: name)
+  end
+
+
+  def search_tags_by(search_term) do
+    query = from t in Tag, where: ilike(t.name, ^"%#{search_term}%")
+    Repo.all(query)
+  end
   @doc """
   Creates a tag.
 
@@ -269,7 +303,6 @@ defmodule FindAPlace.Places do
     |> Tag.changeset(attrs)
     |> Repo.insert()
   end
-
   @doc """
   Updates a tag.
 

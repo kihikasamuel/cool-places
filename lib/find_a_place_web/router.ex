@@ -17,9 +17,9 @@ defmodule FindAPlaceWeb.Router do
   scope "/", FindAPlaceWeb do
     pipe_through :browser
 
-    live "/", PageLive
+    live "/about", PageLive
 
-    live "/places", PlaceLive.Index, :index
+    live "/", PlaceLive.Index, :index
     live "/places/new", PlaceLive.Index, :new
     live "/places/:id/edit", PlaceLive.Index, :edit
 

@@ -9,7 +9,7 @@ defmodule FindAPlaceWeb.PlaceLive.PlaceComponent do
     >
       <img
         alt="123 Wallaby Avenue, Park Road"
-        src="https://images.unsplash.com/photo-1554995207-c18c203602cb"
+        src={Routes.static_path(@socket, "#{Enum.fetch!(@place.images, 0)|> Map.fetch!(:url)}")}
         class="object-cover w-full h-56 rounded-md"
       />
 
@@ -41,7 +41,7 @@ defmodule FindAPlaceWeb.PlaceLive.PlaceComponent do
             <div class="sm:ml-3 mt-1.5 sm:mt-0">
               <dt class="text-gray-500">
                 <button data-to={Routes.place_show_path(@socket, :show, @place.id)} data-method="get">
-                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg class="w-6 h-6 stroke-rose-600" fill="none" stroke="" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                   </svg>
                 </button>

@@ -7,6 +7,8 @@ defmodule FindAPlace.Places.Tag do
 
   schema "tags" do
     field :name, :string
+    # many_to_many :places, FindAPlace.Places.Place,
+    # join_through: FindAPlace.Places.PlacesTags
 
     timestamps()
   end
@@ -16,5 +18,6 @@ defmodule FindAPlace.Places.Tag do
     tag
     |> cast(attrs, [:name])
     |> validate_required([:name])
+    |> unique_constraint(:name)
   end
 end

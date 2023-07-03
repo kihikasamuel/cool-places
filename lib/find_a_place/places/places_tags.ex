@@ -7,7 +7,7 @@ defmodule FindAPlace.Places.PlacesTags do
 
   schema "places_tags" do
     belongs_to :place, FindAPlace.Places.Place
-    belongs_to :tags, FindAPlace.Places.Tag
+    belongs_to :tag, FindAPlace.Places.Tag
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule FindAPlace.Places.PlacesTags do
   @doc false
   def changeset(place_tags, attrs) do
     place_tags
-    |> cast(attrs, [])
-    |> validate_required([])
+    |> cast(attrs, [:tag_id])
+    |> validate_required([:tag_id])
   end
 end

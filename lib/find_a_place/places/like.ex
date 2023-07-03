@@ -16,7 +16,7 @@ defmodule FindAPlace.Places.Like do
   @doc false
   def changeset(like, attrs) do
     like
-    |> cast(attrs, [:vote,:place_id])
+    |> cast(attrs, [:vote, :place_id])
     |> validate_required([:vote, :place_id])
   end
 end

@@ -8,7 +8,7 @@
     <%= live_title_tag assigns[:page_title] || "FindAPlace", suffix: " · Phoenix Framework" %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
     <link rel="icon" href={Routes.static_path(@conn, "/assets/favicon.ico")}>
-    <%# <%= @csrf_meta_tags() %>
+    <%= @csrf_meta_tags() %>
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
@@ -17,7 +17,7 @@
         class="flex items-center justify-between h-16 max-w-screen-xl px-4 mx-auto"
       >
         <div class="flex flex-1 w-0 lg:hidden">
-          <button class="p-2 text-gray-600 bg-gray-100 rounded-full" type="button">
+          <button type="button" to="/" class="p-2 text-gray-600 bg-gray-100 rounded-full" type="button">
             <svg
               class="w-5 h-5"
               fill="none"
@@ -87,10 +87,10 @@
         <nav
           class="items-center justify-center hidden space-x-8 text-sm font-medium lg:flex lg:flex-1 lg:w-0"
         >
-          <a class="text-gray-900" href="">Places</a>
-          <a class="text-gray-900" href="">About</a>
-          <a class="text-gray-900" href="">Creator</a>
-          <a class="text-gray-900" href="">Contributors</a>
+          <a class="text-gray-900" href="/">Places</a>
+          <a class="text-gray-900" href="/about">About</a>
+          <a class="text-gray-900" href="https://github.com/kihikasamuel">Creator</a>
+          <a class="text-gray-900" href="https://github.com/kihikasamuel">Contributors</a>
         </nav>
 
         <div class="items-center hidden space-x-4 lg:flex">
@@ -113,7 +113,7 @@
         <nav
           class="flex items-center justify-center p-4 overflow-x-auto text-sm font-medium"
         >
-          <a class="flex-shrink-0 pl-4 text-gray-900" href="">Places</a>
+          <a class="flex-shrink-0 pl-4 text-gray-900" href="/places">Places</a>
           <a class="flex-shrink-0 pl-4 text-gray-900" href="">About</a>
           <a class="flex-shrink-0 pl-4 text-gray-900" href="">Creator</a>
           <a class="flex-shrink-0 pl-4 text-gray-900" href="">Contributors</a>

@@ -1,4 +1,5 @@
-<div class="p-1">
+<div class="">
+  <h1></h1>
   <.form
     let={f}
     for={@changeset}
@@ -6,10 +7,10 @@
     phx-target={@myself}
     phx-change="validate"
     phx-submit="save"
-    class="text-bold"
+    class=""
     >
     <div class="grid grid-cols-8 justify-center">
-      <h2 class="text-center col-span-8  mt-4"><%= @title %></h2>
+      <h2 class="text-center col-span-8 font-bold  mt-4"><%= @title %></h2>
       <div class="col-span-8 mt-6 flex flex-row gap-1">
         <div>
           <%= label f, :name, class: "w-full pt-2 mb-2" %>
@@ -61,13 +62,13 @@
                 <%!-- <progress value={entry.progress} max="100"> <%= entry.progress %>% </progress> --%>
 
                 <%!-- remove image --%>
-                <button type="button" phx-click="cancel-upload" phx-value-ref={entry.ref}>
+                <button type="button" id={"remove-#{to_string(entry.client_name)}"} phx-click="cancel-upload" phx-target={@myself} phx-value-ref={entry.ref}>
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
 
                 <%!-- If errors is a list --%>
                 <%= for error <- upload_errors(@uploads.image, entry) do%>
-                  <p class="alert alert-danger"><%= error_to_string(error) %></p>
+                  <p class="alert alert-danger mt-2 mb-4"><%= error_to_string(error) %></p>
                 <% end %>
 
               <%!-- </div> --%>
@@ -76,7 +77,7 @@
         </div>
         <%!-- single upload error/overall error --%>
         <%= for err <- upload_errors(@uploads.image) do %>
-          <p class="alert alert-danger"><%= error_to_string(err) %></p>
+          <p class="alert alert-danger" id="error"><%= error_to_string(err) %></p>
         <% end %>
       </div>
       <%!-- END preview images --%>
@@ -87,9 +88,54 @@
         <%= error_tag f, :cost %>
       </div>
 
+      <div class="col-span-8 relative">
+        <div class="items-center w-full py-1 px-3 border-2 border-gray-400 rounded-md bg-white" id="selected-tag-field" phx-update="prepend">
+          <%!-- <label for="tags" class="w-full">Add tags</label> --%>
+          <%= if @tags !== [] do%>
+            <%= for tag <- @tags do%>
+              <span class="inline-block text-white bg-rose-700 py-1 px-3 mr-1" id={"#{tag.id}"}>
+                <span><%= tag.name %></span>
+                <a href="#" class="text-white">&times</a>
+              </span>
+            <% end %>
+          <% end %>
+          <%= text_input f, :tags, phx_change: "look-up", phx_debounce: "500", phx_target: @myself, class: "inline-block focus:outline-0 focus:outline-none border-0", placeholder: "Add tags"%>
+          <%!-- <%= error_tag f, :tags %> --%>
+        </div>
+        <div
+          class="absolute end-0 z-10 mt-0 w-full rounded-md border border-gray-100 bg-white shadow-lg"
+          role="menu"
+          id="menu-dropdown"
+        >
+          <%= if @tags_in_tag !== [] do%>
+          <div class={"p-2"} phx-update="replace" id="show-tags">
+            <%= for tag <- @tags_in_tag do%>
+            <a
+              href="#"
+              class="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
+              role="menuitem"
+              phx-click="select-tag"
+              phx-value-id={tag.id}
+              phx-target={@myself}
+            >
+              <%= tag.name %>
+            </a>
+            <% end %>
+          </div>
+          <% else %>
+            <div class="p-2 flex flex-row justify-start" phx-update="replace" id="show-missing-tag">
+              <%= if @missing_tag_name !== "" do%>
+                <span class="inline-block text-black mr-1"><%= @missing_tag_name %></span>
+                <span phx-click="add-new-tags" phx-target={@myself} phx-value-name={@missing_tag_name} class="inline-block rounded px-2 cursor-pointer text-sm text-white bg-green-400  hover:bg-green-600">Save Tag</span>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
       <div class="mt-4 col-span-8">
         <%= submit "Save", phx_disable_with: "Saving...", class: "min-w-full bg-blue-300 hover:bg-blue-400 text-white rounded py-2" %>
       </div>
     </div>
   </.form>
 </div>
+

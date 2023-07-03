@@ -14,6 +14,7 @@ defmodule FindAPlaceWeb.PlaceLive.Show do
      socket
      |> assign(:page_title, page_title(socket.assigns.live_action))
      |> assign(:place, Places.get_place!(id))}
+     |> IO.inspect()
   end
 
   defp page_title(:show), do: "Show Place"

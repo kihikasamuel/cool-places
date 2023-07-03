@@ -10,9 +10,13 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
   def mount(_params, _session, socket) do
     if connected?(socket), do: Places.subscribe()
 
-    place = list_places()
+    places = list_places()
 
-    {:ok, assign(socket, :places, place), temporary_assigns: [post: []]}
+    {:ok,
+      socket
+      |> assign(:places, places),
+      temporary_assigns: [places: []]
+    }
   end
 
   @impl true
@@ -28,7 +32,7 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "New Place")
+    |> assign(:page_title, "List A Cool Place")
     |> assign(:place, %Place{})
   end
 
@@ -59,7 +63,7 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
       {:ok, _like} ->
         {:noreply,
           socket
-          |> put_flash(:liked, "You Upvoted this Place. Thank you <3!")
+          |> put_flash(:info, "You Upvoted this Place. Thank you <3!")
         }
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -76,9 +80,10 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
   end
 
   @impl true
-  def handle_info({:liked, like}, socket) do
-    {:noreply, update(socket, :likes, fn likes -> [like | likes] end)}
-  end
+  # def handle_info({:liked, like}, socket) do
+  #   IO.inspect(like, label: "New Like")
+  #   {:noreply, update(socket, :places, fn places -> )}
+  # end
 
   defp list_places do
     Places.list_places()

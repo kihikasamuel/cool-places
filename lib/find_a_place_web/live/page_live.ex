@@ -12,20 +12,16 @@ defmodule FindAPlaceWeb.PageLive do
     <section class="relative bg-white">
       <img
         class="absolute inset-0 object-[75%] sm:object-[25%] object-cover w-full h-screen opacity-25 sm:opacity-100"
-        src="https://images.unsplash.com/photo-1601758003122-53c40e686a19"
-        alt="Couple on a bed with a dog"
+        src={Routes.static_path(@socket, "/images/cool-places-little-governors.jpg")}
+        alt="Little Governors Lounge Nature at its best"
       />
-
       <div class="hidden sm:block sm:inset-0 sm:absolute sm:bg-gradient-to-r sm:from-white sm:to-transparent"></div>
 
       <div class="relative max-w-screen-xl px-4 py-32 mx-auto lg:h-screen lg:items-center lg:flex">
-        <div class="max-w-xl text-center sm:text-left">
-          <h1 class="text-3xl font-extrabold sm:text-5xl">
-            Let us find your
-            <strong class="font-extrabold text-rose-700 sm:block">
-              Next Stop.
-            </strong>
-          </h1>
+        <div class="max-w-2xl sm:text-left">
+          <span class="text-2xl font-extrabold sm:text-3xl">
+            Find your <span class="font-extrabold text-rose-700"> next destination.</span>
+          </span>
 
           <p class="max-w-lg mt-4 sm:leading-relaxed sm:text-xl">
             We help you find a place you should visit next.
