@@ -31,11 +31,11 @@ defmodule FindAPlaceWeb.PageLive do
 
           <div class="flex flex-wrap gap-4 mt-8 text-center">
 
-              <%= link "Let's Go", to: "/places", class: "block w-full px-12 py-3 text-sm font-medium text-white rounded shadow bg-rose-600 sm:w-auto active:bg-rose-500 hover:bg-rose-700 focus:outline-none focus:ring"%>
+              <%= link "Let's Go", to: "/", class: "block w-full px-12 py-3 text-sm font-medium text-white rounded bg-rose-500 sm:w-auto active:bg-rose-500 hover:bg-rose-700 focus:outline-none focus:ring"%>
 
-            <a class="block w-full px-12 py-3 text-sm font-medium bg-white rounded shadow text-rose-600 sm:w-auto hover:text-rose-700 active:text-rose-500 focus:outline-none focus:ring" href="/about">
+            <%!-- <a class="block w-full px-12 py-3 text-sm font-medium bg-white rounded shadow text-rose-600 sm:w-auto hover:text-rose-700 active:text-rose-500 focus:outline-none focus:ring" href="/about">
               Learn More
-            </a>
+            </a> --%>
           </div>
         </div>
       </div>

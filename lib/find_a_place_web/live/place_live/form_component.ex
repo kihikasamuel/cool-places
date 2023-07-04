@@ -84,10 +84,10 @@ defmodule FindAPlaceWeb.PlaceLive.FormComponent do
   def handle_event("save", %{"place" => params}, socket) do
     place_images =
       consume_uploaded_entries(socket, :image, fn %{path: path}, _entry ->
-        dest =Path.join([:code.priv_dir(:find_a_place),"static","uploads",Path.basename(path)])
+        dest =Path.join([:code.priv_dir(:find_a_place),"static","images",Path.basename(path)])
 
         File.cp!(path, dest)
-        {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
+        {:ok, Routes.static_path(socket, "/images/#{Path.basename(dest)}")}
       end)
 
     mapped_images =

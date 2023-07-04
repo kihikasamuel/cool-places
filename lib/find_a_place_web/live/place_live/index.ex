@@ -11,10 +11,12 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
     if connected?(socket), do: Places.subscribe()
 
     places = list_places()
+    all_tags = Places.list_tags()
 
     {:ok,
       socket
-      |> assign(:places, places),
+      |> assign(:places, places)
+      |> assign(:all_tags, all_tags),
       temporary_assigns: [places: []]
     }
   end
@@ -26,19 +28,19 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Place")
+    |> assign(:page_title, "Edit This Cool Place")
     |> assign(:place, Places.get_place!(id))
   end
 
   defp apply_action(socket, :new, _params) do
     socket
-    |> assign(:page_title, "List A Cool Place")
+    |> assign(:page_title, "Add A Cool Place")
     |> assign(:place, %Place{})
   end
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Places")
+    |> assign(:page_title, "Cool Places Places")
     |> assign(:place, nil)
   end
 
