@@ -17,7 +17,15 @@ defmodule FindAPlace.Places.Tag do
   def changeset(tag, attrs) do
     tag
     |> cast(attrs, [:name])
+    |> lower_case()
     |> validate_required([:name])
     |> unique_constraint(:name)
+  end
+
+  defp lower_case(changeset) do
+    name = get_field(changeset, :name)
+
+    changeset
+    |> put_change(:name, String.downcase(name))
   end
 end

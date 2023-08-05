@@ -15,9 +15,11 @@ defmodule FindAPlace.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: FindAPlace.PubSub},
       # Start the Endpoint (http/https)
-      FindAPlaceWeb.Endpoint
+      FindAPlaceWeb.Endpoint,
       # Start a worker by calling: FindAPlace.Worker.start_link(arg)
       # {FindAPlace.Worker, arg}
+      # {ConCache, [name: :places_cache, ttl_check_interval: false]}
+      {Cachex, name: :places_cache}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

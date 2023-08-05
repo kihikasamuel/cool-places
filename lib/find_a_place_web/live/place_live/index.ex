@@ -2,22 +2,21 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
   use FindAPlaceWeb, :live_view
 
   # import Logger
-
+  alias FindAPlaceWeb.InitAssignsLive
   alias FindAPlace.Places
   alias FindAPlace.Places.Place
+
+  on_mount {InitAssignsLive, :load_places}
 
   @impl true
   def mount(_params, _session, socket) do
     if connected?(socket), do: Places.subscribe()
 
-    places = list_places()
     all_tags = Places.list_tags()
 
     {:ok,
       socket
-      |> assign(:places, places)
-      |> assign(:all_tags, all_tags),
-      temporary_assigns: [places: []]
+      |> assign(:all_tags, all_tags)
     }
   end
 
@@ -40,8 +39,8 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Cool Places Places")
-    |> assign(:place, nil)
+    |> assign(:page_title, "Cool Places")
+    |> assign(:places, socket.assigns.places)
   end
 
   @impl true
@@ -49,7 +48,7 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
     place = Places.get_place!(id)
     {:ok, _} = Places.delete_place(place)
 
-    {:noreply, assign(socket, :places, list_places())}
+    {:noreply, socket}
   end
 
   @impl true
@@ -78,18 +77,18 @@ defmodule FindAPlaceWeb.PlaceLive.Index do
 
   @impl true
   def handle_info({:updates, place}, socket) do
-    {:noreply, update(socket, :places, fn places -> [place | places] end)}
+    IO.inspect("SILENT")
+    InitAssignsLive.on_inserted(place)
+    IO.inspect("SILENT")
+    {:noreply, socket}
+    # {:noreply, update(socket, :places, fn places -> [place | places] end)}
   end
 
-  @impl true
+  # @impl true
   # def handle_info({:liked, like}, socket) do
   #   IO.inspect(like, label: "New Like")
   #   {:noreply, update(socket, :places, fn places -> )}
   # end
-
-  defp list_places do
-    Places.list_places()
-  end
 
   def get_total_likes(params) do
     Enum.reduce(params.vote, 0, fn vote, acc ->

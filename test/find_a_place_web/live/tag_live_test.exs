@@ -4,6 +4,8 @@ defmodule FindAPlaceWeb.TagLiveTest do
   import Phoenix.LiveViewTest
   import FindAPlace.PlacesFixtures
 
+  @moduletag :tag_live
+
   @create_attrs %{name: "some name"}
   @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
@@ -13,6 +15,7 @@ defmodule FindAPlaceWeb.TagLiveTest do
     %{tag: tag}
   end
 
+  @tag :tag_live_listing
   describe "Index" do
     setup [:create_tag]
 

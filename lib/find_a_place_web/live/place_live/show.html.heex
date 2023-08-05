@@ -15,14 +15,38 @@
   <div class="px-4 py-16 mx-auto max-w-screen-2xl sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 lg:h-screen">
       <div class="relative z-10 lg:py-16">
-        <div class="relative flex flex-row h-64 sm:h-80 lg:h-full">
-        <%= for img <- @place.images do%>
-          <img
-            class="absolute inset-0 object-cover w-full h-full"
-            src={Routes.static_path(@socket, img.url)}
-            alt=""
-          />
-        <% end %>
+        <div class="relative h-64 sm:h-80 lg:h-full w-full">
+        <%!-- <%= for img <- @place.images do %> --%>
+          <div>
+            <img
+              class="absolute inline-block inset-0 object-cover w-full h-full"
+              src={Routes.static_path(@socket, set_default_image(@place.images, @current_idx))}
+              alt=""
+            />
+          </div>
+          <!-- Slider controls -->
+          <button phx-click="prev" type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-prev>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                  <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                  </svg>
+                  <span class="sr-only">Previous</span>
+              </span>
+          </button>
+          <button phx-click="next" type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none" data-carousel-next>
+              <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                  <svg class="w-4 h-4 text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                  </svg>
+                  <span class="sr-only">Next</span>
+              </span>
+          </button>
+        <%!-- <% end %> --%>
+        </div>
+        <div class="relative flex flex-row justify-center">
+          <%= for img <- @place.images do%>
+            <img src={Routes.static_path(@socket, img.url)} class="p-1 border border-gray-200 cursor-pointer" phx-click="set-current-img" phx-value-url={img.url} alt="" height="50" width="50">
+          <% end %>
         </div>
       </div>
 

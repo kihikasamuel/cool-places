@@ -3,6 +3,8 @@ defmodule FindAPlaceWeb.PlaceLive.FormComponent do
 
   alias FindAPlace.Places
   alias FindAPlace.Places.Tag
+  alias FindAPlace.Places.Place
+  alias FindAPlaceWeb.InitAssignsLive
 
   @impl true
   def update(%{place: place} = assigns, socket) do
@@ -26,11 +28,18 @@ defmodule FindAPlaceWeb.PlaceLive.FormComponent do
   end
 
   @impl true
+  def handle_info({:updates, place}, socket) do
+    IO.inspect("DONE")
+    InitAssignsLive.on_inserted(place)
+    IO.inspect("DONE")
+    {:noreply, socket}
+  end
+
+  @impl true
   def handle_event("look-up", %{"place" => %{"tags" => tags_name}}, socket) do
     # search_term = tags;
 
     result = Places.search_tags_by(tags_name)
-    IO.inspect(result)
 
     if(result === [], do:
       {:noreply, socket |> assign(:missing_tag_name, tags_name) |> assign(:tags_in_tag, [])},
@@ -71,7 +80,6 @@ defmodule FindAPlaceWeb.PlaceLive.FormComponent do
       |> Places.change_place(place_params)
       |> Map.put("tags", socket.assigns.tags |> MapSet.to_list())
       |> Map.put(:action, :validate)
-      |> IO.inspect(label: "ON Validation: ")
 
     {:noreply, assign(socket, :changeset, changeset)}
   end
@@ -121,16 +129,18 @@ defmodule FindAPlaceWeb.PlaceLive.FormComponent do
   end
 
   defp save_place(socket, :new, place_params) do
-    IO.inspect(place_params, label: "PLACE PARAMS WHEN SAVING: ")
     case Places.create_place(place_params) do
-      {:ok, _place} ->
+      {:ok, %{insert: place}} ->
+        IO.inspect("Fails here")
+        IO.inspect(place, label: "PLACE:")
+
         {:noreply,
          socket
          |> put_flash(:info, "Place created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+         |> push_redirect(to: socket.assigns.return_to)
+        }
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        IO.inspect(changeset, label: "Error Occurs due to: ")
         {:noreply, assign(socket, changeset: changeset)}
     end
   end

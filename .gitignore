@@ -37,3 +37,6 @@ npm-debug.log
 
 ssl
 ssl/*
+
+# secret files
+**/*.secret.exs
