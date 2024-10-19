@@ -1,15 +1,18 @@
 import Config
 
 # Configure your database
-config :find_a_place, FindAPlace.Repo,
-  username: "erpuser",
-  password: "Incorrect@12",
-  hostname: "localhost",
-  database: "find_a_place_dev",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# Please remeber to uncomment the config below for your database. Or copy and paste them in a .secret.exs file
+# config :find_a_place, FindAPlace.Repo,
+  # username: "",
+  # password: "",
+  # hostname: "localhost",
+  # database: "find_a_place_dev",
+  # stacktrace: true,
+  # show_sensitive_data_on_connection_error: true,
+  # pool_size: 10
 
+# secret file - this line can be commented based on line 4 above
+import_config "dev.secret.exs"
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

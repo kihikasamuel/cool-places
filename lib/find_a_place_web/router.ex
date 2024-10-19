@@ -17,21 +17,24 @@ defmodule FindAPlaceWeb.Router do
   scope "/", FindAPlaceWeb do
     pipe_through :browser
 
-    live "/about", PageLive
+    live_session :home,
+    on_mount: [
+      {FindAPlaceWeb.InitAssignsLive, :home}
+    ] do
+      live "/", PlaceLive.Index, :index
+      live "/places/new", PlaceLive.Index, :new
+      live "/places/:id/edit", PlaceLive.Index, :edit
 
-    live "/", PlaceLive.Index, :index
-    live "/places/new", PlaceLive.Index, :new
-    live "/places/:id/edit", PlaceLive.Index, :edit
+      live "/places/:id", PlaceLive.Show, :show
+      live "/places/:id/show/edit", PlaceLive.Show, :edit
+    end
 
-    live "/places/:id", PlaceLive.Show, :show
-    live "/places/:id/show/edit", PlaceLive.Show, :edit
-
-    # live "/tags", TagLive.Index, :index
-    # live "/tags/new", TagLive.Index, :new
-    # live "/tags/:id/edit", TagLive.Index, :edit
-
-    # live "/tags/:id", TagLive.Show, :show
-    # live "/tags/:id/show/edit", TagLive.Show, :edit
+    live_session :about,
+    on_mount: [
+      {FindAPlaceWeb.InitAssignsLive, :about}
+    ] do
+      live "/about", PageLive
+    end
   end
 
   # Other scopes may use custom stacks.

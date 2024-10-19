@@ -20,7 +20,7 @@ defmodule FindAPlace.MixProject do
   def application do
     [
       mod: {FindAPlace.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :con_cache]
     ]
   end
 
@@ -49,7 +49,9 @@ defmodule FindAPlace.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:con_cache, "~> 0.13"},
+      {:cachex, "~> 3.6"}
     ]
   end
 

@@ -87,8 +87,8 @@
         <nav
           class="items-center justify-center hidden space-x-8 text-sm font-medium lg:flex lg:flex-1 lg:w-0"
         >
-          <a class="text-gray-900" href="/">Places</a>
-          <a class="text-gray-900" href="/about">About</a>
+          <a class={"#{if(@active_item === :home, do: "text-rose-500", else: "text-gray-900")}"} href="/">Places</a>
+          <a class={"#{if(@active_item === :about, do: "text-rose-500", else: "text-gray-900")}"} href="/about">About</a>
           <a class="text-gray-900" href="https://github.com/kihikasamuel">Creator</a>
           <a class="text-gray-900" href="https://github.com/kihikasamuel">Contributors</a>
         </nav>
@@ -113,17 +113,17 @@
         <nav
           class="flex items-center justify-center p-4 overflow-x-auto text-sm font-medium"
         >
-          <a class="flex-shrink-0 pl-4 text-gray-900" href="/places">Places</a>
-          <a class="flex-shrink-0 pl-4 text-gray-900" href="">About</a>
-          <a class="flex-shrink-0 pl-4 text-gray-900" href="">Creator</a>
-          <a class="flex-shrink-0 pl-4 text-gray-900" href="">Contributors</a>
+          <a class={"flex-shrink-0 pl-4 #{if(@active_item === :home, do: "text-rose-500", else: "text-gray-900")}"} href="/">Places</a>
+          <a class={"flex-shrink-0 pl-4 #{if(@active_item === :about, do: "text-rose-500", else: "text-gray-900")}"} href="/about">About</a>
+          <a class="flex-shrink-0 pl-4 text-gray-900" href="https://github.com/kihikasamuel">Creator</a>
+          <a class="flex-shrink-0 pl-4 text-gray-900" href="https://github.com/kihikasamuel">Contributors</a>
         </nav>
       </div>
     </header>
 
     <%= @inner_content %>
 
-    <footer class="bg-gray-100">
+    <footer class="bg-gray-100 border-t-2">
       <div class="max-w-5xl px-4 py-16 mx-auto sm:px-6 lg:px-8 mb-0">
         <%# <div class="flex justify-center text-blue-600">
           <svg
@@ -175,7 +175,7 @@
           </svg>
         </div> %>
         <div class="flex justify-center text-black-400">
-          <a class="font-medium" href="">Places</a>
+          <a class={"font-medium #{if(@active_item === :home, do: "text-rose-500", else: "text-gray-900")}"} href="">Places</a>
         </div>
         <p class="max-w-md mx-auto mt-6 leading-relaxed text-center text-gray-500">
           Made by <a href="" class="underline">@Sam Kihika</a> with Phoenix, tailwindcss and hyperUI components.

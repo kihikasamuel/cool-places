@@ -16,18 +16,25 @@ defmodule FindAPlaceWeb.PlaceLiveTest do
   describe "Index" do
     setup [:create_place]
 
-    test "lists all places", %{conn: conn, place: place} do
+    test "lists all places", %{conn: conn, places: places} do
       {:ok, _index_live, html} = live(conn, Routes.place_index_path(conn, :index))
 
-      assert html =~ "Listing Places"
-      assert html =~ place.address
+      assert html =~ "Places"
+      assert html =~ places
+      # assert html_response(conn, 200) =~ "Places"
+    end
+
+    test "list all tags", %{conn: conn, place: place} do
+      {:ok, _index_live, html} = live(conn, Routes.place_index_path(conn, :index))
+
+      assert html =~ place
     end
 
     test "saves new place", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, Routes.place_index_path(conn, :index))
 
-      assert index_live |> element("a", "New Place") |> render_click() =~
-               "New Place"
+      assert index_live |> element("a", "+ List Places") |> render_click() =~
+               "Add A Cool Place"
 
       assert_patch(index_live, Routes.place_index_path(conn, :new))
 
@@ -49,7 +56,7 @@ defmodule FindAPlaceWeb.PlaceLiveTest do
       {:ok, index_live, _html} = live(conn, Routes.place_index_path(conn, :index))
 
       assert index_live |> element("#place-#{place.id} a", "Edit") |> render_click() =~
-               "Edit Place"
+               "Edit This Cool Place"
 
       assert_patch(index_live, Routes.place_index_path(conn, :edit, place))
 
@@ -75,6 +82,7 @@ defmodule FindAPlaceWeb.PlaceLiveTest do
     end
   end
 
+  @tag :place_show_page
   describe "Show" do
     setup [:create_place]
 

@@ -18,7 +18,8 @@ defmodule FindAPlace.Places do
 
   """
   def list_places do
-    Repo.all(Place)
+    query = from p in Place, order_by: [desc: p.inserted_at]
+    Repo.all(query)
     |> Repo.preload([:likes, :images, places_tags: [:tag]])
   end
 
@@ -66,18 +67,15 @@ defmodule FindAPlace.Places do
       places_tags: places_tags
     })
 
-    Ecto.Multi.new()
+    result = Ecto.Multi.new()
     |> Ecto.Multi.insert(:insert, place)
     |> Repo.transaction()
     |> case do
-      {:ok, result} -> {:ok, result}
+      {:ok, place} -> {:ok, place}
       {:error, name, value, _changes_so_far} -> {:error, {name, value}}
     end
-    |> broadcast(:updates)
-    # %Place{}
-    # |> Place.changeset(attrs)
-    # |> Repo.insert()
-    # |> broadcast(:updates)
+
+    broadcast(result, :updates)
   end
 
   @doc """
@@ -134,8 +132,8 @@ defmodule FindAPlace.Places do
   end
 
   defp broadcast({:error, _reason} = error, _event), do: error
-  defp broadcast({:ok, place}, event) do
-    Phoenix.PubSub.broadcast(FindAPlace.PubSub, "updates", {event, place})
+  defp broadcast({:ok, place}, _event) do
+    Phoenix.PubSub.broadcast(FindAPlace.PubSub, "updates", place)
     {:ok, place}
   end
 

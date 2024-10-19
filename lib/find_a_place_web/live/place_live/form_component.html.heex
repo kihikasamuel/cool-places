@@ -99,11 +99,15 @@
               </span>
             <% end %>
           <% end %>
-          <%= text_input f, :tags, phx_change: "look-up", phx_debounce: "500", phx_target: @myself, class: "inline-block focus:outline-0 focus:outline-none border-0", placeholder: "Add tags"%>
+          <%= text_input f, :tags, phx_change: "look-up-tag", phx_debounce: "500", phx_target: @myself, class: "inline-block focus:outline-0 focus:outline-none border-0", placeholder: "Add tags"%>
           <%!-- <%= error_tag f, :tags %> --%>
         </div>
         <div
-          class="absolute end-0 z-10 mt-0 w-full rounded-md border border-gray-100 bg-white shadow-lg"
+          class="absolute end-0 z-10 mt-0 w-full roun |> allow_upload(:image,
+        accept: ~w(.jpg .jpeg .png),
+        max_entries: 5,
+        max_file_size: 2_000_000
+      )ded-md border border-gray-100 bg-white shadow-lg"
           role="menu"
           id="menu-dropdown"
         >
