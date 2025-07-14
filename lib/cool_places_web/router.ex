@@ -14,10 +14,15 @@ defmodule CoolPlacesWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :public_facing do
+    plug :put_root_layout, html: {CoolPlacesWeb.Layouts, :public}
+  end
+
   scope "/", CoolPlacesWeb do
-    pipe_through :browser
+    pipe_through [:browser, :public_facing]
 
     get "/", PageController, :home
+    get "/coming/soon", PageController, :coming_soon
   end
 
   # Other scopes may use custom stacks.

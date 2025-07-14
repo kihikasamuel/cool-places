@@ -1,5 +1,46 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import 'material-icons/iconfont/material-icons.css';
 
 /* This file is for your main application CSS */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&display=swap');
+
+
+/* Dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Theme */
+@theme {
+   --font-dm: "DM Sans", "serif";
+   --font-dancing: "Dancing Script", "serif";
+
+   --breakpoint-xs: 540px;
+   --breakpoint-sm: 640px;
+   --breakpoint-md: 720px;
+   --breakpoint-lg: 960px;
+   --breakpoint-xl: 1140px;
+   --breakpoint-2xl: 1140px;
+
+   --text-base: 15px;
+   --text-base--line-height: 28px;
+   --text-lg: 17px;
+   --text-lg--line-height: 28px;
+
+   --shadow-xs: 0 2px 4px 0 rgb(0 0 0 / 0.1);
+   --shadow-sm: 0 0 3px rgb(0 0 0 / 0.1);
+   --shadow-md: 0 5px 13px rgb(0 0 0 / 0.1);
+   --shadow-lg: 0 10px 25px -3px rgb(0 0 0 / 0.1);
+   --shadow-testi: 2px 2px 2px -1px rgb(0 0 0 / 0.1);
+
+   --z-1: 1;
+   --z-2: 2;
+   --z-3: 3;
+   --z-999: 999;
+}
+
+@import "./_topnav.css"
+@import "./_general.css"
+

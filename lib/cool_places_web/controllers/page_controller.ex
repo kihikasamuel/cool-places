@@ -6,4 +6,8 @@ defmodule CoolPlacesWeb.PageController do
     # so skip the default app layout.
     render(conn, :home, layout: false)
   end
+
+  def coming_soon(conn, _params) do
+    render(conn, :coming_soon, layout: false)
+  end
 end

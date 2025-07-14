@@ -19,6 +19,8 @@ defmodule CoolPlacesWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
+  embed_templates("core_components/*")
+
   @doc """
   Renders a modal.
 

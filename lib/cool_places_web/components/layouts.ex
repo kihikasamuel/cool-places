@@ -9,6 +9,7 @@ defmodule CoolPlacesWeb.Layouts do
   `use CoolPlacesWeb, :live_view`.
   """
   use CoolPlacesWeb, :html
+  import CoolPlacesWeb.Partials
 
   embed_templates "layouts/*"
 end

@@ -1,0 +1,23 @@
+/*********************************/
+/*             Helper            */
+/*===============================*/
+
+body {
+    @apply font-dm text-base text-slate-900 dark:text-white;
+}
+
+.container {
+    @apply w-full mx-auto px-3;
+}
+
+p {
+    @apply leading-relaxed;
+}
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    @apply font-dm leading-normal;
+}
+
+::selection {
+    @apply bg-slate-900 text-white;
+}

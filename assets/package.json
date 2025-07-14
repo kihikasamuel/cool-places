@@ -2,14 +2,48 @@
   "name": "cool_places",
   "version": "1.0.0",
   "description": "To start your Phoenix server:",
-  "main": "index.js",
+  "main": "tailwind.config.js",
   "directories": {
     "lib": "lib",
     "test": "test"
   },
+  "author": "samcodes<Samuel Kihika>",
+  "license": "ISC",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "@mdi/font": "^7.4.47",
+    "feather-icons": "^4.29.2",
+    "gumshoejs": "^5.1.2",
+    "jarallax": "^2.2.1",
+    "js-datepicker": "^5.18.3",
+    "material-icons": "^1.13.14",
+    "swiper": "4.5.0",
+    "tiny-slider": "^2.9.4",
+    "tobii": "^2.0.0-alpha"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "browser-sync": "^2.26.7",
+    "clean-css": "^5.3.3",
+    "cssnano": "^7.0.6",
+    "del": "4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-cached": "1.1.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-cssnano": "2.1.3",
+    "gulp-file-include": "2.0.1",
+    "gulp-if": "^3.0.0",
+    "gulp-npm-dist": "^1.0.3",
+    "gulp-postcss": "^10.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "1.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "3.0.2",
+    "gulp-useref-plus": "0.0.8",
+    "postcss": "^8.5.2",
+    "sass": "^1.84.0"
+  }
 }
