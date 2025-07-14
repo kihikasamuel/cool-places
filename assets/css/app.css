@@ -39,8 +39,8 @@
    --z-2: 2;
    --z-3: 3;
    --z-999: 999;
-}
+};
 
-@import "./_topnav.css"
-@import "./_general.css"
+@import "./_topnav.css";
+@import "./_general.css";
 
