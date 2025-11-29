@@ -1,0 +1,72 @@
+<header x-data="{open: false}" class="shadow-md sticky top-0 z-50">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <div class="flex items-center">
+        <!-- Logo -->
+        <div class="flex-shrink-0 text-3xl font-extrabold text-primary-blue tracking-tighter">
+          CoolPlaces<span class="text-secondary-green">.</span>
+        </div>
+      </div>
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          <a
+            :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+            id={link}
+            href="#"
+            class="px-3 py-2 text-sm font-medium transition duration-150 ease-in-out"
+          >
+            {link}
+            <%!-- :class="link === 'Home' ? 'text-primary-blue border-b-2 border-primary-blue' : 'text-gray-600 hover:text-primary-blue hover:border-b-2 hover:border-primary-blue/50 --%>
+          </a>
+        </div>
+      </div>
+      <!-- Auth Buttons -->
+      <div class="hidden md:block">
+        <button class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition">
+          Login
+        </button>
+        <button class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]">
+          Register
+        </button>
+      </div>
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button
+          @click="open = !open"
+          class="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-white hover:bg-primary-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-blue transition duration-150"
+        >
+          <i data-lucide="menu" v-if="!isMobileMenuOpen" class="h-6 w-6"></i>
+          <i data-lucide="x" v-else class="h-6 w-6"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+<!-- Mobile Menu - FIX: Ensures smooth transition by using max-h-screen for full content visibility. -->
+  <%!-- isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 --%>
+  <div x-show="open" class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100">
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a
+        @click="open = !open"
+        :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+        href="#"
+        class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
+      >
+        {link}
+      </a>
+      <a
+        href="#"
+        class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
+      >
+        Login
+      </a>
+      <a
+        href="#"
+        class="block text-center mt-2 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition duration-300"
+      >
+        Register
+      </a>
+    </div>
+  </div>
+</header>

@@ -37,8 +37,8 @@ defmodule CoolPlaces.MixProject do
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
-      {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 1.0"},
+      # {:phoenix_live_reload, "~> 1.2", only: :dev},
+      # {:phoenix_live_view, "~> 1.0"},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
@@ -58,7 +58,10 @@ defmodule CoolPlaces.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:sobelow, "~> 0.14.0"}
+      {:sobelow, "~> 0.14.0"},
+      {:phoenix_live_reload, "~> 1.6", only: :dev, override: true},
+      {:phoenix_live_view, "~> 1.1", override: true},
+      {:tidewave, "~> 0.5.1"}
     ]
   end
 

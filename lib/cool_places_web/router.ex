@@ -19,12 +19,20 @@ defmodule CoolPlacesWeb.Router do
   end
 
   scope "/", CoolPlacesWeb do
-    pipe_through [:browser, :public_facing]
+    pipe_through [:browser, :browser]
 
-    get "/", PageController, :home
-    get "/coming/soon", PageController, :coming_soon
+    live_session :user_auth, on_mount: [] do
+      live "/", PlaceLive.Index, :index
+      # live "/register", PlaceLive.Index, :register
+    end
   end
 
+  scope "/", CoolPlacesWeb do
+    pipe_through [:browser, :public_facing]
+
+    # get "/", PageController, :home
+    get "/coming/soon", PageController, :coming_soon
+  end
   # Other scopes may use custom stacks.
   # scope "/api", CoolPlacesWeb do
   #   pipe_through :api

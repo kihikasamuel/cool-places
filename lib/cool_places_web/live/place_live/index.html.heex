@@ -1,0 +1,161 @@
+<!-- Hero Section -->
+<section class="relative bg-dark-bg text-white pt-24 pb-32 overflow-hidden shadow-2xl">
+  <div
+    class="absolute inset-0 z-0 opacity-20"
+    style={"background-image: url(#{~s(/images/bg/cool-places-2.jpg)}); background-size: cover; background-position: center;"}
+    role="img"
+    aria-label="Dark abstract travel background"
+  >
+  </div>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="text-center">
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-4">
+        Explore the World, One Trip at a Time
+      </h1>
+      <p class="text-xl sm:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto">
+        Discover breathtaking destinations and plan your perfect journey with ease.
+      </p>
+    </div>
+    
+<!-- Search/Booking Form -->
+    <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl max-w-5xl mx-auto mt-8 -mb-40 transform translate-y-0 md:translate-y-1/2">
+      <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Destination -->
+        <div class="col-span-1 md:col-span-1">
+          <label
+            for="destination"
+            class="block text-sm font-medium text-gray-700 mb-2 items-center"
+          >
+            <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-primary-blue"></i> Destination
+          </label>
+          <input
+            type="text"
+            id="destination"
+            v-model="form.destination"
+            placeholder="Where are you going?"
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+            required
+          />
+        </div>
+        
+<!-- Date -->
+        <div class="col-span-1 md:col-span-1">
+          <label for="date" class="block text-sm font-medium text-gray-700 mb-2 items-center">
+            <i data-lucide="calendar" class="w-4 h-4 mr-1 text-secondary-green"></i>
+            Check-in/Check-out
+          </label>
+          <input
+            type="date"
+            id="date"
+            v-model="form.date"
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+            required
+          />
+        </div>
+        
+<!-- Guests -->
+        <div class="col-span-1 md:col-span-1">
+          <label
+            for="guests"
+            class="block text-sm font-medium text-gray-700 mb-2 items-center"
+          >
+            <i data-lucide="users" class="w-4 h-4 mr-1 text-primary-blue"></i> Guests
+          </label>
+          <select
+            id="guests"
+            v-model.number="form.guests"
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue appearance-none bg-white transition duration-150"
+          >
+            <%!-- <option v-for="n in 5" :key="n" :value="n">{ n } Guest{ n > 1 ? 's' : '' }</option> --%>
+            <option value="6">6+ Guests</option>
+          </select>
+        </div>
+        
+<!-- Search Button -->
+        <div class="col-span-1 flex items-end">
+          <button
+            type="submit"
+            class="w-full bg-secondary-green hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03] flex items-center justify-center"
+          >
+            <i data-lucide="search" class="w-5 h-5 mr-2"></i> Search
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Padding to account for the lifted search form - FIX: Increased height to md:h-60 to fully clear overlap. -->
+<div class="h-40 md:h-60"></div>
+
+<!-- Destinations Section -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-4">Popular Destinations</h2>
+    <p class="text-xl text-gray-600 text-center mb-16">
+      Explore hand-picked places loved by our community.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <!-- Destination Card Loop -->
+      <div
+        :for={{id, destination} <- @streams.destinations}
+        class="bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
+        phx-update="stream"
+        id={id}
+      >
+        <div class="relative overflow-hidden h-48">
+          <img
+            src={destination.image}
+            alt={destination.name}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            loading="lazy"
+            onerror="this.onerror=null; this.src='https://placehold.co/400x300/e2e8f0/333333?text=Image+Error';"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <span class="absolute top-3 right-3 bg-primary-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+            {destination.category}
+          </span>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">{destination.name}</h3>
+          <div class="flex items-center text-secondary-green mb-4">
+            <i data-lucide="star" class="w-4 h-4 fill-secondary-green mr-1"></i>
+            <span class="text-sm font-semibold">
+              {destination.rating} ({destination.reviews} Reviews)
+            </span>
+          </div>
+          <p class="text-gray-600 text-sm mb-4">{destination.description}</p>
+          <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+            <span class="text-2xl font-extrabold text-primary-blue">${destination.price}</span>
+            <button
+              click="generateItinerary(destination.id)"
+              disabled="isLoading"
+              class="flex-1 bg-primary-blue hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-xl shadow-md transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-0"
+            >
+              <span class="inline-block align-middle whitespace-nowrap">✨ Get Itinerary</span>
+            </button>
+          </div>
+          <button class="mt-3 w-full bg-secondary-green hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-xl transition duration-300">
+            Book Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="bg-primary-blue py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+      Ready to Start Your Adventure?
+    </h2>
+    <p class="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
+      Join Travosy today and unlock exclusive deals on flights, hotels, and packages.
+    </p>
+    <button class="bg-white text-primary-blue hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-[1.05]">
+      Get Started - It's Free!
+    </button>
+  </div>
+</section>

@@ -3,11 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="csrf-token" content={get_csrf_token()} />
-    <.live_title default="CoolPlaces" suffix=" · Phoenix Framework">
+    <.live_title default="CoolPlaces" suffix=" · Travel Planner">
       {assigns[:page_title]}
     </.live_title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta content="Tour & Travels Agency Tailwind CSS Template" name="description" />
+    <meta content="Tour & Travels" name="description" />
     <meta
       content="Tour, Travels, agency, business, corporate, tour packages, journey, trip, tailwind css, Admin, Landing"
       name="keywords"
@@ -16,8 +16,9 @@
     <link rel="shortcut icon" href={~s"/images/favicon.ico"} />
 
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
-    </script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
     <!-- Main Css -->
     <%!-- <link
       href={~p"/assets/libs/@mdi/font/css/materialdesignicons.min.css"}
@@ -25,8 +26,8 @@
       type="text/css"
     /> --%>
   </head>
-  <body class="dark:bg-slate-900">
-  <!-- Loader Start -->
+  <body class="bg-gray-50 font-sans text-gray-800">
+    <!-- Loader Start -->
         <!-- <div id="preloader">
             <div id="status">
                 <div class="spinner">
@@ -39,54 +40,82 @@
 <!-- Start -->
 
     {@inner_content}
-
-    <div class="fixed bottom-3 end-3">
-      <a
-        href=""
-        class="back-button size-8 inline-flex items-center justify-center tracking-wide border align-middle duration-500 text-base text-center bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-md"
+    
+<!-- Itinerary Modal (LLM-Powered) -->
+    <transition name="modal-fade">
+      <div
+        :if={not true}
+        class="fixed inset-0 z-[100] flex items-center justify-center p-4"
+        style="background-color: rgba(0, 0, 0, 0.7);"
       >
-        <i data-feather="arrow-left" class="size-4"></i>
-      </a>
-    </div>
-    
-<!-- Switcher -->
-    <div class="fixed top-1/4 -left-2 z-50">
-      <span class="relative inline-block rotate-90">
-        <input type="checkbox" class="checkbox opacity-0 absolute" id="chk" />
-        <label
-          class="label bg-slate-900 dark:bg-white shadow-sm dark:shadow-gray-800 cursor-pointer rounded-full flex justify-between items-center p-1 w-14 h-8"
-          for="chk"
-        >
-          <i data-feather="moon" class="w-[18px] h-[18px] text-yellow-500"></i>
-          <i data-feather="sun" class="w-[18px] h-[18px] text-yellow-500"></i>
-          <span class="ball bg-white dark:bg-slate-900 rounded-full absolute top-[2px] left-[2px] w-7 h-7">
-          </span>
-        </label>
-      </span>
-    </div>
-    
-<!-- LTR & RTL Mode Code -->
-    <div class="fixed top-[40%] -left-3 z-50">
-      <a href="" id="switchRtl">
-        <span class="py-1 px-3 relative inline-block rounded-b-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow-sm dark:shadow-gray-800 font-semibold rtl:block ltr:hidden">
-          LTR
-        </span>
-        <span class="py-1 px-3 relative inline-block rounded-b-md -rotate-90 bg-white dark:bg-slate-900 shadow-md dark:shadow-sm dark:shadow-gray-800 font-semibold ltr:block rtl:hidden">
-          RTL
-        </span>
-      </a>
-    </div>
-    <!-- LTR & RTL Mode Code -->
+        <%!-- @click.self="isModalOpen = false" --%>
+        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 opacity-0">
+          <%!-- :class="{'scale-100 opacity-100': isModalOpen}" --%>
+          <div class="p-6 sm:p-8 flex flex-col h-full">
+            <div class="flex justify-between items-start mb-6 border-b pb-4">
+              <h3 class="text-2xl sm:text-3xl font-extrabold text-primary-blue leading-tight">
+                <i
+                  data-lucide="plane"
+                  class="w-6 h-6 sm:w-7 sm:h-7 inline-block mr-2 align-top text-secondary-green"
+                >
+                </i>
+                3-Day Itinerary for
+                <span class="text-gray-900">
+                  <%!-- {currentDestinationName} --%>
+                </span>
+              </h3>
+              <button
+                @click="isModalOpen = false"
+                class="text-gray-400 hover:text-gray-700 transition p-1"
+              >
+                <i data-lucide="x" class="w-6 h-6"></i>
+              </button>
+            </div>
+            
+<!-- Content Area -->
+            <div class="flex-grow overflow-y-auto pr-2">
+              <div v-if="isLoading" class="text-center py-10">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 mx-auto">
+                </div>
+                <p class="text-lg font-medium text-gray-600">
+                  Generating personalized itinerary...
+                </p>
+                <p class="text-sm text-gray-500 mt-1">
+                  Powered by Gemini AI and real-time Google Search grounding.
+                </p>
+              </div>
 
-<!-- Back to top -->
-    <a
-      href="#"
-      onclick="topFunction()"
-      id="back-to-top"
-      class="back-to-top fixed hidden text-lg rounded-md z-10 bottom-5 end-5 size-8 text-center bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white justify-center items-center"
-    >
-      <i class="mdi mdi-arrow-up"></i>
-    </a>
-<!-- Back to top -->
+              <div v-else>
+                <div v-if="itineraryText" class="prose max-w-none text-gray-700">
+                  <!-- Displaying Markdown content -->
+                  <div v-html="renderMarkdown(itineraryText)" class="markdown-output"></div>
+                </div>
+                <p v-else class="text-red-500 text-center py-10">
+                  An error occurred while generating the itinerary. Please check the console for details.
+                </p>
+                
+<!-- Sources -->
+                <div
+                  v-if="itinerarySources.length > 0 && !isLoading"
+                  class="mt-8 pt-4 border-t border-gray-100"
+                >
+                  <h4 class="text-sm font-semibold text-gray-500 mb-2">
+                    Sources (Grounded by Google Search):
+                  </h4>
+                  <ul class="text-xs space-y-1">
+                    <%!-- v-for="(source, index) in itinerarySources" --%>
+                    <li class="text-gray-500 hover:text-primary-blue">
+                      <a href="source.uri" target="_blank" class="truncate block">
+                        <%!-- {source.title} --%>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
   </body>
 </html>
