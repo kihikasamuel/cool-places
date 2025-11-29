@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
+    "alpinejs": "^3.15.2",
     "feather-icons": "^4.29.2",
     "gumshoejs": "^5.1.2",
     "jarallax": "^2.2.1",

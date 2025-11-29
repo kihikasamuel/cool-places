@@ -1,0 +1,25 @@
+<%!-- <.header>
+  Place {@place.id}
+  <:subtitle>This is a place record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/places/#{@place}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit place</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+</.list>
+
+<.back navigate={~p"/places"}>Back to places</.back>
+
+<.modal :if={@live_action == :edit} id="place-modal" show on_cancel={JS.patch(~p"/places/#{@place}")}>
+  <.live_component
+    module={CoolPlacesWeb.PlaceLive.FormComponent}
+    id={@place.id}
+    title={@page_title}
+    action={@live_action}
+    place={@place}
+    patch={~p"/places/#{@place}"}
+  />
+</.modal> --%>

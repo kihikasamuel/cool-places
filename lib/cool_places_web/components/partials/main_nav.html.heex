@@ -1,0 +1,101 @@
+<header x-data="{open: false}" class="shadow-md sticky opacity-100 top-0 backdrop-blur-md z-50">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <div class="flex items-center">
+        <!-- Logo -->
+        <div class="flex-shrink-0 text-3xl font-extrabold text-primary-blue tracking-tighter">
+          CoolPlaces<span class="text-secondary-green">.</span>
+        </div>
+      </div>
+      <!-- Desktop Nav Links -->
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-4">
+          <a
+            :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+            id={link}
+            href="#"
+            class={[
+              "px-3 py-2 text-sm font-medium transition duration-150 ease-in-out",
+              "text-primary-blue border-b-2 border-primary-blue" && link == "Home",
+              "text-gray-600 hover:text-primary-blue hover:border-b-2 hover:border-primary-blue/50" &&
+                link !== "Home"
+            ]}
+          >
+            {link}
+          </a>
+        </div>
+      </div>
+      <!-- Auth Buttons -->
+      <div class="hidden md:block">
+        <button class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition">
+          Login
+        </button>
+        <button class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]">
+          Register
+        </button>
+      </div>
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center">
+        <button class="inline-flex items-center justify-center p-2 rounded-xl text-gray-500 hover:text-white hover:bg-primary-blue focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-blue transition duration-150">
+          <svg
+            x-show="!open"
+            @click="open = !open"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
+          </svg>
+          <svg
+            x-show="open"
+            @click="open = false"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+
+          <%!-- <i data-lucide="menu" x-if="open" class="h-6 w-6"></i>
+          <i data-lucide="x" x-if="!open" class="h-6 w-6"></i> --%>
+        </button>
+      </div>
+    </div>
+  </nav>
+  
+<!-- Mobile Menu - FIX: Ensures smooth transition by using max-h-screen for full content visibility. -->
+  <div
+    x-show="open"
+    class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100"
+    x-bind="{max-h-screen opacity-100: open, max-h-0 opacity-0: !open}"
+  >
+    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+      <a
+        :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+        @click="open = !open"
+        href="#"
+        class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
+      >
+        {link}
+      </a>
+      <a
+        href="#"
+        class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
+      >
+        Login
+      </a>
+      <a
+        href="#"
+        class="block text-center mt-2 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition duration-300"
+      >
+        Register
+      </a>
+    </div>
+  </div>
+</header>

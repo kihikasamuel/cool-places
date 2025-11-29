@@ -1,24 +1,84 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import 'material-icons/iconfont/material-icons.css';
+/* @import 'material-icons/iconfont/material-icons.css'; */
 
 /* This file is for your main application CSS */
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Dancing+Script:wght@400..700&display=swap");
 
+.loader {
+  border-top-color: #2563eb;
+  -webkit-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Modal Transitions (Vue standard) */
+.modal-fade-enter-active,
+.modal-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+.modal-fade-enter-from,
+.modal-fade-leave-to {
+  opacity: 0;
+}
+
+/* Basic Markdown Styling for Output */
+.markdown-output h1,
+.markdown-output h2,
+.markdown-output h3 {
+  font-weight: bold;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  color: #2563eb;
+}
+.markdown-output h3 {
+  font-size: 1.25rem;
+}
+.markdown-output strong {
+  font-weight: 700;
+  color: #10b981;
+}
+.markdown-output ul {
+  list-style: disc;
+  margin-left: 1.5em;
+  padding-left: 0.5em;
+}
+.markdown-output ol {
+  list-style: decimal;
+  margin-left: 1.5em;
+  padding-left: 0.5em;
+}
+.markdown-output p {
+  margin-bottom: 1em;
+}
 
 /* Dark mode */
-@custom-variant dark (&:where(.dark, .dark *));
+/* @custom-variant dark (&:where(.dark, .dark *));
 
 /* Theme */
-@theme {
+/* @theme {
    --font-dm: "DM Sans", "serif";
    --font-dancing: "Dancing Script", "serif";
 
    --breakpoint-xs: 540px;
-   --breakpoint-sm: 640px;
    --breakpoint-md: 720px;
    --breakpoint-lg: 960px;
    --breakpoint-xl: 1140px;
@@ -42,5 +102,4 @@
 };
 
 @import "./_topnav.css";
-@import "./_general.css";
-
+@import "./_general.css"; */

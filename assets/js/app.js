@@ -18,6 +18,7 @@
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
+import Alpine from 'alpinejs'
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import topbar from "../vendor/topbar"
@@ -25,10 +26,21 @@ import "../vendor/plugins.init.js"
 import "../vendor/easy_background.js"
 import "../vendor/index.js"
 
+// add alpine
+window.Alpine = Alpine;
+Alpine.start();
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
-  params: {_csrf_token: csrfToken}
+  params: {_csrf_token: csrfToken},
+  dom: {
+    onBeforeElUpdated(from, to) {
+      if(from._x_dataStack) {
+        window.Alpine.clone(from, to)
+      }
+    }
+  }
 })
 
 // Show progress bar on live navigation and form submits
