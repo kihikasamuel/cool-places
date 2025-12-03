@@ -11,6 +11,11 @@ config :cool_places,
   ecto_repos: [CoolPlaces.Repo],
   generators: [timestamp_type: :utc_datetime]
 
+config :kasi_crm, CoolPlaces.Repo,
+  migration_primary_key: [type: :binary_id, autogenerate: true],
+  migration_foreign_key: [type: :binary_id],
+  migration_timestamps: [type: :utc_datetime]
+
 # Configures the endpoint
 config :cool_places, CoolPlacesWeb.Endpoint,
   url: [host: "localhost"],
