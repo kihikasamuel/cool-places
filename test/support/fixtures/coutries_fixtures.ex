@@ -10,9 +10,7 @@ defmodule CoolPlaces.CoutriesFixtures do
   def country_fixture(attrs \\ %{}) do
     {:ok, country} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> CoolPlaces.Coutries.create_country()
 
     country

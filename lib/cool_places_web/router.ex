@@ -33,6 +33,7 @@ defmodule CoolPlacesWeb.Router do
     # get "/", PageController, :home
     get "/coming/soon", PageController, :coming_soon
   end
+
   # Other scopes may use custom stacks.
   # scope "/api", CoolPlacesWeb do
   #   pipe_through :api

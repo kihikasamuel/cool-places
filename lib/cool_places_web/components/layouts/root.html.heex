@@ -16,9 +16,12 @@
     <link rel="shortcut icon" href={~s"/images/favicon.ico"} />
 
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
+    <script src="https://unpkg.com/lucide@latest">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js">
+    </script>
     <!-- Main Css -->
     <%!-- <link
       href={~p"/assets/libs/@mdi/font/css/materialdesignicons.min.css"}
@@ -41,7 +44,7 @@
 
     {@inner_content}
     
-  <!-- Itinerary Modal (LLM-Powered) -->
+<!-- Itinerary Modal (LLM-Powered) -->
     <transition x-data="{open: false}" name="modal-fade">
       <div
         x-show="open"
@@ -49,7 +52,10 @@
         style="background-color: rgba(0, 0, 0, 0.7);"
         @click="open = !open"
       >
-        <div class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 opacity-0" x-bind:class="{'scale-100 opacity-100': open}">
+        <div
+          class="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden transform transition-all duration-300 scale-95 opacity-0"
+          x-bind:class="{'scale-100 opacity-100': open}"
+        >
           <div class="p-6 sm:p-8 flex flex-col h-full">
             <div class="flex justify-between items-start mb-6 border-b pb-4">
               <h3 class="text-2xl sm:text-3xl font-extrabold text-primary-blue leading-tight">
@@ -71,7 +77,7 @@
               </button>
             </div>
             
-      <!-- Content Area -->
+<!-- Content Area -->
             <div class="flex-grow overflow-y-auto pr-2">
               <div v-if="isLoading" class="text-center py-10">
                 <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4 mx-auto">
@@ -93,7 +99,7 @@
                   An error occurred while generating the itinerary. Please check the console for details.
                 </p>
                 
-      <!-- Sources -->
+<!-- Sources -->
                 <div
                   v-if="itinerarySources.length > 0 && !isLoading"
                   class="mt-8 pt-4 border-t border-gray-100"
