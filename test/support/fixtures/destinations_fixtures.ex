@@ -15,4 +15,18 @@ defmodule CoolPlaces.DestinationsFixtures do
 
     destination
   end
+
+  @doc """
+  Generate a destination_asset.
+  """
+  def destination_asset_fixture(attrs \\ %{}) do
+    {:ok, destination_asset} =
+      attrs
+      |> Enum.into(%{
+
+      })
+      |> CoolPlaces.Destinations.create_destination_asset()
+
+    destination_asset
+  end
 end

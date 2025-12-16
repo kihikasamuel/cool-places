@@ -61,7 +61,9 @@ defmodule CoolPlaces.MixProject do
       {:sobelow, "~> 0.14.0"},
       {:phoenix_live_reload, "~> 1.6", only: :dev, override: true},
       {:phoenix_live_view, "~> 1.1", override: true},
-      {:tidewave, "~> 0.5.1"}
+      {:tidewave, "~> 0.5.1"},
+      {:waffle, "~> 1.1"},
+      {:waffle_ecto, "~> 0.0.12"}
     ]
   end
 

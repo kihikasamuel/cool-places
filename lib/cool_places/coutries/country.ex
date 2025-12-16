@@ -16,10 +16,13 @@ defmodule CoolPlaces.Coutries.Country do
     timestamps(type: :utc_datetime)
   end
 
+  defp writeable_fields do
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+  end
   @doc false
   def changeset(country, attrs) do
     country
-    |> cast(attrs, [])
+    |> cast(attrs, writeable_fields())
     |> validate_required([])
   end
 end

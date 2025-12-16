@@ -25,18 +25,23 @@ defmodule CoolPlaces.Destinations.Destination do
     embeds_one :address, Address
     field :rating, :decimal
     field :status, :string
-    # field :images, {:array, :map}
 
     belongs_to :country, CoolPlaces.Coutries.Country
     belongs_to :users, CoolPlaces.Users.User
 
+    has_many :destination_assets, CoolPlaces.Destinations.DestinationAsset, foreign_key: :destination_id
+
     timestamps(type: :utc_datetime)
+  end
+
+  defp writeable_fields do
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
   end
 
   @doc false
   def changeset(destination, attrs) do
     destination
-    |> cast(attrs, [])
+    |> cast(attrs, writeable_fields())
     |> validate_required([])
   end
 end
