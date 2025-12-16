@@ -4,7 +4,7 @@ defmodule CoolPlaces.Ratings.Rating do
 
   schema "ratings" do
     belongs_to :destination, CoolPlaces.Destinations.Destination
-    belongs_to :user, CoolPlaces.Users.User
+    belongs_to :user, CoolPlaces.Accounts.User
     field :value, :integer
     field :comment, :string
 

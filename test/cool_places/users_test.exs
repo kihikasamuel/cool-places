@@ -4,7 +4,7 @@ defmodule CoolPlaces.UsersTest do
   alias CoolPlaces.Users
 
   describe "users" do
-    alias CoolPlaces.Users.User
+    alias CoolPlaces.Accounts.User
 
     import CoolPlaces.UsersFixtures
 

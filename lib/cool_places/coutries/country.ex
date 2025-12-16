@@ -10,7 +10,7 @@ defmodule CoolPlaces.Coutries.Country do
     field :dial_code, :string
     field :unicode_char, :string
 
-    has_many :users, CoolPlaces.Users.User, foreign_key: :country_of_residence_id
+    has_many :users, CoolPlaces.Accounts.User, foreign_key: :country_of_residence_id
     has_many :destinations, CoolPlaces.Destinations.Destination
 
     timestamps(type: :utc_datetime)
