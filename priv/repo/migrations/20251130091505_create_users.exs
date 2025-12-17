@@ -3,10 +3,9 @@ defmodule CoolPlaces.Repo.Migrations.CreateUsers do
 
   def up do
     create table(:users) do
-      add :email, :string
+      add :email, :citext
       add :msisdn, :string
       add :name, :citext
-      add :password, :string
       add :hashed_password, :string
       add :confirmed_at, :utc_datetime
       add :country_of_residence_id, references(:countries, on_delete: :nothing, type: :binary_id)
