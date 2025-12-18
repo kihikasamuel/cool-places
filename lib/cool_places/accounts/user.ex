@@ -12,7 +12,7 @@ defmodule CoolPlaces.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :status, :string
 
-    belongs_to :country_of_residence, CoolPlaces.Coutries.Country, type: :binary_id
+    belongs_to :country_of_residence, CoolPlaces.Countries.Country, type: :binary_id
 
     timestamps(type: :utc_datetime)
   end

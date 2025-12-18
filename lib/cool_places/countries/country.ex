@@ -1,4 +1,4 @@
-defmodule CoolPlaces.Coutries.Country do
+defmodule CoolPlaces.Countries.Country do
   use Ecto.Schema
   import Ecto.Changeset
 

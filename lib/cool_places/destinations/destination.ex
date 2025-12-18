@@ -26,7 +26,7 @@ defmodule CoolPlaces.Destinations.Destination do
     field :rating, :decimal
     field :status, :string
 
-    belongs_to :country, CoolPlaces.Coutries.Country
+    belongs_to :country, CoolPlaces.Countries.Country
     belongs_to :users, CoolPlaces.Accounts.User
 
     has_many :destination_assets, CoolPlaces.Destinations.DestinationAsset, foreign_key: :destination_id

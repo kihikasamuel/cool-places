@@ -1,12 +1,12 @@
-defmodule CoolPlaces.Coutries do
+defmodule CoolPlaces.Countries do
   @moduledoc """
-  The Coutries context.
+  The Countries context.
   """
 
   import Ecto.Query, warn: false
   alias CoolPlaces.Repo
 
-  alias CoolPlaces.Coutries.Country
+  alias CoolPlaces.Countries.Country
 
   @doc """
   Returns the list of countries.

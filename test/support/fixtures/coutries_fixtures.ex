@@ -1,7 +1,7 @@
-defmodule CoolPlaces.CoutriesFixtures do
+defmodule CoolPlaces.CountriesFixtures do
   @moduledoc """
   This module defines test helpers for creating
-  entities via the `CoolPlaces.Coutries` context.
+  entities via the `CoolPlaces.Countries` context.
   """
 
   @doc """
@@ -11,7 +11,7 @@ defmodule CoolPlaces.CoutriesFixtures do
     {:ok, country} =
       attrs
       |> Enum.into(%{})
-      |> CoolPlaces.Coutries.create_country()
+      |> CoolPlaces.Countries.create_country()
 
     country
   end
