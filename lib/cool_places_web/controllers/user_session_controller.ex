@@ -18,7 +18,7 @@ defmodule CoolPlacesWeb.UserSessionController do
     create(conn, params, "Welcome back!")
   end
 
-  defp create(conn, %{"user" => user_params}, info) do
+  defp create(conn, user_params, info) do
     %{"email" => email, "password" => password} = user_params
 
     if user = Accounts.get_user_by_email_and_password(email, password) do

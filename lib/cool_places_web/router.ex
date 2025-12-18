@@ -25,7 +25,6 @@ defmodule CoolPlacesWeb.Router do
   scope "/", CoolPlacesWeb do
     pipe_through [:browser, :public_facing]
 
-    # get "/", PageController, :home
     get "/coming/soon", PageController, :coming_soon
   end
 
@@ -55,6 +54,7 @@ defmodule CoolPlacesWeb.Router do
   scope "/", CoolPlacesWeb do
     pipe_through [:browser]
 
+    live "/", PlaceLive.Index, :index
     delete "/users/log_out", UserSessionController, :delete
 
     live_session :current_user,
@@ -70,8 +70,8 @@ defmodule CoolPlacesWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{CoolPlacesWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
+      live "/users/register", UserRegistrationLive.Index, :index
+      live "/users/log_in", UserLoginLive.Index, :index
       live "/users/reset_password", UserForgotPasswordLive, :new
       live "/users/reset_password/:token", UserResetPasswordLive, :edit
     end

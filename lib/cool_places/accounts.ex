@@ -81,6 +81,14 @@ defmodule CoolPlaces.Accounts do
   end
 
   @doc """
+  Login changeset
+  """
+  def validate_user_login(attrs) do
+    %User{}
+    |> User.login_changeset(attrs)
+  end
+
+  @doc """
   Returns an `%Ecto.Changeset{}` for tracking user changes.
 
   ## Examples

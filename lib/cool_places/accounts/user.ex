@@ -2,6 +2,7 @@ defmodule CoolPlaces.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "users" do
     field :email, :string
     field :msisdn, :string
@@ -18,7 +19,7 @@ defmodule CoolPlaces.Accounts.User do
   end
 
   defp writeable_fields do
-    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at, :msisdn]
   end
 
   @doc """
@@ -46,9 +47,10 @@ defmodule CoolPlaces.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, writeable_fields())
+    |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status])
   end
 
   defp validate_email(changeset, opts) do
@@ -63,6 +65,7 @@ defmodule CoolPlaces.Accounts.User do
     changeset
     |> validate_required([:password])
     |> validate_length(:password, min: 12, max: 72)
+    |> validate_confirmation(:password, message: "does not match password")
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
@@ -137,6 +140,15 @@ defmodule CoolPlaces.Accounts.User do
   def confirm_changeset(user) do
     now = DateTime.utc_now() |> DateTime.truncate(:second)
     change(user, confirmed_at: now)
+  end
+
+  @doc """
+  Login changeset
+  """
+  def login_changeset(user, attrs) do
+    user
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
   end
 
   @doc """

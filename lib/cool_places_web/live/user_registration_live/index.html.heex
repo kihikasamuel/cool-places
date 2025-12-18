@@ -1,0 +1,111 @@
+<div class="flex justify-center items-center min-h-[calc(100vh-80px)] py-4 bg-gray-200">
+  <div class="w-full max-w-fit bg-white p-8 sm:p-10 rounded-2xl shadow-2xl">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-gray-900">Sign Up</h2>
+      <p class="mt-2 text-sm text-gray-600">
+        Already have an account?
+        <.link
+          navigate={~p(/users/log_in)}
+          class="font-medium text-primary-blue hover:text-blue-700"
+        >
+          Sign in here
+        </.link>
+      </p>
+    </div>
+
+    <.simple_form
+      for={@form}
+      id="registration_form"
+      class=""
+      phx-submit="save"
+      phx-change="validate"
+    >
+      <%!-- phx-trigger-action={@trigger_submit}
+      action={~p"/users/log_in?_action=registered"}
+      method="post" --%>
+      <div>
+        <label for="full-names" class="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
+        <.input
+          id="full-names"
+          type="text"
+          field={@form[:name]}
+          required
+          class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+          placeholder="John Doe"
+        />
+      </div>
+
+      <div>
+        <label for="country-of-residence" class="block text-sm font-medium text-gray-700">
+          Country of Residence
+        </label>
+        <.input
+          id="country-of-residence"
+          type="select"
+          field={@form[:country_of_residence_id]}
+          options={@countries}
+          prompt="Select Country..."
+          required
+          class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+          placeholder="e.g Kenya, Uganda, Tanzania, Italy, etc"
+        />
+      </div>
+
+      <div>
+        <label for="register-email" class="block text-sm font-medium text-gray-700">
+          Email address
+        </label>
+        <.input
+          id="register-email"
+          type="email"
+          field={@form[:email]}
+          autocomplete="email"
+          required
+          class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+          placeholder="you@example.com"
+        />
+      </div>
+
+      <div class="flex flex-row gap-4">
+        <div>
+          <label for="register-password" class="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <.input
+            id="register-password"
+            type="password"
+            field={@form[:password]}
+            required
+            class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+            placeholder="Must be at least 6 characters"
+          />
+        </div>
+
+        <div>
+          <label for="register-confirm-password" class="block text-sm font-medium text-gray-700">
+            Confirm Password
+          </label>
+          <.input
+            id="register-confirm-password"
+            type="password"
+            field={@form[:password_confirmation]}
+            required
+            class="mt-1 w-full p-3 border border-gray-300 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+            placeholder="Re-enter your password"
+          />
+        </div>
+      </div>
+      <div>
+        <.button
+          type="submit"
+          phx-disable-with="Creating account..."
+          class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-secondary-green hover:bg-emerald-600 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Submit
+        </.button>
+      </div>
+    </.simple_form>
+  </div>
+</div>

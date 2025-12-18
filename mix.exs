@@ -19,7 +19,7 @@ defmodule CoolPlaces.MixProject do
   def application do
     [
       mod: {CoolPlaces.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :swoosh]
     ]
   end
 

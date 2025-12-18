@@ -2,6 +2,7 @@ defmodule CoolPlaces.Accounts.UserToken do
   use Ecto.Schema
   import Ecto.Query
   alias CoolPlaces.Accounts.UserToken
+  import Ecto.Changeset
 
   @hash_algorithm :sha256
   @rand_size 32
@@ -13,6 +14,8 @@ defmodule CoolPlaces.Accounts.UserToken do
   @change_email_validity_in_days 7
   @session_validity_in_days 60
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "users_tokens" do
     field :token, :binary
     field :context, :string
@@ -20,6 +23,11 @@ defmodule CoolPlaces.Accounts.UserToken do
     belongs_to :user, CoolPlaces.Accounts.User
 
     timestamps(type: :utc_datetime, updated_at: false)
+  end
+
+  def changeset(user_token \\ %UserToken{}, attrs) do
+    user_token
+    |> cast(attrs, [:token, :context, :sent_to, :user_id])
   end
 
   @doc """
