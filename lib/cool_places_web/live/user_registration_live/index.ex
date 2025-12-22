@@ -43,7 +43,7 @@ defmodule CoolPlacesWeb.UserRegistrationLive.Index do
 
   def handle_event("validate", %{"user" => user_params}, socket) do
     changeset =
-      Accounts.change_user_registration(%User{}, user_params) |> IO.inspect(label: "changeset")
+      Accounts.change_user_registration(%User{}, user_params)
 
     {:noreply, assign_form(socket, changeset)}
   end

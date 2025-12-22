@@ -50,26 +50,15 @@ defmodule CoolPlacesWeb.Router do
     end
   end
 
-  ## Account confirmation and logout routes
-  scope "/", CoolPlacesWeb do
-    pipe_through [:browser]
-
-    live "/", PlaceLive.Index, :index
-    delete "/users/log_out", UserSessionController, :delete
-
-    live_session :current_user,
-      on_mount: [{CoolPlacesWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
-    end
-  end
-
   ## Authentication & registration routes
   scope "/", CoolPlacesWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
+    delete "/users/log_out", UserSessionController, :delete
+
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{CoolPlacesWeb.UserAuth, :redirect_if_user_is_authenticated}] do
+      live "/", PlaceLive.Index, :index
       live "/users/register", UserRegistrationLive.Index, :index
       live "/users/log_in", UserLoginLive.Index, :index
       live "/users/reset_password", UserForgotPasswordLive, :new
@@ -84,9 +73,18 @@ defmodule CoolPlacesWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     live_session :require_authenticated_user,
-      on_mount: [{CoolPlacesWeb.UserAuth, :ensure_authenticated}] do
+      on_mount: [
+        {CoolPlacesWeb.UserAuth, :mount_current_user},
+        {CoolPlacesWeb.UserAuth, :ensure_authenticated},
+      ] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+      live "/users/confirm/:token", UserConfirmationLive, :edit
+      live "/users/confirm", UserConfirmationInstructionsLive, :new
+
+      scope "/account" do
+        live "/listing", DestinationsLive.New, :new
+      end
     end
   end
 end
