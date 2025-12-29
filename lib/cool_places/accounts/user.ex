@@ -12,6 +12,8 @@ defmodule CoolPlaces.Accounts.User do
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
     field :status, :string
+    field :avatar_url, :string
+    field :provider, :string
 
     belongs_to :country_of_residence, CoolPlaces.Countries.Country, type: :binary_id
 
@@ -50,7 +52,7 @@ defmodule CoolPlaces.Accounts.User do
     |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
     |> validate_email(opts)
     |> validate_password(opts)
-    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status])
+    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status, :password, :country_of_residence_id])
   end
 
   defp validate_email(changeset, opts) do
@@ -63,7 +65,7 @@ defmodule CoolPlaces.Accounts.User do
 
   defp validate_password(changeset, opts) do
     changeset
-    |> validate_required([:password])
+    # |> validate_required([:password])
     |> validate_length(:password, min: 12, max: 72)
     |> validate_confirmation(:password, message: "does not match password")
     # Examples of additional password validation:

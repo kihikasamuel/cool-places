@@ -35,3 +35,4 @@ cool_places-*.tar
 npm-debug.log
 /assets/node_modules/
 
+config/*.local.exs

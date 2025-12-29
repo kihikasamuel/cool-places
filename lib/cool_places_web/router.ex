@@ -55,6 +55,9 @@ defmodule CoolPlacesWeb.Router do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
     delete "/users/log_out", UserSessionController, :delete
+    # ## oauth request and callback routes
+    get "/auth/:provider", UserSessionController, :request
+    get "/auth/:provider/callback", UserSessionController, :callback
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{CoolPlacesWeb.UserAuth, :redirect_if_user_is_authenticated}] do

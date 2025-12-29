@@ -63,6 +63,32 @@ defmodule CoolPlaces.Accounts do
   ## User registration
 
   @doc """
+  Find or register user from oauth providers response
+
+  ## Example
+
+    iex> find_or_register_user(%Ueberauth.Auth{})
+    {:ok, user}
+
+    iex> find_or_register_user(%Ueberauth.Auth{})
+    {:error, %Ecto.Changeset}
+  """
+  def find_or_register_user(%Ueberauth.Auth{info: user_info} = auth) do
+    case get_user_by_email(user_info.email) do
+      nil ->
+        %{}
+        |> Map.put("email", user_info.email)
+        |> Map.put("name", user_info.name)
+        |> Map.put("avatar_url", user_info.image)
+        |> Map.put("provider", Atom.to_string(auth.provider))
+        |> register_user()
+
+      %User{} = user ->
+        {:ok, user}
+    end
+  end
+
+  @doc """
   Registers a user.
 
   ## Examples

@@ -7,3 +7,12 @@ config :swoosh, :api_client, false
 config :waffle,
   storage: Waffle.Storage.Local,
   asset_host: "http://static.example.com" # or {:system, "ASSET_HOST"}
+
+# ## Ueberauth configurations for [google, x]
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: "",
+  client_secret: ""
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: "",
+  consumer_secret: ""

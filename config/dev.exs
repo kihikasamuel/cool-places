@@ -88,3 +88,6 @@ config :swoosh, :api_client, false
 config :waffle,
   storage: Waffle.Storage.Local,
   asset_host: "http://static.example.com" # or {:system, "ASSET_HOST"}
+
+## Environment specific secrets
+import_config "#{config_env()}.local.exs"

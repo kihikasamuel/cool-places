@@ -114,4 +114,13 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+
+  # ## Ueberauth configurations for [google, x]
+  config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+    client_id: System.get_env("GOOGLE_CLIENT_ID"),
+    client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
+
+  config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+    consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
+    consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
 end
