@@ -7,6 +7,7 @@ defmodule CoolPlaces.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
+      elixirc_options: elixirc_options(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -26,6 +27,10 @@ defmodule CoolPlaces.MixProject do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  # other options for the elixirc command
+  defp elixirc_options(:test), do: [warnings_as_errors: false]
+  defp elixirc_options(_), do: [warnings_as_errors: true]
 
   # Specifies your project dependencies.
   #
@@ -64,7 +69,11 @@ defmodule CoolPlaces.MixProject do
       {:phoenix_live_view, "~> 1.1", override: true},
       {:tidewave, "~> 0.5.1"},
       {:waffle, "~> 1.1"},
-      {:waffle_ecto, "~> 0.0.12"}
+      {:waffle_ecto, "~> 0.0.12"},
+      {:ueberauth, "~> 0.10.8"},
+      {:ueberauth_google, "~> 0.12.1"},
+      {:ueberauth_twitter, "~> 0.4.1"},
+      {:poison, "~> 6.0"}
     ]
   end
 
