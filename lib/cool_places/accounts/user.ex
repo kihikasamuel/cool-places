@@ -11,9 +11,9 @@ defmodule CoolPlaces.Accounts.User do
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
     field :confirmed_at, :utc_datetime
-    field :status, :string
-    field :avatar_url, :string
-    field :provider, :string
+    field :status, :string, default: "active"
+    field :avatar_url, :string, default: nil
+    field :provider, :string, default: nil
 
     belongs_to :country_of_residence, CoolPlaces.Countries.Country, type: :binary_id
 
@@ -48,6 +48,14 @@ defmodule CoolPlaces.Accounts.User do
       Defaults to `true`.
   """
   def registration_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
+    |> validate_email(opts)
+    |> validate_password(opts)
+    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status, :avatar_url, :provider])
+  end
+
+  def oauth_registration_changeset(user, attrs, opts \\ []) do
     user
     |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
     |> validate_email(opts)

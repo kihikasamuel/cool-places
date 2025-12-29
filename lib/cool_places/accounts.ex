@@ -76,12 +76,17 @@ defmodule CoolPlaces.Accounts do
   def find_or_register_user(%Ueberauth.Auth{info: user_info} = auth) do
     case get_user_by_email(user_info.email) do
       nil ->
-        %{}
-        |> Map.put("email", user_info.email)
-        |> Map.put("name", user_info.name)
-        |> Map.put("avatar_url", user_info.image)
-        |> Map.put("provider", Atom.to_string(auth.provider))
-        |> register_user()
+        params =
+          %{}
+          |> Map.put("email", user_info.email)
+          |> Map.put("name", user_info.name)
+          |> Map.put("avatar_url", user_info.image)
+          |> Map.put("provider", Atom.to_string(auth.provider))
+          |> Map.put("confirmed_at", DateTime.utc_now() |> DateTime.truncate(:second))
+
+        %User{}
+        |> User.oauth_registration_changeset(params)
+        |> Repo.insert()
 
       %User{} = user ->
         {:ok, user}
