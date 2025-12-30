@@ -3,12 +3,12 @@
     <div class="flex items-center justify-between h-20">
       <div class="flex items-center">
         <!-- Logo -->
-        <div class="flex-shrink-0 text-3xl font-extrabold text-primary-blue tracking-tighter">
+        <div class="shrink-0 text-3xl font-extrabold text-primary-blue tracking-tighter">
           CoolPlaces<span class="text-secondary-green">.</span>
         </div>
       </div>
       <!-- Desktop Nav Links -->
-      <div class="hidden md:block">
+      <div class="hidden md:block" :if={@current_user == nil}>
         <div class="ml-10 flex items-baseline space-x-4">
           <a
             :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
@@ -26,13 +26,37 @@
         </div>
       </div>
       <!-- Auth Buttons -->
-      <div class="hidden md:block">
-        <.link navigate={~p(/users/log_in)} class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition">
+      <div class="hidden md:block" x-data="{isProfileDropdownOpen: false}">
+        <.link :if={@current_user in [nil]} navigate={~p(/users/log_in)} class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition">
           Login
         </.link>
-        <.link navigate={~p(/users/register)} class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]">
+        <.link :if={@current_user in [nil]} navigate={~p(/users/register)} class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]">
           Register
         </.link>
+        <!-- Profile Dropdown -->
+        <div class="relative" :if={@current_user != nil}>
+            <button @click="isProfileDropdownOpen = !isProfileDropdownOpen" class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition duration-200">
+                <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white shadow-md border-2 border-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+
+            <div x-show="isProfileDropdownOpen" @click.away="isProfileDropdownOpen = false" class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[60]">
+                <div class="px-4 py-3 border-b border-gray-50 mb-1">
+                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Account</p>
+                    <p class="text-sm font-semibold text-gray-700 truncate">{@current_user.email}</p>
+                </div>
+                <button @click="isProfileDropdownOpen = false" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2">
+                    <i data-lucide="plus-circle" class="w-4 h-4 text-secondary-green"></i>
+                    <span>List Destination</span>
+                </button>
+                <.link navigate={~p(/users/log_out)} class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+                    <span>Sign Out</span>
+                </.link>
+            </div>
+        </div>
       </div>
       <!-- Mobile Menu Button -->
       <div class="md:hidden flex items-center">
