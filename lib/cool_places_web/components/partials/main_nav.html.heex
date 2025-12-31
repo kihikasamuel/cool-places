@@ -8,7 +8,7 @@
         </div>
       </div>
       <!-- Desktop Nav Links -->
-      <div class="hidden md:block" :if={@current_user == nil}>
+      <div :if={not is_logged_in?(@current_user)} class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
           <a
             :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
@@ -27,35 +27,96 @@
       </div>
       <!-- Auth Buttons -->
       <div class="hidden md:block" x-data="{isProfileDropdownOpen: false}">
-        <.link :if={@current_user in [nil]} navigate={~p(/users/log_in)} class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition">
+        <.link
+          :if={not is_logged_in?(@current_user)}
+          navigate={~p(/users/log_in)}
+          class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition"
+        >
           Login
         </.link>
-        <.link :if={@current_user in [nil]} navigate={~p(/users/register)} class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]">
+        <.link
+          :if={not is_logged_in?(@current_user)}
+          navigate={~p(/users/register)}
+          class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]"
+        >
           Register
         </.link>
         <!-- Profile Dropdown -->
-        <div class="relative" :if={@current_user != nil}>
-            <button @click="isProfileDropdownOpen = !isProfileDropdownOpen" class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition duration-200">
-                <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white shadow-md border-2 border-white">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-icon lucide-user"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                </div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down-icon lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
-            </button>
-
-            <div x-show="isProfileDropdownOpen" @click.away="isProfileDropdownOpen = false" class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[60]">
-                <div class="px-4 py-3 border-b border-gray-50 mb-1">
-                    <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Account</p>
-                    <p class="text-sm font-semibold text-gray-700 truncate">{@current_user.email}</p>
-                </div>
-                <button @click="isProfileDropdownOpen = false" class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2">
-                    <i data-lucide="plus-circle" class="w-4 h-4 text-secondary-green"></i>
-                    <span>List Destination</span>
-                </button>
-                <.link navigate={~p(/users/log_out)} class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
-                    <span>Sign Out</span>
-                </.link>
+        <div :if={is_logged_in?(@current_user)} class="relative">
+          <button
+            @click="isProfileDropdownOpen = !isProfileDropdownOpen"
+            class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition duration-200"
+          >
+            <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white shadow-md border-2 border-white">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-6 h-6"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-user-icon lucide-user"
+              >
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
+                  cx="12"
+                  cy="7"
+                  r="4"
+                />
+              </svg>
             </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-chevron-down-icon lucide-chevron-down"
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+          </button>
+
+          <div
+            x-show="isProfileDropdownOpen"
+            @click.away="isProfileDropdownOpen = false"
+            class="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-2 z-[60]"
+          >
+            <div class="px-4 py-3 border-b border-gray-50 mb-1">
+              <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Account</p>
+              <p class="text-sm font-semibold text-gray-700 truncate">{@current_user.email}</p>
+            </div>
+            <button
+              @click="isProfileDropdownOpen = false"
+              class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2"
+            >
+              <i data-lucide="plus-circle" class="w-4 h-4 text-secondary-green"></i>
+              <span>List Destination</span>
+            </button>
+            <.link
+              navigate={~p(/users/log_out)}
+              class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-4 h-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-log-out-icon lucide-log-out"
+              >
+                <path d="m16 17 5-5-5-5" /><path d="M21 12H9" /><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              </svg>
+              <span>Sign Out</span>
+            </.link>
+          </div>
         </div>
       </div>
       <!-- Mobile Menu Button -->
@@ -96,11 +157,12 @@
 <!-- Mobile Menu - FIX: Ensures smooth transition by using max-h-screen for full content visibility. -->
   <div
     x-show="open"
-    class="md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100"
+    class="absolute top-16 left-0 right-0 md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100 z-[9999]"
     x-bind="{max-h-screen opacity-100: open, max-h-0 opacity-0: !open}"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a
+        :if={not is_logged_in?(@current_user)}
         :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
         @click="open = !open"
         href="#"
@@ -108,18 +170,41 @@
       >
         {link}
       </a>
-      <a
-        href="#"
-        class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
-      >
-        Login
-      </a>
-      <a
-        href="#"
-        class="block text-center mt-2 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition duration-300"
-      >
-        Register
-      </a>
+      <div :if={not is_logged_in?(@current_user)}>
+        <.link
+          :if={is_logged_in?(@current_user)}
+          navigate={~p(/users/log_in)}
+          class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
+        >
+          Login
+        </.link>
+        <.link
+          :if={not is_logged_in?(@current_user)}
+          navigate={~p(/users/log_in)}
+          class="block text-center mt-2 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition duration-300"
+        >
+          Register
+        </.link>
+      </div>
+      <div :if={is_logged_in?(@current_user)}>
+        <div class="px-3 py-3 border-t border-gray-100 mt-2 bg-gray-50 rounded-lg">
+          <p class="text-xs text-gray-400 font-bold uppercase mb-1">Signed in as</p>
+          <p class="text-sm font-medium text-gray-700 truncate mb-3">{@current_user.email}</p>
+          <.link
+            navigate={~p"/account/listing"}
+            href="#"
+            class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:text-secondary-green"
+          >
+            List Destination
+          </.link>
+          <.link
+            navigate={~p(/users/log_out)}
+            class="block px-3 py-2 rounded-lg text-base font-medium text-red-600"
+          >
+            Sign Out
+          </.link>
+        </div>
+      </div>
     </div>
   </div>
 </header>
