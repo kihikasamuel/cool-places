@@ -47,17 +47,18 @@
             @click="isProfileDropdownOpen = !isProfileDropdownOpen"
             class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition duration-200"
           >
-            <div class="w-10 h-10 rounded-full bg-primary-blue flex items-center justify-center text-white shadow-md border-2 border-white">
+            <div class={["w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white", not is_avatar_set?(@current_user) && "bg-primary-blue"]}>
+              <img :if={is_avatar_set?(@current_user)} src={@current_user.avatar_url} alt="" class="w-8 h-8 rounded-full" />
               <svg
+                :if={not is_avatar_set?(@current_user)}
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-6 h-6"
+                class="w-6 h-6 lucide lucide-user-icon lucide-user"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="lucide lucide-user-icon lucide-user"
               >
                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" /><circle
                   cx="12"
