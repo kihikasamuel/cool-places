@@ -47,8 +47,16 @@
             @click="isProfileDropdownOpen = !isProfileDropdownOpen"
             class="flex items-center space-x-2 p-1.5 rounded-full hover:bg-gray-100 transition duration-200"
           >
-            <div class={["w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white", not is_avatar_set?(@current_user) && "bg-primary-blue"]}>
-              <img :if={is_avatar_set?(@current_user)} src={@current_user.avatar_url} alt="" class="w-8 h-8 rounded-full" />
+            <div class={[
+              "w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md border-2 border-white",
+              not is_avatar_set?(@current_user) && "bg-primary-blue"
+            ]}>
+              <img
+                :if={is_avatar_set?(@current_user)}
+                src={@current_user.avatar_url}
+                alt=""
+                class="w-8 h-8 rounded-full"
+              />
               <svg
                 :if={not is_avatar_set?(@current_user)}
                 xmlns="http://www.w3.org/2000/svg"
@@ -163,8 +171,8 @@
   >
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a
-        :if={not is_logged_in?(@current_user)}
         :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+        :if={not is_logged_in?(@current_user)}
         @click="open = !open"
         href="#"
         class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"

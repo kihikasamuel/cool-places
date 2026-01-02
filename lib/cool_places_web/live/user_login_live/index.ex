@@ -29,8 +29,7 @@ defmodule CoolPlacesWeb.UserLoginLive.Index do
 
   def handle_event("oauth", %{"provider" => provider}, socket) do
     {:noreply,
-      socket
-      |> redirect(to: ~p(/auth/#{provider}))
-    }
+     socket
+     |> redirect(to: ~p(/auth/#{provider}))}
   end
 end

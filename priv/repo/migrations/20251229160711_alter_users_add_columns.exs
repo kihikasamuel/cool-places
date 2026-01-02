@@ -9,7 +9,7 @@ defmodule CoolPlaces.Repo.Migrations.AlterUsersAddColumns do
   end
 
   def down do
-     alter table(:users) do
+    alter table(:users) do
       remove_if_exists :provider, :string
       remove_if_exists :avatar_url, :string
     end

@@ -13,11 +13,17 @@ defmodule CoolPlaces.Repo.Migrations.CreateRatings do
 
     create_if_not_exists index(:ratings, [:destination_id])
     create_if_not_exists index(:ratings, [:user_id])
-    create_if_not_exists unique_index(:ratings, [:user_id, :destination_id], name: :uidx_user_destination_rating)
+
+    create_if_not_exists unique_index(:ratings, [:user_id, :destination_id],
+                           name: :uidx_user_destination_rating
+                         )
   end
 
   def down do
-    drop_if_exists index(:ratings, [:user_id, :destination_id], name: :uidx_user_destination_rating)
+    drop_if_exists index(:ratings, [:user_id, :destination_id],
+                     name: :uidx_user_destination_rating
+                   )
+
     drop_if_exists index(:ratings, [:user_id])
     drop_if_exists index(:ratings, [:destination_id])
     drop_if_exists table(:ratings)

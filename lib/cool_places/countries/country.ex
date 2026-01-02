@@ -19,6 +19,7 @@ defmodule CoolPlaces.Countries.Country do
   defp writeable_fields do
     __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
   end
+
   @doc false
   def changeset(country, attrs) do
     country

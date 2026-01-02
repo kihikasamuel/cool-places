@@ -10,9 +10,7 @@ defmodule CoolPlaces.RatingsFixtures do
   def rating_fixture(attrs \\ %{}) do
     {:ok, rating} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> CoolPlaces.Ratings.create_rating()
 
     rating

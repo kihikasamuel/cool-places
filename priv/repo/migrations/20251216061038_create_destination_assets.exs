@@ -11,11 +11,16 @@ defmodule CoolPlaces.Repo.Migrations.CreateDestinationAssets do
       timestamps(type: :utc_datetime)
     end
 
-    create_if_not_exists index(:destination_assets, [:destination_id], name: :idx_destination_assets_destination_id)
+    create_if_not_exists index(:destination_assets, [:destination_id],
+                           name: :idx_destination_assets_destination_id
+                         )
   end
 
   def down do
-    drop_if_exists index(:destination_assets, [:destination_id], name: :idx_destination_assets_destination_id)
+    drop_if_exists index(:destination_assets, [:destination_id],
+                     name: :idx_destination_assets_destination_id
+                   )
+
     drop_if_exists table(:destination_assets)
   end
 end

@@ -14,5 +14,7 @@ defmodule CoolPlacesWeb.Partials do
   """
   def is_avatar_set?(nil), do: false
   def is_avatar_set?(%{avatar_url: nil} = _current_user), do: false
-  def is_avatar_set?(%{avatar_url: avatar_url} = _current_user) when not is_nil(avatar_url), do: true
+
+  def is_avatar_set?(%{avatar_url: avatar_url} = _current_user) when not is_nil(avatar_url),
+    do: true
 end

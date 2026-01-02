@@ -50,9 +50,8 @@ defmodule CoolPlacesWeb.UserRegistrationLive.Index do
 
   def handle_event("oauth", %{"provider" => provider}, socket) do
     {:noreply,
-      socket
-      |> redirect(to: ~p(/auth/#{provider}))
-    }
+     socket
+     |> redirect(to: ~p(/auth/#{provider}))}
   end
 
   defp assign_form(socket, %Ecto.Changeset{} = changeset) do

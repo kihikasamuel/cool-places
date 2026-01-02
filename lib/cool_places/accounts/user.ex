@@ -49,18 +49,31 @@ defmodule CoolPlaces.Accounts.User do
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
+    |> cast(
+      attrs,
+      [:password] ++
+        (writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
+    )
     |> validate_email(opts)
     |> validate_password(opts)
-    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status, :avatar_url, :provider])
+    |> validate_required(
+      writeable_fields() -- [:hashed_password, :confirmed_at, :status, :avatar_url, :provider]
+    )
   end
 
   def oauth_registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:password] ++ writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
+    |> cast(
+      attrs,
+      [:password] ++
+        (writeable_fields() -- [:hashed_password, :confirmed_at, :status, :current_password])
+    )
     |> validate_email(opts)
     |> validate_password(opts)
-    |> validate_required(writeable_fields() -- [:hashed_password, :confirmed_at, :status, :password, :country_of_residence_id])
+    |> validate_required(
+      writeable_fields() --
+        [:hashed_password, :confirmed_at, :status, :password, :country_of_residence_id]
+    )
   end
 
   defp validate_email(changeset, opts) do
