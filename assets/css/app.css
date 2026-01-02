@@ -70,6 +70,8 @@
   margin-bottom: 1em;
 }
 
+@custom-variant phx-drop-target-active (.phx-drop-target-active&, .phx-drop-target-active &);
+
 /* Dark mode */
 /* @custom-variant dark (&:where(.dark, .dark *));
 

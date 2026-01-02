@@ -1,7 +1,108 @@
 defmodule CoolPlacesWeb.DestinationsLive.New do
   use CoolPlacesWeb, :live_view
 
+  alias CoolPlaces.Destinations.Destination
+  alias CoolPlaces.Destinations
+  alias CoolPlaces.Utils.Uploads
+
   def mount(_params, _session, socket) do
+    changeset = Destination.changeset(%Destination{}, %{"destination_assets" => []})
+    countries = CoolPlaces.Countries.list_countries() |> Enum.map(&{&1.name, &1.id})
+
+    socket =
+      socket
+      |> assign(page_title: "List Your Discovery", countries: countries, uploaded_files: [])
+      |> assign_form(changeset)
+      |> allow_upload(:destination_asset,
+        accept: ~w(.jpg .jpeg .png),
+        max_entries: 5,
+        max_file_size: 1_000_000,
+        auto_upload: true
+      )
+
     {:ok, socket}
+  end
+
+  def handle_event("validate", _params, socket) do
+    {:noreply, socket}
+  end
+
+  def handle_event("cancel-upload", %{"ref" => ref}, socket) do
+    {:noreply, cancel_upload(socket, :destination_asset, ref)}
+  end
+
+  def handle_event("publish", params, socket) do
+    uploaded_file =
+      consume_uploaded_entries(socket, :destination_asset, fn %{path: path}, entry ->
+        tmp_file = File.read!(path)
+        file_name = Path.basename(path) <> ".#{ext(entry)}"
+        Uploads.store(%{filename: file_name, binary: tmp_file})
+
+        {:ok, "/uploads/#{file_name}"}
+      end)
+
+    socket =
+      socket
+      |> update(:uploaded_files, &(&1 ++ uploaded_file))
+
+    mapped_files =
+      socket.assigns.uploaded_files
+      |> parse_uploads()
+
+    params =
+      params
+      |> Map.put("destination_assets", mapped_files)
+
+    publish_destination(socket, socket.assigns.live_action, params)
+  end
+
+  defp publish_destination(socket, :new, destination_params) do
+    case Destinations.create_destination(destination_params) |> IO.inspect(label: "PUBLISH") do
+      {:ok, _destination} ->
+        {:noreply,
+         socket
+         |> put_flash(:info, "Your discovery has been published")
+         |> redirect(to: ~p(/account/listing))}
+
+      {:error, %Ecto.Changeset{} = _changeset} ->
+        {
+          :noreply,
+          socket
+          |> put_flash(:error, "Error while publishing your discovery. Kindly, check the form!")
+          #  |> assign_form(changeset)
+        }
+    end
+  end
+
+  defp error_to_string(:too_large), do: "Too large"
+  defp error_to_string(:too_many_files), do: "You have selected too many files"
+  defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
+
+  ## get file extension
+  defp ext(entry) do
+    [ext | _] = MIME.extensions(entry.client_type)
+    ext
+  end
+
+  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
+    form = to_form(changeset)
+
+    if changeset.valid? do
+      assign(socket, form: form, check_errors: true)
+    else
+      assign(socket, form: form)
+    end
+  end
+
+  defp parse_uploads(uploads) do
+    uploads
+    |> Enum.map(fn file_uploaded ->
+      %{
+        "asset_url" => file_uploaded,
+        "is_destination_cover?" => if(Enum.at(uploads, 0) == file_uploaded, do: true, else: false)
+      }
+    end)
+    |> Enum.with_index()
+    |> Map.new(fn {value, index} -> {index, value} end)
   end
 end

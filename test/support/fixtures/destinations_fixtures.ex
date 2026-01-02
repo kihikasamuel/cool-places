@@ -22,11 +22,21 @@ defmodule CoolPlaces.DestinationsFixtures do
   def destination_asset_fixture(attrs \\ %{}) do
     {:ok, destination_asset} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> CoolPlaces.Destinations.create_destination_asset()
 
     destination_asset
+  end
+
+  @doc """
+  Generate a destination_asset_mapping.
+  """
+  def destination_asset_mapping_fixture(attrs \\ %{}) do
+    {:ok, destination_asset_mapping} =
+      attrs
+      |> Enum.into(%{})
+      |> CoolPlaces.Destinations.create_destination_asset_mapping()
+
+    destination_asset_mapping
   end
 end

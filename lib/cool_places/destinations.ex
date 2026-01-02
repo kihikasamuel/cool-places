@@ -197,4 +197,51 @@ defmodule CoolPlaces.Destinations do
   def change_destination_asset(%DestinationAsset{} = destination_asset, attrs \\ %{}) do
     DestinationAsset.changeset(destination_asset, attrs)
   end
+
+  alias CoolPlaces.Destinations.DestinationAssetMapping
+
+  @doc """
+  Returns the list of destination_asset_mapping.
+
+  ## Examples
+
+      iex> list_destination_asset_mapping()
+      [%DestinationAssetMapping{}, ...]
+
+  """
+  def list_destination_asset_mapping do
+    Repo.all(DestinationAssetMapping)
+  end
+
+  @doc """
+  Gets a single destination_asset_mapping.
+
+  Raises `Ecto.NoResultsError` if the Destination asset mapping does not exist.
+
+  ## Examples
+
+      iex> get_destination_asset_mapping!(123)
+      %DestinationAssetMapping{}
+
+      iex> get_destination_asset_mapping!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_destination_asset_mapping!(id), do: Repo.get!(DestinationAssetMapping, id)
+
+  @doc """
+  Deletes a destination_asset_mapping.
+
+  ## Examples
+
+      iex> delete_destination_asset_mapping(destination_asset_mapping)
+      {:ok, %DestinationAssetMapping{}}
+
+      iex> delete_destination_asset_mapping(destination_asset_mapping)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_destination_asset_mapping(%DestinationAssetMapping{} = destination_asset_mapping) do
+    Repo.delete(destination_asset_mapping)
+  end
 end

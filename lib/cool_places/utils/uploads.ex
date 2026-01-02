@@ -1,10 +1,9 @@
-defmodule CoolPlaces.Uploads do
+defmodule CoolPlaces.Utils.Uploads do
   use Waffle.Definition
-
-  # Include ecto support (requires package waffle_ecto installed):
   use Waffle.Ecto.Definition
 
   @versions [:original]
+  @extensions ~w(.jpg .jpeg .png)
 
   # To add a thumbnail version:
   # @versions [:original, :thumb]
@@ -22,25 +21,25 @@ defmodule CoolPlaces.Uploads do
   def validate({file, _}) do
     file_extension = file.file_name |> Path.extname() |> String.downcase()
 
-    case Enum.member?(~w(.jpg .jpeg .gif .png), file_extension) do
+    case Enum.member?(@extensions, file_extension) do
       true -> :ok
       false -> {:error, "invalid file type"}
     end
   end
 
   # Define a thumbnail transformation:
-  def transform(:thumb, _) do
-    {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
-  end
+  # def transform(:thumb, _) do
+  #   {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
+  # end
 
-  # Override the persisted filenames:
-  def filename(version, _) do
-    version
-  end
+  # # Override the persisted filenames:
+  # def filename(version, _) do
+  #   version
+  # end
 
   # Override the storage directory:
-  def storage_dir(_version, {_file, scope}) do
-    "uploads/destinations/#{scope.id}"
+  def storage_dir(_version, {_file, _scope}) do
+    "uploads/destinations"
   end
 
   # Provide a default URL if there hasn't been a file uploaded
