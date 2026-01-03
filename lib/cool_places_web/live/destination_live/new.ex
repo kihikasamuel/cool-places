@@ -31,8 +31,9 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     {:ok, socket}
   end
 
-  def handle_event("validate", _params, socket) do
-    {:noreply, socket}
+  def handle_event("validate", params, socket) do
+    changeset = Destination.changeset(%Destination{}, params)
+    {:noreply, socket |> assign_form(changeset)}
   end
 
   def handle_event("search_destination", %{"value" => search_value}, socket) do
