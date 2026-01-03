@@ -49,7 +49,10 @@ defmodule CoolPlaces.Destinations.Destination do
     destination
     |> cast(attrs, writeable_fields())
     |> cast_embed(:address, with: &Address.changeset/2, required: true)
-    |> cast_assoc(:destination_asset, with: &CoolPlaces.Destinations.DestinationAsset.changeset/2, required: true)
+    |> cast_assoc(:destination_asset,
+      with: &CoolPlaces.Destinations.DestinationAsset.changeset/2,
+      required: true
+    )
     |> validate_required([:name, :status, :description, :user_id])
   end
 end
