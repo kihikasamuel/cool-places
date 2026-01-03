@@ -16,3 +16,7 @@ config :ueberauth, Ueberauth.Strategy.Google.OAuth,
 config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_key: "",
   consumer_secret: ""
+
+# configure http_client
+config :cool_places, http_client: CoolPlaces.Utils.HTTPClient.Finch
+# config :cool_places, http_client: CoolPlaces.Wrappers.MockHTTPClient
