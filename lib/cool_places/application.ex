@@ -13,7 +13,13 @@ defmodule CoolPlaces.Application do
       {DNSCluster, query: Application.get_env(:cool_places, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: CoolPlaces.PubSub},
       # Start the Finch HTTP client for sending emails
-      {Finch, name: CoolPlaces.Finch},
+      {Finch, name: CoolPlaces.Finch, pools: %{
+        default: [
+          size: 10,
+          count: 2,
+          conn_opts: [transport_opts: [verify: ca_verify_options()]]
+        ]
+      }},
       # Start a worker by calling: CoolPlaces.Worker.start_link(arg)
       # {CoolPlaces.Worker, arg},
       # Start to serve requests, typically the last entry
@@ -32,5 +38,13 @@ defmodule CoolPlaces.Application do
   def config_change(changed, _new, removed) do
     CoolPlacesWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp ca_verify_options() do
+    if Mix.env() in [:dev, :test] do
+      :verify_none
+    else
+      :verify_peer
+    end
   end
 end

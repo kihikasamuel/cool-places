@@ -73,7 +73,8 @@ defmodule CoolPlaces.MixProject do
       {:ueberauth, "~> 0.10.8"},
       {:ueberauth_google, "~> 0.12.1"},
       {:ueberauth_twitter, "~> 0.4.1"},
-      {:poison, "~> 6.0"}
+      {:poison, "~> 6.0"},
+      {:timex, "~> 3.7"}
     ]
   end
 
