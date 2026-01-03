@@ -45,16 +45,16 @@
       
 <!-- Date -->
       <div class="col-span-1 md:col-span-1">
-        <label for="date" class="block text-sm font-medium text-gray-700 mb-2 items-center">
+        <label for="city" class="block text-sm font-medium text-gray-700 mb-2 items-center">
           <i data-lucide="calendar" class="w-4 h-4 mr-1 text-secondary-green"></i>
-          Check-in/Check-out
+          City or Town
         </label>
         <input
-          type="date"
-          id="date"
-          v-model="form.date"
+          type="text"
+          id="city"
           class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
           required
+          placeholder="City or Town you are in"
         />
       </div>
       
@@ -64,15 +64,17 @@
           for="guests"
           class="block text-sm font-medium text-gray-700 mb-2 items-center"
         >
-          <i data-lucide="users" class="w-4 h-4 mr-1 text-primary-blue"></i> Guests
+          <i data-lucide="users" class="w-4 h-4 mr-1 text-primary-blue"></i> Category
         </label>
         <select
-          id="guests"
-          v-model.number="form.guests"
+          id="Category"
           class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue appearance-none bg-white transition duration-150"
         >
           <%!-- <option v-for="n in 5" :key="n" :value="n">{ n } Guest{ n > 1 ? 's' : '' }</option> --%>
-          <option value="6">6+ Guests</option>
+          <option value="6">Beach</option>
+          <option value="7">Mountain</option>
+          <option value="8">Desert</option>
+          <option value="9">Histor</option>
         </select>
       </div>
       
@@ -93,7 +95,7 @@
 <div class="h-40 md:h-60"></div>
 
 <!-- Destinations Section -->
-<section class="py-15 bg-gray-50">
+<section class="py-15 bg-gray-50 mb-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-4">Popular Destinations</h2>
     <p class="text-xl text-gray-600 text-center mb-16">
@@ -108,9 +110,11 @@
         phx-update="stream"
         id={id}
       >
-        <div class="relative overflow-hidden h-48">
+        <div class="relative overflow-hidden h-48" id={destination.id} :if={length(destination.destination_asset) > 0}>
           <img
-            src={destination.image}
+            :for={asset <- destination.destination_asset}
+            id={asset.id}
+            src={CoolPlaces.Utils.Uploads.url(asset.asset_url, :original)}
             alt={destination.name}
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="lazy"
@@ -118,20 +122,21 @@
           />
           <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
           <span class="absolute top-3 right-3 bg-primary-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-            {destination.category}
+            {destination.tag}
           </span>
         </div>
-        <div class="p-6">
+        <div class="p-6" id="ratings">
           <h3 class="text-xl font-bold text-gray-900 mb-2">{destination.name}</h3>
           <div class="flex items-center text-secondary-green mb-4">
             <i data-lucide="star" class="w-4 h-4 fill-secondary-green mr-1"></i>
             <span class="text-sm font-semibold">
-              {destination.rating} {destination.reviews} Reviews
+              <%!-- {destination.rating} --%>
+              <%!-- {destination.rating} {destination.reviews} Reviews --%>
             </span>
           </div>
           <p class="text-gray-600 text-sm mb-4">{destination.description}</p>
           <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
-            <span class="text-2xl font-extrabold text-primary-blue">${destination.price}</span>
+            <%!-- <span class="text-2xl font-extrabold text-primary-blue">${destination.price}</span> --%>
             <button
               click="generateItinerary(destination.id)"
               disabled="isLoading"
@@ -156,10 +161,10 @@
       Ready to Start Your Adventure?
     </h2>
     <p class="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
-      Join Travosy today and unlock exclusive deals on flights, hotels, and packages.
+      Join Coolplaces today and plan your bucket list.
     </p>
-    <button class="bg-white text-primary-blue hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-[1.05]">
+    <.link navigate={~p(/users/register)} class="bg-white text-primary-blue hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-[1.05]">
       Get Started - It's Free!
-    </button>
+    </.link>
   </div>
 </section>

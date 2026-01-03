@@ -60,7 +60,7 @@ defmodule CoolPlacesWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{CoolPlacesWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/", PlaceLive.Index, :index
+      live "/", DestinationsLive.Index, :index
       live "/users/register", UserRegistrationLive.Index, :index
       live "/users/log_in", UserLoginLive.Index, :index
       live "/users/reset_password", UserForgotPasswordLive, :new

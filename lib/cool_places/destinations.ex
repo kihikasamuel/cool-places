@@ -18,7 +18,7 @@ defmodule CoolPlaces.Destinations do
 
   """
   def list_destinations do
-    Repo.all(Destination)
+    Repo.all(Destination) |> Repo.preload(:destination_asset)
   end
 
   @doc """

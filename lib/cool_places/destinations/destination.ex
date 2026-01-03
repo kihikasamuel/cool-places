@@ -25,7 +25,7 @@ defmodule CoolPlaces.Destinations.Destination do
   schema "destinations" do
     field :name, :string
     embeds_one :address, Address
-    field :rating, :decimal, virtual: true
+    field :rating, :decimal, virtual: true, default: 0.0
     ## status for the purpose of delisting
     field :status, :string, default: "active"
     field :description, :string
