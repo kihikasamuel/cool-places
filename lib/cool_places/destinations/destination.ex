@@ -25,14 +25,11 @@ defmodule CoolPlaces.Destinations.Destination do
   schema "destinations" do
     field :name, :string
     embeds_one :address, Address
-
-    ## TODO: drop and change to virtual field, that takes the average ratings from the ratings table
-    field :rating, :decimal
-    ## for the purpose of delisting
-    field :status, :string
+    field :rating, :decimal, virtual: true
+    ## status for the purpose of delisting
+    field :status, :string, default: "active"
     field :description, :string, virtual: true
-    ## TODO: add tags module and reference it here or use information as pulled from maps
-    field :tag, :string, virtual: true
+    field :tag, :string
 
     belongs_to :country, CoolPlaces.Countries.Country
     belongs_to :user, CoolPlaces.Accounts.User
@@ -51,9 +48,8 @@ defmodule CoolPlaces.Destinations.Destination do
   def changeset(destination, attrs) do
     destination
     |> cast(attrs, writeable_fields())
-    |> cast_assoc(:destination_asset, with: &CoolPlaces.Destinations.DestinationAsset.changeset/2, required: true)
-    |> validate_required([])
-
     # |> cast_embed(:address, with: &Address.changeset/2, required: true)
+    |> cast_assoc(:destination_asset, with: &CoolPlaces.Destinations.DestinationAsset.changeset/2, required: true)
+    |> validate_required([:name, :status, :description, :user_id])
   end
 end
