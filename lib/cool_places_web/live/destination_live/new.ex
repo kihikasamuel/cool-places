@@ -4,6 +4,7 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
   alias CoolPlaces.Destinations.Destination
   alias CoolPlaces.Destinations
   alias CoolPlaces.Utils.Uploads
+  alias CoolPlaces.Wrappers.Google.PlacesSearch
 
   def mount(_params, _session, socket) do
     changeset = Destination.changeset(%Destination{}, %{"destination_assets" => []})
@@ -11,7 +12,14 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
 
     socket =
       socket
-      |> assign(page_title: "List Your Discovery", countries: countries, uploaded_files: [])
+      |> assign(
+        page_title: "List Your Discovery",
+        countries: countries,
+        uploaded_files: [],
+        destination_search_results: [],
+        selected_address: nil,
+        selected_country_id: nil
+      )
       |> assign_form(changeset)
       |> allow_upload(:destination_asset,
         accept: ~w(.jpg .jpeg .png),
@@ -25,6 +33,39 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
 
   def handle_event("validate", _params, socket) do
     {:noreply, socket}
+  end
+
+  def handle_event("search_destination", %{"value" => search_value}, socket) do
+    {:ok, results} = PlacesSearch.search(search_value)
+
+    {:noreply, socket |> assign(destination_search_results: results, selected_address: nil)}
+  end
+
+  def handle_event("select_address", %{"addressvalue" => address_id}, socket) do
+    address = Enum.find(socket.assigns.destination_search_results, &(&1["id"] == address_id))
+    selected_country = Enum.find(socket.assigns.countries, &(&1 |> elem(0) == address["country"]))
+    selected_country_id = selected_country |> elem(1)
+
+    selected_address = %{
+      "id" => address["id"],
+      "name" => address["name"],
+      "street" => address["address"],
+      "city" => address["city"],
+      "town" => address["town"],
+      "postal_code" => address["postal_code"],
+      "coordinates" => %{
+        "lat" => address["lat"],
+        "lng" => address["lng"]
+      }
+    }
+
+    {:noreply,
+     socket
+     |> assign(selected_address: selected_address, selected_country_id: selected_country_id)}
+  end
+
+  def handle_event("clear_search", _, socket) do
+    {:noreply, socket |> assign(destination_search_results: [], selected_address: nil)}
   end
 
   def handle_event("cancel-upload", %{"ref" => ref}, socket) do
@@ -57,13 +98,14 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
       params
       |> Map.put("destination_asset", mapped_files)
       |> Map.put("user_id", socket.assigns.current_user.id)
-      |> IO.inspect(label: "PARAMS")
+      |> Map.put("address", socket.assigns.selected_address)
+      |> Map.put("country_id", socket.assigns.selected_country_id)
 
     publish_destination(socket, socket.assigns.live_action, params)
   end
 
   defp publish_destination(socket, :new, destination_params) do
-    case Destinations.create_destination(destination_params) |> IO.inspect(label: "PUBLISH") do
+    case Destinations.create_destination(destination_params) do
       {:ok, _destination} ->
         {:noreply,
          socket

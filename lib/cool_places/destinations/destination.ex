@@ -10,7 +10,7 @@ defmodule CoolPlaces.Destinations.Destination do
       field :town, :string
       field :city, :string
       field :postal_code, :string
-      # {lat: -1.207419663745757, long: 36.8588036290915}
+      # {lat: -1.207419663745757, lng: 36.8588036290915}
       field :coordinates, :map
     end
 
@@ -28,7 +28,7 @@ defmodule CoolPlaces.Destinations.Destination do
     field :rating, :decimal, virtual: true
     ## status for the purpose of delisting
     field :status, :string, default: "active"
-    field :description, :string, virtual: true
+    field :description, :string
     field :tag, :string
 
     belongs_to :country, CoolPlaces.Countries.Country
@@ -48,7 +48,7 @@ defmodule CoolPlaces.Destinations.Destination do
   def changeset(destination, attrs) do
     destination
     |> cast(attrs, writeable_fields())
-    # |> cast_embed(:address, with: &Address.changeset/2, required: true)
+    |> cast_embed(:address, with: &Address.changeset/2, required: true)
     |> cast_assoc(:destination_asset, with: &CoolPlaces.Destinations.DestinationAsset.changeset/2, required: true)
     |> validate_required([:name, :status, :description, :user_id])
   end
