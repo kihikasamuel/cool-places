@@ -18,5 +18,11 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_secret: ""
 
 # configure http_client
-config :cool_places, http_client: CoolPlaces.Utils.HTTPClient.Finch
-# config :cool_places, http_client: CoolPlaces.Wrappers.MockHTTPClient
+config :cool_places, CoolPlaces.Utils.HTTPClient,
+  http_client: CoolPlaces.Utils.HTTPClient.Finch
+
+# configuration for google places search
+config :cool_places, CoolPlaces.Wrappers.Google.PlacesSearch,
+  base_url: "",
+  api_key: "",
+  model: "" # if using gemini

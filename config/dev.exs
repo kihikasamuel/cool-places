@@ -89,8 +89,5 @@ config :waffle,
   storage: Waffle.Storage.Local,
   asset_host: "http://localhost:4000" # or {:system, "ASSET_HOST"}
 
-# configure http client
-config :cool_places, http_client: CoolPlaces.Utils.HTTPClient.Finch
-
 ## Environment specific secrets
 import_config "#{config_env()}.local.exs"
