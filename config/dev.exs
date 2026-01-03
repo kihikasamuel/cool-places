@@ -87,7 +87,7 @@ config :swoosh, :api_client, false
 # waffle configuration for local file storage
 config :waffle,
   storage: Waffle.Storage.Local,
-  asset_host: "http://static.example.com" # or {:system, "ASSET_HOST"}
+  asset_host: "http://localhost:4000" # or {:system, "ASSET_HOST"}
 
 ## Environment specific secrets
 import_config "#{config_env()}.local.exs"

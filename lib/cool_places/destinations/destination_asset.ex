@@ -14,13 +14,13 @@ defmodule CoolPlaces.Destinations.DestinationAsset do
   end
 
   defp writeable_fields do
-    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at]
+    __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at, :asset_url]
   end
 
   @doc false
   def changeset(destination_asset, attrs) do
     destination_asset
     |> cast(attrs, writeable_fields())
-    |> cast_attachments(attrs, [:asset_url])
+    |> cast_attachments(attrs, [:asset_url], allow_paths: true, allow_urls: true)
   end
 end

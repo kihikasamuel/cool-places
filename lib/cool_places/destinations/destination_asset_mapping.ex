@@ -7,20 +7,9 @@ defmodule CoolPlaces.Destinations.DestinationAssetMapping do
   schema "destination_asset_mapping" do
     belongs_to :destinations, CoolPlaces.Destinations.Destination, foreign_key: :destination_id
 
-    belongs_to :destination_assets, CoolPlaces.Destinations.DestinationAsset,
+    belongs_to :destination_asset, CoolPlaces.Destinations.DestinationAsset,
       foreign_key: :destination_asset_id
 
     timestamps(type: :utc_datetime)
   end
-
-  # defp writeable_fields do
-  #   __MODULE__.__schema__(:fields) -- [:id, :inserted_at, :updated_at, :destination_asset_id]
-  # end
-
-  # def changeset(destination_asset_mapping, attrs) do
-  #   destination_asset_mapping
-  #   |> cast(attrs, writeable_fields())
-  #   |> cast_assoc(:destination_assets, required: true)
-  #   |> IO.inspect(label: "INSIDE MAPPING")
-  # end
 end

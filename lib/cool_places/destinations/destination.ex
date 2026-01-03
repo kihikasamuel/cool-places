@@ -35,9 +35,9 @@ defmodule CoolPlaces.Destinations.Destination do
     field :tag, :string, virtual: true
 
     belongs_to :country, CoolPlaces.Countries.Country
-    belongs_to :users, CoolPlaces.Accounts.User
+    belongs_to :user, CoolPlaces.Accounts.User
 
-    many_to_many :destination_assets, CoolPlaces.Destinations.DestinationAsset,
+    many_to_many :destination_asset, CoolPlaces.Destinations.DestinationAsset,
       join_through: CoolPlaces.Destinations.DestinationAssetMapping
 
     timestamps(type: :utc_datetime)
@@ -51,9 +51,8 @@ defmodule CoolPlaces.Destinations.Destination do
   def changeset(destination, attrs) do
     destination
     |> cast(attrs, writeable_fields())
-    |> cast_assoc(:destination_assets, required: true)
+    |> cast_assoc(:destination_asset, with: &CoolPlaces.Destinations.DestinationAsset.changeset/2, required: true)
     |> validate_required([])
-    # |> maybe_cast_destination_assets(attrs)
 
     # |> cast_embed(:address, with: &Address.changeset/2, required: true)
   end

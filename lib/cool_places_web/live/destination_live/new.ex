@@ -36,9 +36,13 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
       consume_uploaded_entries(socket, :destination_asset, fn %{path: path}, entry ->
         tmp_file = File.read!(path)
         file_name = Path.basename(path) <> ".#{ext(entry)}"
-        Uploads.store(%{filename: file_name, binary: tmp_file})
 
-        {:ok, "/uploads/#{file_name}"}
+        with {:ok, file_path} <- Uploads.store(%{filename: file_name, binary: tmp_file}) do
+          {:ok, Uploads.url(file_path)}
+        else
+          _ ->
+            {:ok, "/uploads/destinations/#{file_name}"}
+        end
       end)
 
     socket =
@@ -51,7 +55,9 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
 
     params =
       params
-      |> Map.put("destination_assets", mapped_files)
+      |> Map.put("destination_asset", mapped_files)
+      |> Map.put("user_id", socket.assigns.current_user.id)
+      |> IO.inspect(label: "PARAMS")
 
     publish_destination(socket, socket.assigns.live_action, params)
   end
@@ -98,8 +104,7 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     uploads
     |> Enum.map(fn file_uploaded ->
       %{
-        "asset_url" => file_uploaded,
-        "is_destination_cover?" => if(Enum.at(uploads, 0) == file_uploaded, do: true, else: false)
+        "asset_url" => file_uploaded
       }
     end)
     |> Enum.with_index()
