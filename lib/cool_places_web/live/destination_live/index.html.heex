@@ -24,70 +24,68 @@
 <section>
   <!-- Search/Booking Form -->
   <div class="relative -mt-16 -mb-40 bg-white p-6 sm:p-10 rounded-3xl shadow-2xl max-w-5xl mx-auto">
-    <form class="grid grid-cols-1 md:grid-cols-4 gap-4">
-      <!-- Destination -->
-      <div class="col-span-1 md:col-span-1">
-        <label
-          for="destination"
-          class="block text-sm font-medium text-gray-700 mb-2 items-center"
-        >
-          <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-primary-blue"></i> Destination
-        </label>
-        <input
-          type="text"
-          id="destination"
-          v-model="form.destination"
-          placeholder="Where are you going?"
-          class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
-          required
-        />
-      </div>
-      
+    <.simple_form for={@search_form} class="" phx-submit="search_destinations">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <!-- Destination -->
+        <div class="col-span-1 md:col-span-1">
+          <label
+            for="destination"
+            class="block text-sm font-medium text-gray-700 mb-2 items-center"
+          >
+            <i data-lucide="map-pin" class="w-4 h-4 mr-1 text-primary-blue"></i> Destination
+          </label>
+          <.input
+            type="text"
+            id="destination"
+            field={@search_form[:destination]}
+            placeholder="Where are you going?"
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+          />
+        </div>
+        
 <!-- Date -->
-      <div class="col-span-1 md:col-span-1">
-        <label for="city" class="block text-sm font-medium text-gray-700 mb-2 items-center">
-          <i data-lucide="calendar" class="w-4 h-4 mr-1 text-secondary-green"></i>
-          City or Town
-        </label>
-        <input
-          type="text"
-          id="city"
-          class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
-          required
-          placeholder="City or Town you are in"
-        />
-      </div>
-      
+        <div class="col-span-1 md:col-span-1">
+          <label for="city" class="block text-sm font-medium text-gray-700 mb-2 items-center">
+            <i data-lucide="calendar" class="w-4 h-4 mr-1 text-secondary-green"></i> City or Town
+          </label>
+          <.input
+            type="text"
+            id="city"
+            field={@search_form[:city]}
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue transition duration-150"
+            placeholder="City or Town you are in"
+          />
+        </div>
+        
 <!-- Guests -->
-      <div class="col-span-1 md:col-span-1">
-        <label
-          for="guests"
-          class="block text-sm font-medium text-gray-700 mb-2 items-center"
-        >
-          <i data-lucide="users" class="w-4 h-4 mr-1 text-primary-blue"></i> Category
-        </label>
-        <select
-          id="Category"
-          class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue appearance-none bg-white transition duration-150"
-        >
-          <%!-- <option v-for="n in 5" :key="n" :value="n">{ n } Guest{ n > 1 ? 's' : '' }</option> --%>
-          <option value="6">Beach</option>
-          <option value="7">Mountain</option>
-          <option value="8">Desert</option>
-          <option value="9">Histor</option>
-        </select>
-      </div>
-      
+        <div class="col-span-1 md:col-span-1">
+          <label
+            for="category"
+            class="block text-sm font-medium text-gray-700 mb-2 items-center"
+          >
+            <i data-lucide="users" class="w-4 h-4 mr-1 text-primary-blue"></i> Category
+          </label>
+          <.input
+            type="select"
+            id="category"
+            field={@search_form[:category]}
+            options={@categories}
+            prompt="Select category..."
+            class="w-full p-3 border border-gray-200 rounded-xl focus:ring-primary-blue focus:border-primary-blue appearance-none bg-white transition duration-150"
+          />
+        </div>
+        
 <!-- Search Button -->
-      <div class="col-span-1 flex items-end">
-        <button
-          type="submit"
-          class="w-full bg-secondary-green hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03] flex items-center justify-center"
-        >
-          <i data-lucide="search" class="w-5 h-5 mr-2"></i> Search
-        </button>
+        <div class="col-span-1 md:col-span-1 flex items-center mt-4">
+          <button
+            type="submit"
+            class="w-full bg-secondary-green hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03] flex items-center justify-center"
+          >
+            <i data-lucide="search" class="w-5 h-5 mr-2"></i> Search
+          </button>
+        </div>
       </div>
-    </form>
+    </.simple_form>
   </div>
 </section>
 
@@ -96,58 +94,144 @@
 
 <!-- Destinations Section -->
 <section class="py-15 bg-gray-50 mb-10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-4">Popular Destinations</h2>
-    <p class="text-xl text-gray-600 text-center mb-16">
-      Explore hand-picked places loved by our community.
-    </p>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      <!-- Destination Card Loop -->
-      <div
-        :for={{id, destination} <- @streams.destinations}
-        class="bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
-        phx-update="stream"
-        id={id}
-      >
-        <div class="relative overflow-hidden h-48" id={destination.id} :if={length(destination.destination_asset) > 0}>
-          <img
-            :for={asset <- destination.destination_asset}
-            id={asset.id}
-            src={CoolPlaces.Utils.Uploads.url(asset.asset_url, :original)}
-            alt={destination.name}
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
-            onerror="this.onerror=null; this.src='https://placehold.co/400x300/e2e8f0/333333?text=Image+Error';"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-          <span class="absolute top-3 right-3 bg-primary-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
-            {destination.tag}
-          </span>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" id="destinations-list">
+    <div
+      :if={@destinations_count == 0}
+      class="max-w-3xl mx-auto py-12 px-4 text-center"
+      id="no-destinations"
+    >
+      <div class="relative mb-10">
+        <!-- Abstract Travel Illustration -->
+        <div class="w-64 h-64 bg-primary-blue/5 rounded-full mx-auto flex items-center justify-center relative overflow-hidden">
+          <div class="absolute inset-0 opacity-10 flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-48 h-48 lucide lucide-globe-icon lucide-globe"
+            >
+              <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" />
+            </svg>
+          </div>
+          <div class="z-10 bg-white p-6 rounded-3xl shadow-xl transform -rotate-6">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-16 h-16 text-primary-blue lucide lucide-map-icon lucide-map"
+            >
+              <path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z" /><path d="M15 5.764v15" /><path d="M9 3.236v15" />
+            </svg>
+          </div>
+          <div class="absolute top-1/4 right-1/4 bg-secondary-green p-3 rounded-2xl shadow-lg transform rotate-12 z-20">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-8 h-8 text-white lucide lucide-navigation-icon lucide-navigation"
+            >
+              <polygon points="3 11 22 2 13 21 11 13 3 11" />
+            </svg>
+          </div>
         </div>
-        <div class="p-6" id="ratings">
-          <h3 class="text-xl font-bold text-gray-900 mb-2">{destination.name}</h3>
-          <div class="flex items-center text-secondary-green mb-4">
-            <i data-lucide="star" class="w-4 h-4 fill-secondary-green mr-1"></i>
-            <span class="text-sm font-semibold">
-              <%!-- {destination.rating} --%>
-              <%!-- {destination.rating} {destination.reviews} Reviews --%>
+      </div>
+
+      <h2 class="text-3xl font-extrabold text-gray-900 mb-4">The map is wide open...</h2>
+      <p class="text-lg text-gray-600 mb-10 leading-relaxed">
+        We haven't found any destinations that matches your search yet. Be the first to pin a breathtaking spot on the map and help fellow travelers explore!
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <.link
+          navigate={~p(/account/listing)}
+          class="w-full sm:w-auto px-8 py-4 bg-primary-blue text-white rounded-2xl font-bold shadow-xl shadow-primary-blue/20 hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-5 h-5 mr-2 lucide lucide-plus-icon lucide-plus"
+          >
+            <path d="M5 12h14" /><path d="M12 5v14" />
+          </svg>
+          List First Destination
+        </.link>
+        <%!--  --%>
+      </div>
+    </div>
+    <div :if={@destinations_count > 0}>
+      <h2 class="text-4xl font-extrabold text-gray-900 text-center mb-4">Popular Destinations</h2>
+      <p class="text-xl text-gray-600 text-center mb-16">
+        Explore hand-picked places loved by our community.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <!-- Destination Card Loop -->
+        <div
+          :for={{id, destination} <- @streams.destinations}
+          class="bg-white rounded-2xl shadow-xl overflow-hidden group hover:shadow-2xl transition duration-300 transform hover:-translate-y-1"
+          phx-update="stream"
+          id={id}
+        >
+          <div
+            :if={length(destination.destination_asset) > 0}
+            class="relative overflow-hidden h-48"
+            id={destination.id}
+          >
+            <img
+              :for={asset <- destination.destination_asset}
+              id={asset.id}
+              src={CoolPlaces.Utils.Uploads.url(asset.asset_url, :original)}
+              alt={destination.name}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              loading="lazy"
+              onerror="this.onerror=null; this.src='https://placehold.co/400x300/e2e8f0/333333?text=Image+Error';"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <span class="absolute top-3 right-3 bg-primary-blue text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+              {destination.tag}
             </span>
           </div>
-          <p class="text-gray-600 text-sm mb-4">{destination.description}</p>
-          <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+          <div class="p-6" id="ratings">
+            <h3 class="text-xl font-bold text-gray-900 mb-2">{destination.name}</h3>
+            <div class="flex items-center text-secondary-green mb-4">
+              <i data-lucide="star" class="w-4 h-4 fill-secondary-green mr-1"></i>
+              <span class="text-sm font-semibold">
+                <%!-- {destination.rating} --%>
+                <%!-- {destination.rating} {destination.reviews} Reviews --%>
+              </span>
+            </div>
+            <p class="text-gray-600 text-sm mb-4 truncate">{destination.description}</p>
+            <%!-- <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2"> --%>
             <%!-- <span class="text-2xl font-extrabold text-primary-blue">${destination.price}</span> --%>
-            <button
+            <%!-- <button
               click="generateItinerary(destination.id)"
               disabled="isLoading"
               class="flex-1 bg-primary-blue hover:bg-blue-700 text-white text-sm font-medium py-2 px-4 rounded-xl shadow-md transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center min-w-0"
             >
-              <span class="inline-block align-middle whitespace-nowrap">✨ Get Itinerary</span>
+              <span class="inline-block align-middle whitespace-nowrap">View</span>
+            </button>
+          </div> --%>
+            <button class="mt-3 w-full bg-secondary-green hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-xl transition duration-300">
+              View
             </button>
           </div>
-          <button class="mt-3 w-full bg-secondary-green hover:bg-emerald-600 text-white text-sm font-medium py-2 px-4 rounded-xl transition duration-300">
-            Book Now
-          </button>
         </div>
       </div>
     </div>
@@ -163,7 +247,10 @@
     <p class="text-xl text-blue-200 mb-8 max-w-3xl mx-auto">
       Join Coolplaces today and plan your bucket list.
     </p>
-    <.link navigate={~p(/users/register)} class="bg-white text-primary-blue hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-[1.05]">
+    <.link
+      navigate={~p(/users/register)}
+      class="bg-white text-primary-blue hover:bg-gray-100 font-bold py-3 px-8 rounded-full text-lg shadow-xl transition duration-300 transform hover:scale-[1.05]"
+    >
       Get Started - It's Free!
     </.link>
   </div>

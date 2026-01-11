@@ -17,8 +17,10 @@ defmodule CoolPlaces.Destinations do
       [%Destination{}, ...]
 
   """
-  def list_destinations do
-    Repo.all(Destination) |> Repo.preload(:destination_asset)
+  def list_destinations(queryable \\ Destination, opts \\ [page: 1, per_page: 20]) do
+    queryable
+    |> preload_assoc_query()
+    |> Repo.paginate(opts)
   end
 
   @doc """
@@ -100,6 +102,47 @@ defmodule CoolPlaces.Destinations do
   """
   def change_destination(%Destination{} = destination, attrs \\ %{}) do
     Destination.changeset(destination, attrs)
+  end
+
+  @doc """
+  Returns a querybale with preloaded destination assets.
+  """
+  def preload_assoc_query(queryable, assocs \\ [:destination_asset]) do
+    from(q in queryable, preload: ^assocs)
+  end
+
+  @doc """
+  Returns a list of destination filtered by search query.
+
+  ## Examples
+
+      iex> filtered_query(%{category: "beach"})
+      [%Destination{}, ...]
+  """
+  def filtered_query(queryable \\ Destination, filters) when is_map(filters) do
+    Enum.reduce(filters, queryable, fn {k, v}, query_accum ->
+      cond do
+        v in [nil, ""] ->
+          query_accum
+
+        k == "category" ->
+          from d in query_accum,
+            where: d.tag == ^v
+
+        k == "destination" ->
+          from d in query_accum,
+            where: ilike(d.name, ^"%#{v}%"),
+            or_where: ilike(fragment("?->>'street'", d.address), ^"%#{v}%")
+
+        k == "city" ->
+          from d in query_accum,
+            where: ilike(fragment("?->>'city'", d.address), ^"%#{v}%"),
+            or_where: ilike(fragment("?->>'town'", d.address), ^"%#{v}%")
+
+        true ->
+          query_accum
+      end
+    end)
   end
 
   alias CoolPlaces.Destinations.DestinationAsset
