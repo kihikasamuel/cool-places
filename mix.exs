@@ -74,7 +74,8 @@ defmodule CoolPlaces.MixProject do
       {:ueberauth_google, "~> 0.12.1"},
       {:ueberauth_twitter, "~> 0.4.1"},
       {:poison, "~> 6.0"},
-      {:timex, "~> 3.7"}
+      {:timex, "~> 3.7"},
+      {:scrivener_ecto, "~> 3.1"}
     ]
   end
 
