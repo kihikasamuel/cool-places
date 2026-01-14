@@ -1,21 +1,22 @@
-defmodule CoolPlacesWeb.PlaceLive.Show do
+defmodule CoolPlacesWeb.DestinationsLive.Show do
   use CoolPlacesWeb, :live_view
 
-  # alias CoolPlaces.Places
+  alias CoolPlaces.Destinations
 
-  # @impl true
-  # def mount(_params, _session, socket) do
-  #   {:ok, socket}
-  # end
+  @impl true
+  def mount(_params, _session, socket) do
+    socket =
+      socket
+      |> assign(is_loading: false, travel_plan: nil)
 
-  # @impl true
-  # def handle_params(%{"id" => id}, _, socket) do
-  #   {:noreply,
-  #    socket
-  #    |> assign(:page_title, page_title(socket.assigns.live_action))
-  #    |> assign(:place, Places.get_place!(id))}
-  # end
+    {:ok, socket}
+  end
 
-  # defp page_title(:show), do: "Show Place"
-  # defp page_title(:edit), do: "Edit Place"
+  @impl true
+  def handle_params(%{"id" => id}, _, socket) do
+    {:noreply,
+     socket
+     |> assign(:page_title, "Destination Details")
+     |> assign(:destination, Destinations.get_destination!(id))}
+  end
 end

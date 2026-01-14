@@ -26,7 +26,7 @@ defmodule CoolPlacesWeb.DestinationsLive.Index do
 
     socket
     |> assign(
-      page_title: "Find Your Next Adventure",
+      page_title: "Discover Your Next Adventure",
       categories: ["Beach", "Mountain", "Desert", "Historic"],
       destinations_count: length(destinations.entries)
     )

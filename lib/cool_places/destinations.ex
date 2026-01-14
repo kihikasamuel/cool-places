@@ -37,7 +37,8 @@ defmodule CoolPlaces.Destinations do
       ** (Ecto.NoResultsError)
 
   """
-  def get_destination!(id), do: Repo.get!(Destination, id)
+  def get_destination!(id),
+    do: Repo.get!(Destination, id) |> Repo.preload([:destination_asset, :country, :user])
 
   @doc """
   Creates a destination.
