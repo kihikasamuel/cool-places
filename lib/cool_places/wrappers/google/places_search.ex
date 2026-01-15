@@ -15,13 +15,6 @@ defmodule CoolPlaces.Wrappers.Google.PlacesSearch do
   def config(), do: Application.fetch_env!(:cool_places, __MODULE__)
 
   def search(keyword) do
-    base_uri = config(:base_url) |> URI.parse()
-    model = config(:model)
-    query_params = URI.encode_query(%{"key" => config(:api_key)})
-    path = [base_uri.path || "/", "v1beta/models/", model, "?#{query_params}"] |> Path.join()
-
-    uri = %{base_uri | path: path} |> URI.to_string()
-
     search_prompt =
       "Act as a geocoding API. Provide a JSON array of 5 real-world place suggestions matching #{keyword}. Each object MUST have: name, address, lat, lng, country, category, city, town, and postal_code. Return ONLY the JSON array."
 
@@ -33,7 +26,33 @@ defmodule CoolPlaces.Wrappers.Google.PlacesSearch do
 
     headers = @headers
 
-    request(:post, uri, body, headers, [])
+    call(:post, body, headers)
+  end
+
+  def generate_itinerary(destination, plan_period \\ 3) do
+    prompt =
+      "Create a luxurious #{plan_period}-day travel itinerary for #{destination}. Use Header 3 for days. Markdown format."
+
+    body =
+      Jason.encode!(%{
+        "contents" => %{"parts" => [%{"text" => prompt}]},
+        "generationConfig" => %{"responseMimeType" => "application/json"}
+      })
+
+    headers = @headers
+
+    call(:post, body, headers, [])
+  end
+
+  defp call(method, body, headers, options \\ []) do
+    base_uri = config(:base_url) |> URI.parse()
+    model = config(:model)
+    query_params = URI.encode_query(%{"key" => config(:api_key)})
+    path = [base_uri.path || "/", "v1beta/models/", model, "?#{query_params}"] |> Path.join()
+
+    uri = %{base_uri | path: path} |> URI.to_string()
+
+    request(method, uri, body, headers, options)
     |> parse_response
   end
 

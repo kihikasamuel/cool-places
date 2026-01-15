@@ -29,6 +29,20 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
   end
 
   @impl true
+  def handle_event("generate_itinerary", %{"destination" => destination}, socket) do
+    case CoolPlaces.Wrappers.Google.PlacesSearch.generate_itinerary(destination) do
+      {:ok, itinerary} ->
+        {:noreply,
+         socket
+         |> assign(:travel_plan, itinerary |> List.first())}
+
+      {:error, _reason} ->
+        {:noreply,
+         socket
+         |> assign(:travel_plan, nil)}
+    end
+  end
+
   def handle_event("set_active_image", %{"active_image_index" => active_image_index}, socket) do
     active_image_index = String.to_integer(active_image_index)
 
