@@ -58,7 +58,7 @@
       <h1 class="text-4xl md:text-7xl font-black mb-4 tracking-tighter">
         {@destination.name}
       </h1>
-      <div class="flex items-center text-gray-300">
+      <div :if={not is_nil(@destination.address) or not is_nil(@destination.country)} class="flex items-center text-gray-300">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -75,7 +75,8 @@
             r="3"
           />
         </svg>
-        <span class="text-lg">{@destination.address.street}</span>
+        <span :if={not is_nil(@destination.address)} class="text-lg">{@destination.address.street}</span>
+        <span :if={is_nil(@destination.address) and not is_nil(@destination.country)} class="text-lg">{@destination.country.name}</span>
       </div>
     </div>
     
