@@ -55,6 +55,7 @@ defmodule CoolPlaces.Utils.HTTPClient do
           |> process_reponse()
         end)
         |> show_timer(url)
+        # TODO: send logs to telemetry
       end
 
       defp show_timer({time, response}, url) do
