@@ -31,7 +31,7 @@ defmodule CoolPlaces.Wrappers.Google.PlacesSearch do
 
   def generate_itinerary(destination, plan_period \\ 3) do
     prompt =
-      "Create a luxurious #{plan_period}-day travel itinerary for #{destination}. Use Header 3 for days. Markdown format."
+      "Create a luxurious #{plan_period}-day travel itinerary for #{destination}. Use Header 3 for days. Markdown format. RETURN ONLY A JSON ARRAY WHERE EACH ITEM REPRESENTS A DAY WITH KEYS: day, activities (ARRAY OF STRINGS), accommodations, dining, transportation, and notes"
 
     body =
       Jason.encode!(%{

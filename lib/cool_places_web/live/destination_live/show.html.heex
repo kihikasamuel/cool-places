@@ -198,12 +198,12 @@
             </div>
             <button
               phx-click="generate_itinerary"
-              phx-value-destination={@destination.name}
               @click="isLoading = true"
+              phx-throttle="3000"
               class="bg-dark-bg text-white px-6 py-3 rounded-2xl font-bold hover:bg-slate-800 transition flex items-center justify-center disabled:opacity-50"
             >
               <i
-                phx-show="isLoading && #{not is_nil(@travel_plan)}"
+                x-show="false"
                 class="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"
               >
               </i>
@@ -228,25 +228,23 @@
           </div>
 
           <div
-            :if={not is_nil(@travel_plan) and not @is_loading}
+            :if={not is_nil(@travel_plan)}
             class="markdown-output p-6 bg-white rounded-2xl shadow-sm border border-gray-100"
             id="travel-itinerary-section"
           >
-          <%= for items <- @travel_plan["itinerary"] do %>
-            <%= for {_, activities} <- items do %>
-              <h3 class="text-lg font-bold mt-6 mb-2">{activities["day"]} {activities["theme"]}</h3>
-              <ul class="list-disc list-inside space-y-1 mb-4">
-                <%= for activity <- activities do %>
-                  <li class="text-gray-700">
-                    <span class="text-gray-500 font-mono text-xs mr-2"> { activity[:time] }</span>
-                    <span class="font-semibold">{ activity[:description] }</span>
-                  </li>
-                <% end %>
-              </ul>
+          <h2 class="text-lg font-bold mt-6 mb-2">Travel Plan</h2>
+          <%= for item <- @travel_plan do %>
+          <h3 class="text-lg font-bold mt-6 mb-2">{raw(item["day"])}</h3>
+          <ul class="list-disc list-inside space-y-1 mb-4">
+            <%= for activity <- item["activities"] do %>
+              <li class="text-gray-700">
+                <span class="font-normal text-sm">{ raw(activity) }</span>
+              </li>
             <% end %>
+          </ul>
           <% end %>
           </div>
-          <div :if={not @is_loading} class="text-center py-12">
+          <div :if={is_nil(@travel_plan)} class="text-center py-12">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

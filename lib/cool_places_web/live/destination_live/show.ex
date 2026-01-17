@@ -29,12 +29,15 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
   end
 
   @impl true
-  def handle_event("generate_itinerary", %{"destination" => destination}, socket) do
-    case CoolPlaces.Wrappers.Google.PlacesSearch.generate_itinerary(destination) do
+  def handle_event("generate_itinerary", _params, socket) do
+    destination = socket.assigns.destination
+
+    case CoolPlaces.Wrappers.Google.PlacesSearch.generate_itinerary(destination.name) do
       {:ok, itinerary} ->
+
         {:noreply,
          socket
-         |> assign(:travel_plan, itinerary |> List.first())}
+         |> assign(:travel_plan, itinerary)}
 
       {:error, _reason} ->
         {:noreply,
