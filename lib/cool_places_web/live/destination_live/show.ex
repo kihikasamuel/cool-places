@@ -46,6 +46,14 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
     end
   end
 
+  def handle_event("download_itinerary", _params, socket) do
+    destination = socket.assigns.destination
+    {:noreply, socket |> push_event("generate-pdf", %{
+      elementId: "travel-itinerary-section",
+      filename: "#{destination.name}-itinerary.pdf"
+    })}
+  end
+
   def handle_event("set_active_image", %{"active_image_index" => active_image_index}, socket) do
     active_image_index = String.to_integer(active_image_index)
 

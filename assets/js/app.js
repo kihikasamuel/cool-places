@@ -25,6 +25,7 @@ import topbar from "../vendor/topbar"
 import "../vendor/plugins.init.js"
 import "../vendor/easy_background.js"
 import "../vendor/index.js"
+import Hooks from './hooks';
 
 // add alpine
 window.Alpine = Alpine;
@@ -34,6 +35,7 @@ let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("
 let liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
+  hooks: Hooks,
   dom: {
     onBeforeElUpdated(from, to) {
       if(from._x_dataStack) {
