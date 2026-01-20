@@ -118,7 +118,7 @@ defmodule CoolPlacesWeb.CoreComponents do
       role="alert"
       class={[
         "fixed top-2 right-2 mr-2 w-80 sm:w-96 z-50 rounded-lg p-3 ring-1",
-        @kind == :info && "bg-emerald-50 text-emerald-800 ring-emerald-500 fill-cyan-900",
+        @kind == :info && "bg-emerald-50 text-emerald-800 ring-cool-blue fill-cyan-900",
         @kind == :error && "bg-rose-50 text-rose-900 shadow-md ring-rose-500 fill-rose-900"
       ]}
       {@rest}
@@ -233,7 +233,7 @@ defmodule CoolPlacesWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-emerald-500 hover:bg-emerald-600 py-2 px-3",
+        "phx-submit-loading:opacity-75 rounded-lg bg-cool-blue hover:bg-cool-indigo py-2 px-3",
         "text-sm font-semibold leading-6 text-white active:text-white/80",
         @class
       ]}

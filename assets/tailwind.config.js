@@ -17,6 +17,10 @@ module.exports = {
         "primary-blue": "#2563EB", // Blue 600
         "secondary-green": "#10B981", // Emerald 500
         "dark-bg": "#0F172A", // Slate 900
+        "cool-blue": "#3B82F6",
+        "cool-indigo": "#6366F1",
+        "dark-bg": "#0F172A",
+        "dark-surface": "#1E293B"
         // brand: "#FD4F00",
       },
       fontFamily: {
