@@ -67,8 +67,7 @@ defmodule CoolPlacesWeb.Router do
         live "/users/reset_password/:token", UserResetPasswordLive, :edit
 
         # public destination routes
-        # live "/", CallToAction.Index, :coming_soon
-        live "/", UserLoginLive.Index, :index
+        live "/", CTALive.ComingSoon, :coming_soon
         live "/explorer", DestinationsLive.Index, :index
         live "/destinations/:id", DestinationsLive.Show, :show
     end

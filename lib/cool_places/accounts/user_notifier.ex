@@ -4,7 +4,7 @@ defmodule CoolPlaces.Accounts.UserNotifier do
   alias CoolPlaces.Mailer
 
   # Delivers the email using the application mailer.
-  defp deliver(recipient, subject, body) do
+  def deliver(recipient, subject, body) do
     email =
       new()
       |> to(recipient)
