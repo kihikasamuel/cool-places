@@ -23,12 +23,16 @@ defmodule CoolPlaces.Newsletters.Subscription do
     |> cast(attrs, writeable_fields())
     |> subscribed_at_changeset()
     |> validate_required(writeable_fields() -- [:unsubscribed_at])
+    |> unsafe_validate_unique([:email, :type], CoolPlaces.Repo, message: "Email already subscribed!")
   end
 
   defp subscribed_at_changeset(changeset) do
     case get_field(changeset, :subscribed_at) do
-      nil -> put_change(changeset, :subscribed_at, DateTime.utc_now() |> DateTime.truncate(:second))
-      _ -> changeset
+      nil ->
+        put_change(changeset, :subscribed_at, DateTime.utc_now() |> DateTime.truncate(:second))
+
+      _ ->
+        changeset
     end
   end
 end

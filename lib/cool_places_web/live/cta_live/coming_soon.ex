@@ -9,7 +9,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
 
     socket =
       socket
-      |> assign(submitted: false, form: chnageset)
+      |> assign(submitted: false, form: chnageset, subscription_error: nil)
 
     {:ok, socket}
   end
@@ -28,7 +28,9 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply,
          socket
-         |> assign(form: changeset |> to_form())}
+         |> assign(:error, "Email already subscribed!")
+         |> assign(form: changeset |> to_form())
+        }
     end
   end
 
@@ -76,7 +78,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
           The world's best <br /><span class="text-cool-blue">curated.</span>
         </h1>
         <p class="text-xl text-slate-500 mb-12 max-w-xl mx-auto leading-relaxed">
-          Join the top 1% of adventurers on the waitlist for CoolPlaces. Unlock hidden gems, and custom AI itineraries.
+          Join the top 1% of travellers on the waitlist for CoolPlaces. Unlock hidden gems, and custom AI itineraries.
         </p>
 
         <.simple_form
@@ -106,6 +108,9 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
               > </span> --%>
               Get Early Access
             </button>
+          </div>
+          <div class="flex justify-center">
+            <span :if={assigns[:error]} class="text-sm text-red-500 mt-2">{assigns[:error]}</span>
           </div>
         </.simple_form>
 
