@@ -152,7 +152,7 @@
         </div>
         
 <!-- Amenities Grid -->
-        <div>
+        <%!-- <div>
           <h3 class="text-xl font-bold mb-6">What this place offers</h3>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-6">
             <div
@@ -185,7 +185,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> --%>
         
 <!-- Itinerary Preview -->
         <div x-data="{ isLoading: false}" class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
@@ -244,7 +244,7 @@
           >
           <h2 class="text-lg font-bold mt-6 mb-2">Travel Plan</h2>
           <%= for item <- @travel_plan do %>
-          <h3 class="text-lg font-bold mt-6 mb-2">{raw(item["day"])}</h3>
+          <h3 class="text-lg font-bold mt-6 mb-2">{raw(item["title"])}</h3>
           <ul class="list-disc list-inside space-y-1 mb-4">
             <%= for activity <- item["activities"] do %>
               <li class="text-gray-700">

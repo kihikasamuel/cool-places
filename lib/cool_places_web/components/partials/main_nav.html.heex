@@ -34,7 +34,7 @@
       <div :if={not is_logged_in?(@current_user)} class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
           <a
-            :for={link <- ["Explorer"]}
+            :for={link <- []}
             id={link}
             href={"/#{String.downcase(link)}"}
             class={[
@@ -50,7 +50,7 @@
       </div>
       <!-- Auth Buttons -->
       <div class="hidden md:block" x-data="{isProfileDropdownOpen: false}">
-        <.link
+        <%!-- <.link
           :if={not is_logged_in?(@current_user)}
           navigate={~p(/users/log_in)}
           class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition"
@@ -63,7 +63,7 @@
           class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]"
         >
           Register
-        </.link>
+        </.link> --%>
         <!-- Profile Dropdown -->
         <div :if={is_logged_in?(@current_user)} class="relative">
           <button
