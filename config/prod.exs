@@ -17,5 +17,7 @@ config :swoosh, local: false
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :cool_places, env: :prod
+
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.
