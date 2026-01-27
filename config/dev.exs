@@ -84,6 +84,10 @@ config :phoenix_live_view,
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
 
+# configure http client
+config :cool_places, CoolPlaces.Utils.HTTPClient,
+  http_client: CoolPlaces.Utils.HTTPClient.Finch
+
 # waffle configuration for local file storage
 config :waffle,
   storage: Waffle.Storage.Local,
