@@ -72,7 +72,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
               r="2"
             />
           </svg>
-          <span>New: CoolPlaces launching next month</span>
+          <span>New: CoolPlaces launching next week</span>
         </div>
         <h1 class="text-6xl md:text-8xl font-black text-slate-900 mb-6 tracking-tighter leading-none">
           The world's best <br /><span class="text-cool-blue">curated.</span>

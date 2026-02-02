@@ -93,5 +93,7 @@ config :waffle,
   storage: Waffle.Storage.Local,
   asset_host: "http://localhost:4000" # or {:system, "ASSET_HOST"}
 
+config :cool_places, env: :dev
+
 ## Environment specific secrets
 import_config "#{config_env()}.local.exs"
