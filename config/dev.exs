@@ -85,15 +85,31 @@ config :phoenix_live_view,
 config :swoosh, :api_client, false
 
 # configure http client
-config :cool_places, CoolPlaces.Utils.HTTPClient,
-  http_client: CoolPlaces.Utils.HTTPClient.Finch
+config :cool_places, CoolPlaces.Utils.HTTPClient, http_client: CoolPlaces.Utils.HTTPClient.Finch
 
 # waffle configuration for local file storage
 config :waffle,
   storage: Waffle.Storage.Local,
-  asset_host: "http://localhost:4000" # or {:system, "ASSET_HOST"}
+  # or {:system, "ASSET_HOST"}
+  asset_host: "http://localhost:4000"
 
 config :cool_places, env: :dev
+
+# ## Ueberauth configurations for [google, x]
+config :ueberauth, Ueberauth.Strategy.Google.OAuth,
+  client_id: "SOME_CLIENT_ID",
+  client_secret: "SOME_CLIENT_SECRET"
+
+config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  consumer_key: "SOME_CONSUMER_KEY",
+  consumer_secret: "SOME_CONSUMER_SECRET"
+
+# configuration for google places search
+config :cool_places, CoolPlaces.Wrappers.Google.PlacesSearch,
+  base_url: "SOME_BASE_URL",
+  api_key: "SOME_API_KEY",
+  # if using gemini
+  model: "SOME_MODEL"
 
 ## Environment specific secrets
 import_config "#{config_env()}.local.exs"
