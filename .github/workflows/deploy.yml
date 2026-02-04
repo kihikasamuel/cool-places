@@ -1,0 +1,64 @@
+name: CI/CD for Coolplaces
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+permissions:
+  contents: 'read'
+  id-token: 'write' # Required for Workload Identity Federation
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04 # Should match Prod environment exactly
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Elixir & OTP
+        uses: erlef/setup-beam@v1
+        with:
+          elixir-version: '1.18'
+          otp-version: '27'
+
+      - name: Install Dependencies
+        run: |
+          mix local.hex --force
+          mix local.rebar --force
+          mix deps.get --only prod
+
+      - name: Build Assets
+        run: |
+          npm install --prefix assets
+          mix assets.deploy
+
+      # --- THIS IS THE RELEASE CREATION STEP ---
+      - name: Create Phoenix Release
+        run: |
+          export MIX_ENV=prod
+          mix compile
+          mix release --overwrite
+        env:
+          SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+
+      - name: Archive Release
+        run: tar -czf cool_places_rel.tar.gz -C _build/prod/rel/cool_places .
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: "projects/${{secrets.GCP_PROJECT_NUMBER}}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+          service_account: ${{secrets.GCP_SERVICE_ACCOUNT_EMAIL}}
+
+      - name: Upload to GCP VM
+        run: |
+          gcloud compute scp cool_places_rel.tar.gz ${{ secrets.GCE_USER }}@${{ secrets.GCE_INSTANCE }}:~/ --zone=${{ secrets.GCE_ZONE }}
+
+      - name: Deploy and Restart Systemd
+        run: |
+          gcloud compute ssh ${{ secrets.GCE_USER }}@${{ secrets.GCE_INSTANCE }} --zone=${{ secrets.GCE_ZONE }} --command="
+            mkdir -p ~/app
+            tar -xzf ~/cool_places_rel.tar.gz -C ~/app
+            rm ~/cool_places_rel.tar.gz
+            sudo systemctl restart coolplaces.service
+          "
