@@ -57,8 +57,8 @@ jobs:
       - name: Deploy and Restart Systemd
         run: |
           gcloud compute ssh ${{ secrets.GCE_USER }}@${{ secrets.GCE_INSTANCE }} --zone=${{ secrets.GCE_ZONE }} --command="
-            mkdir -p ~/app
-            tar -xzf ~/cool_places_rel.tar.gz -C ~/app
+            mkdir -p ~/oss
+            tar -xzf ~/cool_places_rel.tar.gz -C ~/oss
             rm ~/cool_places_rel.tar.gz
             sudo systemctl restart coolplaces.service
           "
