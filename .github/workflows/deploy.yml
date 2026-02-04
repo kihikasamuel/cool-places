@@ -23,6 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          mkdir -p ./config/dev.local.exs
           mix local.hex --force
           mix local.rebar --force
           mix deps.get --only prod
@@ -58,7 +59,7 @@ jobs:
         run: |
           gcloud compute ssh ${{ secrets.GCE_USER }}@${{ secrets.GCE_INSTANCE }} --zone=${{ secrets.GCE_ZONE }} --command="
             mkdir -p ~/oss
-            tar -xzf ~/cool_places_rel.tar.gz -C ~/oss
+            tar -xzf ~/cool_places_rel.tar.gz -C ~/oss/cool_places
             rm ~/cool_places_rel.tar.gz
             sudo systemctl restart coolplaces.service
           "
