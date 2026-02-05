@@ -23,8 +23,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          mkdir -p ./config/dev.local.exs
-          echo pwd
           mix local.hex --force
           mix local.rebar --force
           mix deps.get --only prod
