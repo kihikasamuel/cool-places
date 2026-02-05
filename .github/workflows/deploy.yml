@@ -42,7 +42,7 @@ jobs:
           SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
 
       - name: Archive Release
-        run: tar -czf cool_places_rel.tar.gz -C _build/prod/rel/cool_places .
+        run: tar -czf cool_places_rel.tar.gz -C _build/prod/rel/cool_places
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
