@@ -47,23 +47,24 @@ jobs:
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/$${{ secrets.GCP_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: ${{secrets.GCP_SERVICE_ACCOUNT_EMAIL}}
+
+      - name: Upload to GCP VM
         env:
-          PROJECT_NUMBER: ${{secrets.GCP_PROJECT_NUMBER}}
-          GCP_SERVICE_ACCOUNT_EMAIL: ${{secrets.GCP_SERVICE_ACCOUNT_EMAIL}}
+          GCP_ZONE: ${{secrets.GCE_ZONE}}
+          GCE_USER: ${{secrets.GCE_USER}}
+        run: |
+          gcloud compute scp cool_places_rel.tar.gz $GCE_USER@$GCE_INSTANCE:~/ --zone=$GCE_ZONE
+
+      - name: Deploy and Restart Systemd
+        env:
           GCP_ZONE: ${{secrets.GCE_ZONE}}
           GCE_USER: ${{secrets.GCE_USER}}
           GCE_INSTANCE: ${{secrets.GCE_INSTANCE}}
-        with:
-          workload_identity_provider: "projects/${PROJECT_NUMBER}/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
-          service_account: ${GCP_SERVICE_ACCOUNT_EMAIL}
-
-      - name: Upload to GCP VM
         run: |
-          gcloud compute scp cool_places_rel.tar.gz ${GCE_USER}@${GCE_INSTANCE}:~/ --zone=${GCE_ZONE}
-
-      - name: Deploy and Restart Systemd
-        run: |
-          gcloud compute ssh ${GCE_USER}@${GCE_INSTANCE} --zone=${GCE_ZONE} --command="
+          gcloud compute ssh $GCE_USER@$GCE_INSTANCE --zone=$GCE_ZONE --command="
             mkdir -p ~/oss
             tar -xzf ~/cool_places_rel.tar.gz -C ~/oss/cool_places
             rm ~/cool_places_rel.tar.gz
