@@ -29,6 +29,7 @@ jobs:
 
       - name: Build Assets
         run: |
+          export MIX_ENV=prod
           npm install --prefix assets
           mix assets.deploy
 
