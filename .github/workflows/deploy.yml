@@ -5,13 +5,16 @@ on:
   pull_request:
     branches: [ "master" ]
 
-permissions:
-  contents: 'read'
-  id-token: 'write' # Required for Workload Identity Federation
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-24.04 # Should match Prod environment exactly
+
+    environment: production
+
+    permissions:
+      contents: 'read'
+      id-token: 'write' # Required for Workload Identity Federation
+
     steps:
       - uses: actions/checkout@v4
 
