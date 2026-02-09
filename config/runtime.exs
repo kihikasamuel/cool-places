@@ -74,7 +74,7 @@ if config_env() == :prod do
   #
   config :cool_places, CoolPlacesWeb.Endpoint,
     https: [
-      ...,
+      # ...,
       port: 443,
       cipher_suite: :strong,
       keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
