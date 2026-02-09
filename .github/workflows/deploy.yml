@@ -72,8 +72,8 @@ jobs:
           GCP_INSTANCE: ${{secrets.GCE_INSTANCE}}
         run: |
           gcloud compute ssh $GCP_USER@$GCP_INSTANCE --zone=$GCP_ZONE --command="
-            mkdir -p /srv/cool_places
-            tar -xzf ~/cool_places_rel.tar.gz -C /srv/cool_places
-            rm ~/cool_places_rel.tar.gz
+            sudo mkdir -p /srv/cool_places
+            sudo tar -xzf ~/cool_places_rel.tar.gz -C /srv/cool_places
+            sudo rm ~/cool_places_rel.tar.gz
             sudo systemctl restart coolplaces.service
           "
