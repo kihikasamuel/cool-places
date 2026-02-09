@@ -61,8 +61,8 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port,
-      transport_options: [socket_opts: [:inet6]]
+      port: port
+      # transport_options: [socket_opts: [:inet6]]
     ],
     check_origin: ["https://#{host}"],
     secret_key_base: secret_key_base
@@ -127,6 +127,9 @@ if config_env() == :prod do
     base_url: System.get_env("PLACES_SEARCH_BASE_URL"),
     api_key: System.get_env("PLACES_SEARCH_API_KEY"),
     model: System.get_env("PLACES_SEARCH_MODEL")
+
+  # tzdata update directory
+  config :tzdata, :data_dir, System.get_env("TZ_DATA_DIR")
 
   # Not useful for now
   # config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
