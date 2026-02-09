@@ -61,8 +61,10 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: port,
+      transport_options: [socket_opts: [:inet6]]
     ],
+    check_origin: ["https://#{host}"],
     secret_key_base: secret_key_base
 
   # ## SSL Support
@@ -70,14 +72,15 @@ if config_env() == :prod do
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  #     config :cool_places, CoolPlacesWeb.Endpoint,
-  #       https: [
-  #         ...,
-  #         port: 443,
-  #         cipher_suite: :strong,
-  #         keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-  #         certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
-  #       ]
+  config :cool_places, CoolPlacesWeb.Endpoint,
+    https: [
+      ...,
+      port: 443,
+      cipher_suite: :strong,
+      keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+      certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
+    ]
+
   #
   # The `cipher_suite` is set to `:strong` to support only the
   # latest and more secure SSL ciphers. This means old browsers
@@ -120,7 +123,13 @@ if config_env() == :prod do
     client_id: System.get_env("GOOGLE_CLIENT_ID"),
     client_secret: System.get_env("GOOGLE_CLIENT_SECRET")
 
-  config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
-    consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
-    consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+  config :cool_places, CoolPlaces.Wrappers.Google.PlacesSearch,
+    base_url: System.get_env("PLACES_SEARCH_BASE_URL"),
+    api_key: System.get_env("PLACES_SEARCH_API_KEY"),
+    model: System.get_env("PLACES_SEARCH_MODEL")
+
+  # Not useful for now
+  # config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
+  #   consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
+  #   consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
 end
