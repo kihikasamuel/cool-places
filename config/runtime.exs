@@ -65,13 +65,6 @@ if config_env() == :prod do
       port: port,
       transport_options: [socket_opts: [:inet6]]
     ],
-    https: [
-      ip: {127, 0, 0, 1},
-      port: 443,
-      cipher_suite: :strong,
-      keyfile: System.get_env("CERT_KEY_PATH"),
-      certfile: System.get_env("CERT_FILE_PATH")
-    ],
     check_origin: ["https://#{host}"],
     secret_key_base: secret_key_base
 
