@@ -66,7 +66,7 @@ if config_env() == :prod do
       # use_x_forwarded_for: true
       # transport_options: [socket_opts: [:inet6]]
     ],
-    check_origin: ["https://#{host}"],
+    check_origin: ["https://#{host}", "https://www.#{host}"],
     secret_key_base: secret_key_base
 
   # ## SSL Support
