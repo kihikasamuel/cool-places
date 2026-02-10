@@ -60,7 +60,8 @@ if config_env() == :prod do
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
-      ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      # ip: {0, 0, 0, 0, 0, 0, 0, 0},
+      ip: {127, 0, 0, 1},
       port: port
       # transport_options: [socket_opts: [:inet6]]
     ],
