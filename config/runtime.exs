@@ -66,21 +66,26 @@ if config_env() == :prod do
       # transport_options: [socket_opts: [:inet6]]
     ],
     check_origin: ["https://#{host}"],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    https: [
+      port: 443,
+      cipher_suite: :strong,
+      keyfile: System.get_env("CERT_KEY_PATH"),
+      certfile: System.get_env("CERT_FILE_PATH")
+    ]
 
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
   # to your endpoint configuration:
   #
-  config :cool_places, CoolPlacesWeb.Endpoint,
-    https: [
-      # ...,
-      port: 443,
-      cipher_suite: :strong,
-      keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
-      certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
-    ]
+  # config :cool_places, CoolPlacesWeb.Endpoint,
+  # https: [
+  #   port: 443,
+  #   cipher_suite: :strong,
+  #   keyfile: System.get_env("SOME_APP_SSL_KEY_PATH"),
+  #   certfile: System.get_env("SOME_APP_SSL_CERT_PATH")
+  # ]
 
   #
   # The `cipher_suite` is set to `:strong` to support only the
