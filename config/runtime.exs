@@ -63,7 +63,8 @@ if config_env() == :prod do
       # ip: {0, 0, 0, 0, 0, 0, 0, 0},
       ip: {127, 0, 0, 1},
       port: port,
-      transport_options: [socket_opts: [:inet6]]
+      use_x_forwarded_for: true
+      # transport_options: [socket_opts: [:inet6]]
     ],
     check_origin: ["https://#{host}"],
     secret_key_base: secret_key_base
