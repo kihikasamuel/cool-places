@@ -70,6 +70,7 @@ defmodule CoolPlacesWeb.Router do
       live "/", CTALive.ComingSoon, :coming_soon
       live "/explorer", DestinationsLive.Index, :index
       live "/destinations/:id", DestinationsLive.Show, :show
+      live "/about", CTALive.About, :index
     end
 
     post "/users/log_in", UserSessionController, :create
