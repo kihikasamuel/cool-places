@@ -31,7 +31,7 @@ if config_env() == :prod do
   maybe_ipv6 = if System.get_env("ECTO_IPV6") in ~w(true 1), do: [:inet6], else: []
 
   config :cool_places, CoolPlaces.Repo,
-    ssl: true,
+    ssl: [certfile: System.get_env("CERT_FILE_PATH")],
     url: database_url,
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
@@ -65,14 +65,15 @@ if config_env() == :prod do
       port: port,
       transport_options: [socket_opts: [:inet6]]
     ],
-    check_origin: ["https://#{host}"],
-    secret_key_base: secret_key_base,
     https: [
+      ip: {127, 0, 0, 1},
       port: 443,
       cipher_suite: :strong,
       keyfile: System.get_env("CERT_KEY_PATH"),
       certfile: System.get_env("CERT_FILE_PATH")
-    ]
+    ],
+    check_origin: ["https://#{host}"],
+    secret_key_base: secret_key_base
 
   # ## SSL Support
   #
