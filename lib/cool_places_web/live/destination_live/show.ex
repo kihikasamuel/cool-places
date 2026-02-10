@@ -34,7 +34,6 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
 
     case CoolPlaces.Wrappers.Google.PlacesSearch.generate_itinerary(destination.name) do
       {:ok, itinerary} ->
-
         {:noreply,
          socket
          |> assign(:travel_plan, itinerary)}
@@ -48,10 +47,13 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
 
   def handle_event("download_itinerary", _params, socket) do
     destination = socket.assigns.destination
-    {:noreply, socket |> push_event("generate-pdf", %{
-      elementId: "travel-itinerary-section",
-      filename: "#{destination.name}-itinerary.pdf"
-    })}
+
+    {:noreply,
+     socket
+     |> push_event("generate-pdf", %{
+       elementId: "travel-itinerary-section",
+       filename: "#{destination.name}-itinerary.pdf"
+     })}
   end
 
   def handle_event("set_active_image", %{"active_image_index" => active_image_index}, socket) do

@@ -68,7 +68,8 @@
 <!-- Suggestions Dropdown -->
         <div
           :if={length(@destination_search_results) > 0 and is_nil(@selected_address)}
-          id="destination-selection" phx-update="ignore"
+          id="destination-selection"
+          phx-update="ignore"
           class="absolute z-20 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-2xl overflow-hidden max-h-60 overflow-y-auto"
         >
           <button
@@ -103,7 +104,8 @@
 
         <div
           :if={@selected_address}
-          id="destination-selected-address" phx-update="ignore"
+          id="destination-selected-address"
+          phx-update="ignore"
           class="mt-2 p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-center justify-between"
         >
           <div class="flex items-center text-primary-blue text-sm">

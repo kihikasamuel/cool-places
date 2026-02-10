@@ -60,16 +60,16 @@ defmodule CoolPlacesWeb.Router do
 
     live_session :redirect_if_user_is_authenticated,
       on_mount: [{CoolPlacesWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-        # user registration and login routes
-        live "/users/register", UserRegistrationLive.Index, :index
-        live "/users/log_in", UserLoginLive.Index, :index
-        live "/users/reset_password", UserForgotPasswordLive, :new
-        live "/users/reset_password/:token", UserResetPasswordLive, :edit
+      # user registration and login routes
+      live "/users/register", UserRegistrationLive.Index, :index
+      live "/users/log_in", UserLoginLive.Index, :index
+      live "/users/reset_password", UserForgotPasswordLive, :new
+      live "/users/reset_password/:token", UserResetPasswordLive, :edit
 
-        # public destination routes
-        live "/", CTALive.ComingSoon, :coming_soon
-        live "/explorer", DestinationsLive.Index, :index
-        live "/destinations/:id", DestinationsLive.Show, :show
+      # public destination routes
+      live "/", CTALive.ComingSoon, :coming_soon
+      live "/explorer", DestinationsLive.Index, :index
+      live "/destinations/:id", DestinationsLive.Show, :show
     end
 
     post "/users/log_in", UserSessionController, :create

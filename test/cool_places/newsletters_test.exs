@@ -34,12 +34,16 @@ defmodule CoolPlaces.NewslettersTest do
       newsletter = newsletter_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Newsletter{} = newsletter} = Newsletters.update_newsletter(newsletter, update_attrs)
+      assert {:ok, %Newsletter{} = newsletter} =
+               Newsletters.update_newsletter(newsletter, update_attrs)
     end
 
     test "update_newsletter/2 with invalid data returns error changeset" do
       newsletter = newsletter_fixture()
-      assert {:error, %Ecto.Changeset{}} = Newsletters.update_newsletter(newsletter, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Newsletters.update_newsletter(newsletter, @invalid_attrs)
+
       assert newsletter == Newsletters.get_newsletter!(newsletter.id)
     end
 
@@ -86,12 +90,16 @@ defmodule CoolPlaces.NewslettersTest do
       subscription = subscription_fixture()
       update_attrs = %{}
 
-      assert {:ok, %Subscription{} = subscription} = Newsletters.update_subscription(subscription, update_attrs)
+      assert {:ok, %Subscription{} = subscription} =
+               Newsletters.update_subscription(subscription, update_attrs)
     end
 
     test "update_subscription/2 with invalid data returns error changeset" do
       subscription = subscription_fixture()
-      assert {:error, %Ecto.Changeset{}} = Newsletters.update_subscription(subscription, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Newsletters.update_subscription(subscription, @invalid_attrs)
+
       assert subscription == Newsletters.get_subscription!(subscription.id)
     end
 

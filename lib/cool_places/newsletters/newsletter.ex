@@ -14,7 +14,6 @@ defmodule CoolPlaces.Newsletters.Newsletter do
 
     belongs_to :author, CoolPlaces.Accounts.User
 
-
     timestamps(type: :utc_datetime)
   end
 

@@ -25,12 +25,18 @@ defmodule CoolPlaces.Repo.Migrations.CreateNewsletters do
       timestamps(type: :utc_datetime)
     end
 
-    create_if_not_exists unique_index(:subscriptions, [:email, :type], name: :uidx_subscriptions_unique_subscription_per_email_and_type)
+    create_if_not_exists unique_index(:subscriptions, [:email, :type],
+                           name: :uidx_subscriptions_unique_subscription_per_email_and_type
+                         )
+
     create_if_not_exists index(:subscriptions, [:type], name: :idx_subscriptions_type)
   end
 
   def down do
-    drop_if_exists unique_index(:subscriptions, [:email, :type], name: :uidx_subscriptions_unique_subscription_per_email_and_type)
+    drop_if_exists unique_index(:subscriptions, [:email, :type],
+                     name: :uidx_subscriptions_unique_subscription_per_email_and_type
+                   )
+
     drop_if_exists index(:subscriptions, [:type], name: :idx_subscriptions_type)
     drop_if_exists index(:newsletters, [:author_id], name: :idx_newsletters_author_id)
     drop table(:subscriptions)

@@ -58,7 +58,10 @@
       <h1 class="text-4xl md:text-7xl font-black mb-4 tracking-tighter">
         {@destination.name}
       </h1>
-      <div :if={not is_nil(@destination.address) or not is_nil(@destination.country)} class="flex items-center text-gray-300">
+      <div
+        :if={not is_nil(@destination.address) or not is_nil(@destination.country)}
+        class="flex items-center text-gray-300"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
@@ -75,8 +78,15 @@
             r="3"
           />
         </svg>
-        <span :if={not is_nil(@destination.address)} class="text-lg">{@destination.address.street}</span>
-        <span :if={is_nil(@destination.address) and not is_nil(@destination.country)} class="text-lg">{@destination.country.name}</span>
+        <span :if={not is_nil(@destination.address)} class="text-lg">
+          {@destination.address.street}
+        </span>
+        <span
+          :if={is_nil(@destination.address) and not is_nil(@destination.country)}
+          class="text-lg"
+        >
+          {@destination.country.name}
+        </span>
       </div>
     </div>
     
@@ -188,7 +198,10 @@
         </div> --%>
         
 <!-- Itinerary Preview -->
-        <div x-data="{ isLoading: false}" class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+        <div
+          x-data="{ isLoading: false}"
+          class="bg-gray-50 rounded-3xl p-8 border border-gray-100"
+        >
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
               <h3 class="text-2xl font-black text-gray-900">Experience Itinerary</h3>
@@ -226,13 +239,12 @@
               Generate Travel Plan
             </button>
             <button
+              :if={not is_nil(@travel_plan)}
               class="bg-gray-200 text-gray-600 px-4 py-2 rounded-2xl font-normal hover:bg-gray-300 transition flex items-center justify-center"
               id="download-itinerary-button"
               phx-click="download_itinerary"
-              :if={not is_nil(@travel_plan)}
             >
-            <.icon name="hero-folder-arrow-down" class="w-4 h-4 mr-2"/>
-              Download
+              <.icon name="hero-folder-arrow-down" class="w-4 h-4 mr-2" /> Download
             </button>
           </div>
 
@@ -242,17 +254,17 @@
             id="travel-itinerary-section"
             phx-hook="PrintToPdf"
           >
-          <h2 class="text-lg font-bold mt-6 mb-2">Travel Plan</h2>
-          <%= for item <- @travel_plan do %>
-          <h3 class="text-lg font-bold mt-6 mb-2">{raw(item["title"])}</h3>
-          <ul class="list-disc list-inside space-y-1 mb-4">
-            <%= for activity <- item["activities"] do %>
-              <li class="text-gray-700">
-                <span class="font-normal text-sm">{ raw(activity) }</span>
-              </li>
+            <h2 class="text-lg font-bold mt-6 mb-2">Travel Plan</h2>
+            <%= for item <- @travel_plan do %>
+              <h3 class="text-lg font-bold mt-6 mb-2">{raw(item["title"])}</h3>
+              <ul class="list-disc list-inside space-y-1 mb-4">
+                <%= for activity <- item["activities"] do %>
+                  <li class="text-gray-700">
+                    <span class="font-normal text-sm">{raw(activity)}</span>
+                  </li>
+                <% end %>
+              </ul>
             <% end %>
-          </ul>
-          <% end %>
           </div>
           <div :if={is_nil(@travel_plan)} class="text-center py-12">
             <svg

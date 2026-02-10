@@ -10,9 +10,7 @@ defmodule CoolPlaces.NewslettersFixtures do
   def newsletter_fixture(attrs \\ %{}) do
     {:ok, newsletter} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> CoolPlaces.Newsletters.create_newsletter()
 
     newsletter
@@ -24,9 +22,7 @@ defmodule CoolPlaces.NewslettersFixtures do
   def subscription_fixture(attrs \\ %{}) do
     {:ok, subscription} =
       attrs
-      |> Enum.into(%{
-
-      })
+      |> Enum.into(%{})
       |> CoolPlaces.Newsletters.create_subscription()
 
     subscription

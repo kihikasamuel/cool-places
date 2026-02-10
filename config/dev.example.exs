@@ -6,7 +6,8 @@ config :swoosh, :api_client, false
 # waffle configuration for local file storage
 config :waffle,
   storage: Waffle.Storage.Local,
-  asset_host: "http://static.example.com" # or {:system, "ASSET_HOST"}
+  # or {:system, "ASSET_HOST"}
+  asset_host: "http://static.example.com"
 
 # ## Ueberauth configurations for [google, x]
 config :ueberauth, Ueberauth.Strategy.Google.OAuth,
@@ -18,11 +19,11 @@ config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   consumer_secret: ""
 
 # configure http_client
-config :cool_places, CoolPlaces.Utils.HTTPClient,
-  http_client: CoolPlaces.Utils.HTTPClient.Finch
+config :cool_places, CoolPlaces.Utils.HTTPClient, http_client: CoolPlaces.Utils.HTTPClient.Finch
 
 # configuration for google places search
 config :cool_places, CoolPlaces.Wrappers.Google.PlacesSearch,
   base_url: "",
   api_key: "",
-  model: "" # if using gemini
+  # if using gemini
+  model: ""

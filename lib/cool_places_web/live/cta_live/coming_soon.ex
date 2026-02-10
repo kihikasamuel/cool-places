@@ -29,8 +29,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
         {:noreply,
          socket
          |> assign(:error, "Email already subscribed!")
-         |> assign(form: changeset |> to_form())
-        }
+         |> assign(form: changeset |> to_form())}
     end
   end
 
