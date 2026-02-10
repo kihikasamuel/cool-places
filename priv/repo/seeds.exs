@@ -14,7 +14,7 @@ defmodule CoolPlaces.Seeds do
 
   Logger.configure(level: :info)
 
-  if Application.compile_env(:kasi_crm, :env) not in [:test] do
+  if Application.compile_env(:cool_places, :env) not in [:test] do
     [
       "countries.exs"
     ]
