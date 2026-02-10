@@ -66,13 +66,14 @@ if config_env() == :prod do
       # transport_options: [socket_opts: [:inet6]]
     ],
     check_origin: ["https://#{host}"],
-    secret_key_base: secret_key_base,
-    https: [
-      port: 443,
-      cipher_suite: :strong,
-      keyfile: System.get_env("CERT_KEY_PATH"),
-      certfile: System.get_env("CERT_FILE_PATH")
-    ]
+    secret_key_base: secret_key_base
+
+  # https: [
+  #   port: 443,
+  #   cipher_suite: :strong,
+  #   keyfile: System.get_env("CERT_KEY_PATH"),
+  #   certfile: System.get_env("CERT_FILE_PATH")
+  # ]
 
   # ## SSL Support
   #
