@@ -186,13 +186,14 @@
   
 <!-- Mobile Menu - FIX: Ensures smooth transition by using max-h-screen for full content visibility. -->
   <div
-    x-show="open"
+    x-show="false"
     class="absolute top-16 left-0 right-0 md:hidden overflow-hidden transition-all duration-300 ease-in-out bg-white border-t border-gray-100 z-[9999]"
     x-bind="{max-h-screen opacity-100: open, max-h-0 opacity-0: !open}"
+    @click.outside="open = false"
   >
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a
-        :for={link <- ["Home", "Destinations", "Packages", "Flights", "Hotels"]}
+        :for={link <- []}
         :if={not is_logged_in?(@current_user)}
         @click="open = !open"
         href="#"
@@ -202,15 +203,13 @@
       </a>
       <div :if={not is_logged_in?(@current_user)}>
         <.link
-          :if={is_logged_in?(@current_user)}
           navigate={~p(/users/log_in)}
           class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"
         >
           Login
         </.link>
         <.link
-          :if={not is_logged_in?(@current_user)}
-          navigate={~p(/users/log_in)}
+          navigate={~p(/users/register)}
           class="block text-center mt-2 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl transition duration-300"
         >
           Register

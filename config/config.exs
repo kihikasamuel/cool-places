@@ -75,9 +75,9 @@ config :ueberauth, Ueberauth,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-if File.exists?("#{__DIR__}/#{config_env()}.local.exs") do
-  import_config "#{config_env()}.local.exs"
+if File.exists?("#{__DIR__}/#{config_env()}.exs") do
+  import_config "#{config_env()}.exs"
 else
   require Logger
-  Logger.warning("Didn't find '#{config_env()}.local.exs'")
+  Logger.warning("Didn't find '#{config_env()}.exs'")
 end

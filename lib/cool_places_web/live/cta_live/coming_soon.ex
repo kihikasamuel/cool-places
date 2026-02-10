@@ -51,7 +51,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
       >
       </div>
 
-      <div class="max-w-3xl text-center z-10">
+      <div class="max-w-3xl text-center z-10 mt-4">
         <div class="inline-flex items-center space-x-2 bg-indigo-50 text-cool-indigo px-5 py-2 rounded-full text-sm font-bold mb-8">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ defmodule CoolPlacesWeb.CTALive.ComingSoon do
           The world's best <br /><span class="text-cool-blue">curated.</span>
         </h1>
         <p class="text-xl text-slate-500 mb-12 max-w-xl mx-auto leading-relaxed">
-          Join the top 1% of travellers on the waitlist for CoolPlaces. Unlock hidden gems, and custom AI itineraries.
+          Stop following the crowds. Start leading them. Join the exclusive waitlist for CoolPlaces and gain early access to off-the-grid destinations and hyper-personalized AI travel planning. The world's best-kept secrets are now within reach.
         </p>
 
         <.simple_form

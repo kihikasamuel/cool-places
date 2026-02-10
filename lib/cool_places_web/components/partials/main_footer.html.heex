@@ -22,17 +22,16 @@
       CoolPlaces
     </div>
     <div class="flex gap-10 text-sm font-semibold text-slate-400">
-      <.link navigate={~p"/#"} class="hover:text-slate-900 transition">
+      <.link navigate={~p"/"} class="hover:text-slate-900 transition">
         Explorer
       </.link>
-      <a
-        href="#"
-        @click.prevent="currentView = 'coming-soon'"
+      <.link
+        navigate={~p"/"}
         class="hover:text-slate-900 transition"
       >
         Pro Membership
-      </a>
-      <a href="#" class="hover:text-slate-900 transition">Privacy</a>
+      </.link>
+      <.link navigate={~p"/"} class="hover:text-slate-900 transition">Privacy</.link>
     </div>
     <p class="text-slate-400 text-sm">© 2026 CoolPlaces. All rights reserved.</p>
   </div>
