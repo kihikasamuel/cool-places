@@ -18,7 +18,7 @@ defmodule CoolPlaces.Release do
 
     for repo <- repos() do
       {:ok, _, _} =
-        Ecto.Migrator.with_repo(repo, fn repo ->
+        Ecto.Migrator.with_repo(repo, fn _repo ->
           seed_script = Path.join([:code.priv_dir(@app), "repo", "seeds.exs"])
 
           if File.exists?(seed_script) do
