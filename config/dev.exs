@@ -112,4 +112,9 @@ config :cool_places, CoolPlaces.Wrappers.Google.PlacesSearch,
   model: "SOME_MODEL"
 
 ## Environment specific secrets
-import_config "#{config_env()}.local.exs"
+if File.exists?("#{__DIR__}/#{config_env()}.local.exs") do
+  import_config "#{config_env()}.local.exs"
+else
+  require Logger
+  Logger.warning("Didn't find '#{config_env()}.exs'")
+end
