@@ -6,8 +6,7 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :cool_places, CoolPlacesWeb.Endpoint,
-  cache_static_manifest: "priv/static/cache_manifest.json",
-  force_ssl: [hsts: true]
+  cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: CoolPlaces.Finch
