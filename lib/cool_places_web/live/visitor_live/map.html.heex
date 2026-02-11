@@ -1,0 +1,94 @@
+<div class="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+      <h1 class="text-4xl font-black text-slate-900 mb-4 tracking-tight">
+        Our Global Community
+      </h1>
+      <p class="text-xl text-slate-500 max-w-2xl mx-auto">
+        Visualizing the journey of travelers discovering cool places around the world.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-blue-50 text-cool-blue rounded-2xl flex items-center justify-center mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-8 h-8"
+          >
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+          </svg>
+        </div>
+        <div class="text-3xl font-black text-slate-900 mb-1">{@stats.total_visitors}</div>
+        <div class="text-sm font-bold text-slate-400 uppercase tracking-wider">
+          Total Visitors
+        </div>
+      </div>
+
+      <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-indigo-50 text-cool-indigo rounded-2xl flex items-center justify-center mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="w-8 h-8"
+          >
+            <circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /><path d="M12 21a14.5 14.5 0 0 1 0-18" />
+          </svg>
+        </div>
+        <div class="text-3xl font-black text-slate-900 mb-1">{@stats.unique_countries}</div>
+        <div class="text-sm font-bold text-slate-400 uppercase tracking-wider">
+          Countries Reached
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-[3rem] shadow-2xl border border-slate-100 overflow-hidden relative">
+      <div
+        id="visitor-map"
+        phx-hook="VisitorMap"
+        style="height: 600px; width: 100%;"
+        phx-update="ignore"
+      >
+      </div>
+
+      <div class="absolute bottom-6 right-6 bg-white/90 backdrop-blur-sm p-4 rounded-2xl shadow-lg border border-slate-100 z-[1000] hidden md:block">
+        <div class="flex items-center gap-3">
+          <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+          <span class="text-sm font-bold text-slate-700">Real-time Activity</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 text-center">
+      <.link
+        navigate={~p"/explorer"}
+        class="inline-flex items-center gap-2 bg-slate-900 text-white px-8 py-4 rounded-2xl font-black hover:bg-slate-800 transition shadow-xl"
+      >
+        Explore More Places
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5"
+        >
+          <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+        </svg>
+      </.link>
+    </div>
+  </div>
+</div>
