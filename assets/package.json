@@ -21,6 +21,7 @@
     "jarallax": "^2.2.1",
     "js-datepicker": "^5.18.3",
     "jspdf": "^4.0.0",
+    "leaflet": "^1.9.4",
     "material-icons": "^1.13.14",
     "swiper": "^12.0.3",
     "tiny-slider": "^2.9.4",
