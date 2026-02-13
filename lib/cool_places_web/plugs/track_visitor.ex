@@ -15,7 +15,7 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
         Visitors.track_visitor(ip, user_agent)
       end)
 
-      put_session(conn, :visitor_tracked, false)
+      put_session(conn, :visitor_tracked, true)
     else
       conn
     end
@@ -29,8 +29,8 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
 
   defp get_ip(conn) do
     case get_req_header(conn, "x-real-ip") do
+      [ip | _] -> ip
       [] -> conn.remote_ip |> Tuple.to_list() |> Enum.join(",")
-      ip -> ip
     end
   end
 
