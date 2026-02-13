@@ -14,7 +14,7 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
         Visitors.track_visitor(ip, user_agent)
       end)
 
-      put_session(conn, :visitor_tracked, true)
+      put_session(conn, :visitor_tracked, false)
     else
       conn
     end

@@ -8,7 +8,7 @@ defmodule CoolPlaces.Wrappers.Geolocation do
 
   require Logger
 
-  @base_url "http://ip-api.com/json/"
+  @base_url "https://ip-api.com/json/"
   @headers [{"Content-Type", "application/json"}]
 
   def lookup(ip) when is_binary(ip) do
