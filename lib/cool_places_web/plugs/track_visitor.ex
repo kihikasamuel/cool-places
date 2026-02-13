@@ -9,6 +9,7 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
       # Run tracking in a Task to avoid blocking the request
       ip = get_ip(conn)
       user_agent = get_user_agent(conn)
+      Logger.info("LOGS: #{inspect(conn)}")
 
       Task.start(fn ->
         Visitors.track_visitor(ip, user_agent)
@@ -27,7 +28,10 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
   end
 
   defp get_ip(conn) do
-    get_req_header(conn, "x-real-ip")
+    case get_req_header(conn, "x-real-ip") do
+      [] -> conn.remote_ip |> Tuple.to_list() |> Enum.join(",")
+      ip -> ip
+    end
   end
 
   defp get_user_agent(conn) do
