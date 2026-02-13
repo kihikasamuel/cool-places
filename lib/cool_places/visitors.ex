@@ -70,6 +70,7 @@ defmodule CoolPlaces.Visitors do
           {:error, reason}
 
         geo_data ->
+          Logger.info("GEO DATA: #{inspect(geo_data, pretty: true)}")
           geo_data
           |> Map.put(:ip_address_hash, ip_hash)
           |> Map.put(:user_agent, user_agent)

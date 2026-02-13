@@ -9,7 +9,6 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
       # Run tracking in a Task to avoid blocking the request
       ip = get_ip(conn)
       user_agent = get_user_agent(conn)
-      Logger.info("LOGS: #{inspect(conn)}")
 
       Task.start(fn ->
         Visitors.track_visitor(ip, user_agent)
