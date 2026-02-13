@@ -6,7 +6,6 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
 
   def call(conn, _opts) do
     if track?(conn) do
-      Logger.info("CONN: #{inspect(conn, pretty: true)}")
       # Run tracking in a Task to avoid blocking the request
       ip = get_ip(conn)
       user_agent = get_user_agent(conn)
@@ -28,9 +27,15 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
   end
 
   defp get_ip(conn) do
-    conn.remote_ip
-    |> Tuple.to_list()
-    |> Enum.join(".")
+    case get_req_header(conn, "x-real-ip") do
+      ip when is_binary(ip) ->
+        ip
+
+      _ ->
+        conn.remote_ip
+        |> Tuple.to_list()
+        |> Enum.join(",")
+    end
   end
 
   defp get_user_agent(conn) do
