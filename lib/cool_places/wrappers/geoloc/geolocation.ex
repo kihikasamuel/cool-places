@@ -14,8 +14,11 @@ defmodule CoolPlaces.Wrappers.Geolocation do
   def lookup(ip) when is_binary(ip) do
     url = @base_url <> ip
 
-    request(:get, url, nil, @headers, [])
-    |> parse_response()
+    result =
+      request(:get, url, nil, @headers, [])
+      |> parse_response()
+
+    Logger.info("Lookup: #{inspect(result, pretty: true)}")
   end
 
   defp parse_response({:ok, response}) do

@@ -7,6 +7,7 @@ defmodule CoolPlaces.Visitors do
   alias CoolPlaces.Repo
   alias CoolPlaces.Visitors.Visitor
   alias CoolPlaces.Wrappers.Geolocation
+  require Logger
 
   @doc """
   Returns the list of visitors.
@@ -63,17 +64,19 @@ defmodule CoolPlaces.Visitors do
   def track_visitor(ip, user_agent \\ nil) do
     ip_hash = Geolocation.hash_ip(ip)
 
-    case Geolocation.lookup(ip) do
-      {:error, reason} ->
-        {:error, reason}
+    res =
+      case Geolocation.lookup(ip) do
+        {:error, reason} ->
+          {:error, reason}
 
-      geo_data ->
-        geo_data
-        |> Map.put(:ip_address_hash, ip_hash)
-        |> Map.put(:user_agent, user_agent)
-        |> Map.put(:visited_at, DateTime.utc_now() |> DateTime.truncate(:second))
-        |> create_visitor()
-    end
-    |> IO.inspect(label: "~~~~~~TRACKS~~~~~~")
+        geo_data ->
+          geo_data
+          |> Map.put(:ip_address_hash, ip_hash)
+          |> Map.put(:user_agent, user_agent)
+          |> Map.put(:visited_at, DateTime.utc_now() |> DateTime.truncate(:second))
+          |> create_visitor()
+      end
+
+    Logger.info("log visitor: #{inspect(res, pretty: true)}")
   end
 end
