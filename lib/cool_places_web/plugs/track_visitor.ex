@@ -1,11 +1,12 @@
 defmodule CoolPlacesWeb.Plugs.TrackVisitor do
   import Plug.Conn
   alias CoolPlaces.Visitors
-
+  require Logger
   def init(opts), do: opts
 
   def call(conn, _opts) do
     if track?(conn) do
+      Logger.info("CONN: #{inspect(conn, pretty: true)}")
       # Run tracking in a Task to avoid blocking the request
       ip = get_ip(conn)
       user_agent = get_user_agent(conn)
