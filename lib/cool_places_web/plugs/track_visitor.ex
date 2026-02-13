@@ -27,15 +27,7 @@ defmodule CoolPlacesWeb.Plugs.TrackVisitor do
   end
 
   defp get_ip(conn) do
-    case get_req_header(conn, "x-real-ip") do
-      ip when is_binary(ip) ->
-        ip
-
-      _ ->
-        conn.remote_ip
-        |> Tuple.to_list()
-        |> Enum.join(",")
-    end
+    get_req_header(conn, "x-real-ip")
   end
 
   defp get_user_agent(conn) do
