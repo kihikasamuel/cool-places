@@ -74,5 +74,6 @@ defmodule CoolPlaces.Visitors do
         |> Map.put(:visited_at, DateTime.utc_now() |> DateTime.truncate(:second))
         |> create_visitor()
     end
+    |> IO.inspect(label: "~~~~~~TRACKS~~~~~~")
   end
 end
