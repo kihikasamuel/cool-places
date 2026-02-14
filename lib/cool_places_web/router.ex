@@ -72,6 +72,8 @@ defmodule CoolPlacesWeb.Router do
       live "/explorer", DestinationsLive.Index, :index
       live "/destinations/:id", DestinationsLive.Show, :show
       live "/about", CTALive.About, :index
+      live "/privacy-policy", CTALive.PrivacyPolicy, :index
+      live "/terms-of-service", CTALive.TermsOfService, :index
     end
 
     post "/users/log_in", UserSessionController, :create
