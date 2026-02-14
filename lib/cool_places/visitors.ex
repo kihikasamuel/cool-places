@@ -63,9 +63,10 @@ defmodule CoolPlaces.Visitors do
   """
   def track_visitor(ip, user_agent \\ nil) do
     ip_hash = Geolocation.hash_ip(ip)
-
+    visitor_info = Geolocation.lookup(ip)
+    Logger.info("VISITOR INFO: #{inspect(visitor_info, pretty: true)}")
     res =
-      case Geolocation.lookup(ip) do
+      case visitor_info |> IO.inspect(label: "LOGGGGED", pretty: true) do
         {:error, reason} ->
           {:error, reason}
 
