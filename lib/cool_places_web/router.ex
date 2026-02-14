@@ -11,6 +11,7 @@ defmodule CoolPlacesWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug CoolPlacesWeb.Plugs.TrackVisitor
   end
 
   pipeline :api do
@@ -71,6 +72,8 @@ defmodule CoolPlacesWeb.Router do
       live "/explorer", DestinationsLive.Index, :index
       live "/destinations/:id", DestinationsLive.Show, :show
       live "/about", CTALive.About, :index
+      live "/privacy-policy", CTALive.PrivacyPolicy, :index
+      live "/terms-of-service", CTALive.TermsOfService, :index
     end
 
     post "/users/log_in", UserSessionController, :create
@@ -91,10 +94,20 @@ defmodule CoolPlacesWeb.Router do
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+      live "/world-map", VisitorLive.Map, :index
 
       scope "/account" do
         live "/listing", DestinationsLive.New, :new
       end
     end
+
+    # live_session :require_super_user,
+    #   on_mount: [
+    #     {CoolPlacesWeb.UserAuth, :mount_current_user},
+    #     {CoolPlacesWeb.UserAuth, :ensure_authenticated},
+    #     {CoolPlacesWeb.UserAuth, :require_super_user}
+    #   ] do
+    #   live "/world-map", VisitorMapLive, :index
+    # end
   end
 end

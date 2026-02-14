@@ -24,7 +24,7 @@ defmodule CoolPlacesWeb.CTALive.About do
           </p>
         </div>
       </section>
-
+      
     <!-- Values Section -->
       <section class="py-24 max-w-7xl mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-16">
@@ -98,7 +98,7 @@ defmodule CoolPlacesWeb.CTALive.About do
           </div>
         </div>
       </section>
-
+      
     <!-- Manifesto Section -->
       <section class="py-24 bg-slate-900 text-white overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
@@ -171,7 +171,7 @@ defmodule CoolPlacesWeb.CTALive.About do
           </div>
         </div>
       </section>
-
+      
     <!-- Team Section -->
       <section class="py-32 max-w-7xl mx-auto px-4 text-center">
         <h2 class="text-3xl font-black mb-16">The Team</h2>
@@ -186,7 +186,7 @@ defmodule CoolPlacesWeb.CTALive.About do
           </div>
         </div>
       </section>
-
+      
     <!-- NEW: Join the Team Section -->
       <!--section class="py-32 bg-[#F8FAFC] border-t border-slate-100">
         <div class="max-w-7xl mx-auto px-4">

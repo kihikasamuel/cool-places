@@ -44,7 +44,7 @@ defmodule CoolPlaces.Utils.HTTPClient do
           http_client: CoolPlaces.Utils.HTTPClient.Finch
         ]
 
-        config = Application.get_env(:cool_places, __MODULE__)
+        config = Application.get_env(:cool_places, __MODULE__) || []
         config = Keyword.merge(default, config)
 
         :timer.tc(fn ->

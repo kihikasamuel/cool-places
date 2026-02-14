@@ -68,7 +68,8 @@ if config_env() == :prod do
     ],
     check_origin: ["https://#{host}", "https://www.#{host}"],
     secret_key_base: secret_key_base,
-    force_ssl: [rewrite_on: [:x_forwarded_proto]]
+    force_ssl: [rewrite_on: [:x_forwarded_proto]],
+    use_config_remote_ip: true
 
   # ## SSL Support
   #
