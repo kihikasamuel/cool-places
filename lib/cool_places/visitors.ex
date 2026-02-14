@@ -64,21 +64,19 @@ defmodule CoolPlaces.Visitors do
   def track_visitor(ip, user_agent \\ nil) do
     ip_hash = Geolocation.hash_ip(ip)
     visitor_info = Geolocation.lookup(ip)
+
     Logger.info("VISITOR INFO: #{inspect(visitor_info, pretty: true)}")
-    res =
-      case visitor_info |> IO.inspect(label: "LOGGGGED", pretty: true) do
-        {:error, reason} ->
-          {:error, reason}
 
-        geo_data ->
-          Logger.info("GEO DATA: #{inspect(geo_data, pretty: true)}")
-          geo_data
-          |> Map.put(:ip_address_hash, ip_hash)
-          |> Map.put(:user_agent, user_agent)
-          |> Map.put(:visited_at, DateTime.utc_now() |> DateTime.truncate(:second))
-          |> create_visitor()
-      end
+    case visitor_info do
+      {:error, reason} ->
+        {:error, reason}
 
-    Logger.info("log visitor: #{inspect(res, pretty: true)}")
+      geo_data ->
+        geo_data
+        |> Map.put(:ip_address_hash, ip_hash)
+        |> Map.put(:user_agent, user_agent)
+        |> Map.put(:visited_at, DateTime.utc_now() |> DateTime.truncate(:second))
+        |> create_visitor()
+    end
   end
 end
