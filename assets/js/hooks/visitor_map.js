@@ -3,7 +3,7 @@ const VisitorMap = {
         this.map = L.map(this.el).setView([20, 0], 2);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', noWrap: true
         }).addTo(this.map);
 
         this.markers = [];

@@ -200,10 +200,14 @@ defmodule CoolPlaces.Newsletters do
   end
 
   def maybe_send_subscription_email(subscription) do
+    text_body = "Congratulations! You have been added to our waitlist. We'll keep you posted!"
+    html_body = CoolPlacesWeb.EmailLayouts.render("email_newsletter_confirmation.html", %{})
+
     CoolPlaces.Accounts.UserNotifier.deliver(
       subscription.email,
       "Subscription Confirmed",
-      "Congratulations! You have been added to our waitlist. We'll keep you posted!"
+      text_body,
+      html_body
     )
   end
 end

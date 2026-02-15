@@ -2,15 +2,17 @@ defmodule CoolPlaces.Accounts.UserNotifier do
   import Swoosh.Email
 
   alias CoolPlaces.Mailer
+  alias CoolPlacesWeb.EmailLayouts
 
   # Delivers the email using the application mailer.
-  def deliver(recipient, subject, body) do
+  def deliver(recipient, subject, text_body, html_body) do
     email =
       new()
       |> to(recipient)
-      |> from({"CoolPlaces", "contact@example.com"})
+      |> from({"CoolPlaces", "contact@coolplaces.co.ke"})
       |> subject(subject)
-      |> text_body(body)
+      |> text_body(text_body)
+      |> html_body(html_body)
 
     with {:ok, _metadata} <- Mailer.deliver(email) do
       {:ok, email}
@@ -21,7 +23,7 @@ defmodule CoolPlaces.Accounts.UserNotifier do
   Deliver instructions to confirm account.
   """
   def deliver_confirmation_instructions(user, url) do
-    deliver(user.email, "Confirmation instructions", """
+    text_body = """
 
     ==============================
 
@@ -34,14 +36,18 @@ defmodule CoolPlaces.Accounts.UserNotifier do
     If you didn't create an account with us, please ignore this.
 
     ==============================
-    """)
+    """
+
+    html_body = EmailLayouts.render("email_confirmation.html", url: url, user: user)
+
+    deliver(user.email, "Confirmation instructions", text_body, html_body)
   end
 
   @doc """
   Deliver instructions to reset a user password.
   """
   def deliver_reset_password_instructions(user, url) do
-    deliver(user.email, "Reset password instructions", """
+    text_body = """
 
     ==============================
 
@@ -54,14 +60,18 @@ defmodule CoolPlaces.Accounts.UserNotifier do
     If you didn't request this change, please ignore this.
 
     ==============================
-    """)
+    """
+
+    html_body = EmailLayouts.render("email_reset_password.html", url: url, user: user)
+
+    deliver(user.email, "Reset password instructions", text_body, html_body)
   end
 
   @doc """
   Deliver instructions to update a user email.
   """
   def deliver_update_email_instructions(user, url) do
-    deliver(user.email, "Update email instructions", """
+    text_body = """
 
     ==============================
 
@@ -74,6 +84,10 @@ defmodule CoolPlaces.Accounts.UserNotifier do
     If you didn't request this change, please ignore this.
 
     ==============================
-    """)
+    """
+
+    html_body = EmailLayouts.render("email_update_email.html", url: url, user: user)
+
+    deliver(user.email, "Update email instructions", text_body, html_body)
   end
 end
