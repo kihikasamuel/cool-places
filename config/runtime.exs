@@ -134,7 +134,7 @@ if config_env() == :prod do
     remote: [
       ssl_options: [
         verify: :verify_peer,
-        cacertfile: System.get_env("CERT_FILE_PATH"),
+        cacertfile: System.get_env("CA_CERT_FILE_PATH"),
         customize_hostname_check: [
           match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
         ]
