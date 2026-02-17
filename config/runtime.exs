@@ -130,16 +130,17 @@ if config_env() == :prod do
     auth: :always,
     port: System.get_env("SMTP_PORT"),
     retries: 2,
-    no_mx_lookups: false,
-    remote: [
-      ssl_options: [
-        verify: :verify_none
-        # cacertfile: System.get_env("CA_CERT_FILE_PATH"),
-        # customize_hostname_check: [
-        #   match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-        # ]
-      ]
-    ]
+    no_mx_lookups: false
+
+  # remote: [
+  #   ssl_options: [
+  #     verify: :verify_none
+  #     # cacertfile: System.get_env("CA_CERT_FILE_PATH"),
+  #     # customize_hostname_check: [
+  #     #   match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+  #     # ]
+  #   ]
+  # ]
 
   # ## Ueberauth configurations for [google, x]
   config :ueberauth, Ueberauth.Strategy.Google.OAuth,
