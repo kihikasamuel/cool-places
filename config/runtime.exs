@@ -120,6 +120,17 @@ if config_env() == :prod do
   #     config :swoosh, :api_client, Swoosh.ApiClient.Hackney
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
+  config :cool_places, CoolPlaces.Mailer,
+    adapter: Swoosh.Adapters.SMTP,
+    relay: System.get_env("SMTP_RELAY"),
+    username: System.get_env("SMTP_USERNAME"),
+    password: System.get_env("SMTP_PASSWORD"),
+    ssl: true,
+    tls: :always,
+    auth: :always,
+    port: System.get_env("SMTP_PORT"),
+    retries: 2,
+    no_mx_lookups: false
 
   # ## Ueberauth configurations for [google, x]
   config :ueberauth, Ueberauth.Strategy.Google.OAuth,

@@ -7,6 +7,7 @@ defmodule CoolPlaces.Newsletters do
   alias CoolPlaces.Repo
 
   alias CoolPlaces.Newsletters.Newsletter
+  alias CoolPlaces.Newsletters.Subscription
 
   @doc """
   Returns the list of newsletters.
@@ -101,8 +102,6 @@ defmodule CoolPlaces.Newsletters do
   def change_newsletter(%Newsletter{} = newsletter, attrs \\ %{}) do
     Newsletter.changeset(newsletter, attrs)
   end
-
-  alias CoolPlaces.Newsletters.Subscription
 
   @doc """
   Returns the list of subscription.
