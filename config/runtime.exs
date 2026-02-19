@@ -132,7 +132,7 @@ if config_env() == :prod do
     retries: 2,
     no_mx_lookups: false,
     remote: [
-      ssl_opts: [
+      ssl_options: [
         verify: :verify_peer,
         # Direct path to Ubuntu's trusted CA bundle
         cacertfile: System.get_env("CA_CERT_FILE_PATH"),
