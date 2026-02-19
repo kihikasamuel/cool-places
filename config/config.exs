@@ -25,7 +25,9 @@ config :cool_places, CoolPlacesWeb.Endpoint,
     layout: false
   ],
   pubsub_server: CoolPlaces.PubSub,
-  live_view: [signing_salt: "/H6j7vVq"]
+  live_view: [signing_salt: "/H6j7vVq"],
+  # force_ssl is a compile time config
+  force_ssl: [rewrite_on: [:x_forwarded_proto]]
 
 # Configures the mailer
 #

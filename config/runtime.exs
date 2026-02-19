@@ -68,7 +68,6 @@ if config_env() == :prod do
     ],
     check_origin: ["https://#{host}", "https://www.#{host}"],
     secret_key_base: secret_key_base,
-    force_ssl: [rewrite_on: [:x_forwarded_proto]],
     use_config_remote_ip: true
 
   # ## SSL Support
@@ -125,6 +124,7 @@ if config_env() == :prod do
     relay: System.get_env("SMTP_RELAY"),
     username: System.get_env("SMTP_USERNAME"),
     password: System.get_env("SMTP_PASSWORD"),
+    hostname: System.get_env("PHX_HOST"),
     ssl: true,
     tls: :always,
     auth: :always,
