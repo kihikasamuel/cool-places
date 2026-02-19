@@ -141,8 +141,7 @@ if config_env() == :prod do
       versions: [:"tlsv1.2", :"tlsv1.3"],
       customize_hostname_check: [
         match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-      ],
-      log_level: :debug
+      ]
     ]
 
   # ## Ueberauth configurations for [google, x]

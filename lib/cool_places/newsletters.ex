@@ -147,7 +147,6 @@ defmodule CoolPlaces.Newsletters do
   def subscribe(attrs \\ %{}) do
     %Subscription{}
     |> Subscription.changeset(attrs)
-    |> IO.inspect(label: "Subscription Changeset")
     |> Repo.insert()
   end
 

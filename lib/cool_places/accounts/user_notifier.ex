@@ -9,7 +9,7 @@ defmodule CoolPlaces.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"CoolPlaces", "contact@coolplaces.co.ke"})
+      |> from({"CoolPlaces", "hello@coolplaces.co.ke"})
       |> subject(subject)
       |> text_body(text_body)
       |> html_body(html_body)
