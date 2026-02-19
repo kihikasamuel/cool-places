@@ -133,16 +133,16 @@ if config_env() == :prod do
     no_mx_lookups: false,
     remote: [
       ssl_opts: [
-        verify: :verify_none
-        # # Direct path to Ubuntu's trusted CA bundle
-        # cacertfile: System.get_env("CA_CERT_FILE_PATH"),
-        # # Allow for intermediate certificates
-        # depth: 3,
-        # # Explicitly support common TLS versions
-        # versions: [:"tlsv1.2", :"tlsv1.3"],
-        # customize_hostname_check: [
-        #   match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-        # ]
+        verify: :verify_peer,
+        # Direct path to Ubuntu's trusted CA bundle
+        cacertfile: System.get_env("CA_CERT_FILE_PATH"),
+        # Allow for intermediate certificates
+        depth: 3,
+        # Explicitly support common TLS versions
+        versions: [:"tlsv1.2", :"tlsv1.3"],
+        customize_hostname_check: [
+          match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+        ]
       ]
     ]
 
