@@ -68,7 +68,6 @@ if config_env() == :prod do
     ],
     check_origin: ["https://#{host}", "https://www.#{host}"],
     secret_key_base: secret_key_base,
-    force_ssl: [rewrite_on: [:x_forwarded_proto]],
     use_config_remote_ip: true
 
   # ## SSL Support
@@ -125,22 +124,21 @@ if config_env() == :prod do
     relay: System.get_env("SMTP_RELAY"),
     username: System.get_env("SMTP_USERNAME"),
     password: System.get_env("SMTP_PASSWORD"),
-    ssl: true,
+    hostname: System.get_env("PHX_HOST"),
+    ssl: false,
     tls: :always,
     auth: :always,
     port: System.get_env("SMTP_PORT"),
     retries: 2,
-    no_mx_lookups: false
-
-  # remote: [
-  #   ssl_options: [
-  #     verify: :verify_none
-  #     # cacertfile: System.get_env("CA_CERT_FILE_PATH"),
-  #     # customize_hostname_check: [
-  #     #   match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
-  #     # ]
-  #   ]
-  # ]
+    no_mx_lookups: false,
+    ssl_opts: [
+      verify: :verify_peer,
+      # Direct path to Ubuntu's trusted CA bundle
+      cacertfile: System.get_env("CA_CERT_FILE_PATH"),
+      customize_hostname_check: [
+        match_fun: :public_key.pkix_verify_hostname_match_fun(:https)
+      ]
+    ]
 
   # ## Ueberauth configurations for [google, x]
   config :ueberauth, Ueberauth.Strategy.Google.OAuth,
