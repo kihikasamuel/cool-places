@@ -17,9 +17,15 @@ defmodule CoolPlaces.Destinations do
       [%Destination{}, ...]
 
   """
-  def list_destinations(queryable \\ Destination, opts \\ [page: 1, per_page: 20]) do
+  def list_destinations(
+        queryable \\ Destination,
+        opts \\ [page: 1, per_page: 20]
+      ) do
+    opts = Keyword.merge(opts, order_by: [desc: :inserted_at])
+
     queryable
-    |> preload_assoc_query()
+    |> order_by(^Keyword.get(opts, :order_by))
+    |> preload_assoc_query([:destination_asset, :country])
     |> Repo.paginate(opts)
   end
 
@@ -126,10 +132,6 @@ defmodule CoolPlaces.Destinations do
         v in [nil, ""] ->
           query_accum
 
-        k == "category" ->
-          from d in query_accum,
-            where: d.tag == ^v
-
         k == "destination" ->
           from d in query_accum,
             where: ilike(d.name, ^"%#{v}%"),
@@ -139,6 +141,10 @@ defmodule CoolPlaces.Destinations do
           from d in query_accum,
             where: ilike(fragment("?->>'city'", d.address), ^"%#{v}%"),
             or_where: ilike(fragment("?->>'town'", d.address), ^"%#{v}%")
+
+        k == "category" ->
+          from d in query_accum,
+            where: d.tag == ^v
 
         true ->
           query_accum

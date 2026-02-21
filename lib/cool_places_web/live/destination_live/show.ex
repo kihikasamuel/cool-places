@@ -23,7 +23,7 @@ defmodule CoolPlacesWeb.DestinationsLive.Show do
 
     {:noreply,
      socket
-     |> assign(:page_title, "Destination Details")
+     |> assign(:page_title, "Cool Places - #{destination.name}")
      |> assign(:destination, destination)
      |> assign(:active_destination_asset, destination.destination_asset |> Enum.at(0))}
   end
