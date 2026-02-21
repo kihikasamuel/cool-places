@@ -28,7 +28,7 @@ defmodule CoolPlacesWeb.DestinationsLive.Index do
     |> assign(
       page_title: "Discover Your Next Adventure",
       categories: ["Beach", "Mountain", "Desert", "Historic"],
-      destinations_count: length(destinations.entries)
+      destinations_count: destinations.total_entries
     )
     |> stream(:destinations, destinations, reset: true)
   end
@@ -54,6 +54,14 @@ defmodule CoolPlacesWeb.DestinationsLive.Index do
      socket
      |> assign(destinations_count: length(results.entries))
      |> stream(:destinations, results, reset: true)}
+  end
+
+  def handle_event("view-destination", %{"id" => id}, socket) do
+    destination = Destinations.get_destination!(id)
+
+    {:noreply,
+     socket
+     |> push_navigate(to: ~p"/destinations/#{destination.id}")}
   end
 
   defp changeset(params) do

@@ -24,15 +24,12 @@
           </div>
           CoolPlaces
         </div>
-        <%!-- <div class="shrink-0 text-3xl font-extrabold text-primary-blue tracking-tighter">
-          CoolPlaces<span class="text-cool-blue">.</span>
-        </div> --%>
       </div>
       <!-- Desktop Nav Links -->
       <div :if={not is_logged_in?(@current_user)} class="hidden md:block">
         <div class="ml-10 flex items-baseline space-x-4">
           <a
-            :for={link <- ["about"]}
+            :for={link <- ["explorer", "about"]}
             id={link}
             href={"/#{String.downcase(link)}"}
             class={[
@@ -48,7 +45,7 @@
       </div>
       <!-- Auth Buttons -->
       <div class="hidden md:block" x-data="{isProfileDropdownOpen: false}">
-        <%!-- <.link
+        <.link
           :if={not is_logged_in?(@current_user)}
           navigate={~p(/users/log_in)}
           class="text-gray-600 hover:text-primary-blue px-3 py-2 text-sm font-medium transition"
@@ -61,7 +58,7 @@
           class="ml-4 bg-primary-blue hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-xl shadow-lg transition duration-300 transform hover:scale-[1.03]"
         >
           Register
-        </.link> --%>
+        </.link>
         <!-- Profile Dropdown -->
         <div :if={is_logged_in?(@current_user)} class="relative">
           <button
@@ -193,7 +190,7 @@
   >
     <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
       <a
-        :for={link <- ["about"]}
+        :for={link <- ["explorer", "about"]}
         :if={not is_logged_in?(@current_user)}
         @click="open = !open"
         href={"/#{link}"}
@@ -201,7 +198,7 @@
       >
         {link}
       </a>
-      <div :if={is_logged_in?(@current_user)}>
+      <div>
         <.link
           navigate={~p(/users/log_in)}
           class="block px-3 py-2 rounded-lg text-base font-medium text-gray-700 hover:bg-primary-blue/10 hover:text-primary-blue transition duration-150"

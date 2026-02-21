@@ -20,7 +20,7 @@ defmodule CoolPlacesWeb.CTALive.PrivacyPolicy do
           <p class="text-slate-500 font-medium">Last Updated: February 14, 2026</p>
         </div>
       </section>
-
+      
     <!-- Content -->
       <section class="py-20 max-w-4xl mx-auto px-6 md:px-4">
         <div class="prose prose-slate prose-lg max-w-none">
