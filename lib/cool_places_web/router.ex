@@ -22,6 +22,10 @@ defmodule CoolPlacesWeb.Router do
     plug :put_root_layout, html: {CoolPlacesWeb.Layouts, :public}
   end
 
+  pipeline :account_layout do
+    # plug :put_root_layout, html: {CoolPlacesWeb.Layouts, :admin}
+  end
+
   ## information & status pages
   scope "/", CoolPlacesWeb do
     pipe_through [:browser, :public_facing]
@@ -87,6 +91,7 @@ defmodule CoolPlacesWeb.Router do
     get "/users/log_out", UserSessionController, :delete
 
     live_session :require_authenticated_user,
+      layout: {CoolPlacesWeb.Layouts, :admin},
       on_mount: [
         {CoolPlacesWeb.UserAuth, :mount_current_user},
         {CoolPlacesWeb.UserAuth, :ensure_authenticated}

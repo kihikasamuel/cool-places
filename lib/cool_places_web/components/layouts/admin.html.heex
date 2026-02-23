@@ -1,0 +1,11 @@
+<div class="min-h-screen flex bg-gray-50" x-data="{ sidebarExpanded: true }">
+  <.sidebar />
+  <div class="flex-1 flex flex-col min-w-0 overflow-y-auto">
+    <.main_nav current_user={assigns[:current_user]} show_logo={false} />
+    <div class="flex-1">
+      <.flash_group flash={@flash} />
+      {@inner_content}
+    </div>
+    <.main_footer />
+  </div>
+</div>
