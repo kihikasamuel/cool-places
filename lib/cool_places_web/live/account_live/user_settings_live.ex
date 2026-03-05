@@ -5,12 +5,12 @@ defmodule CoolPlacesWeb.UserSettingsLive do
 
   def render(assigns) do
     ~H"""
-    <.header class="text-center">
+    <.header class="text-center mt-10 p-4">
       Account Settings
       <:subtitle>Manage your account email address and password settings</:subtitle>
     </.header>
 
-    <div class="space-y-12 divide-y">
+    <div class="space-y-12 divide-y max-w-2xl mx-auto p-4">
       <div>
         <.simple_form
           for={@email_form}
