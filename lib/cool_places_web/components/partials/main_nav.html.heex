@@ -3,7 +3,10 @@
     <div class="flex items-center justify-between h-20">
       <div class="flex items-center">
         <!-- Logo -->
-        <div class="flex-shrink-0 flex items-center gap-2 text-2xl font-black text-slate-900 tracking-tight cursor-pointer">
+        <div
+          :if={Map.get(assigns, :show_logo, true)}
+          class="flex-shrink-0 flex items-center gap-2 text-2xl font-black text-slate-900 tracking-tight cursor-pointer"
+        >
           <div class="w-8 h-8 bg-cool-blue rounded-lg flex items-center justify-center text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -117,13 +120,26 @@
               <p class="text-xs text-gray-400 font-medium uppercase tracking-wider">Account</p>
               <p class="text-sm font-semibold text-gray-700 truncate">{@current_user.email}</p>
             </div>
-            <button
-              @click="isProfileDropdownOpen = false"
-              class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center space-x-2"
+            <.link
+              navigate={~p"/users/settings"}
+              class="flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-50 hover:text-primary-blue transition-colors group"
             >
-              <i data-lucide="plus-circle" class="w-4 h-4 text-cool-blue"></i>
-              <span>List Destination</span>
-            </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 text-gray-400 group-hover:text-primary-blue shrink-0"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                </path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span x-show="sidebarExpanded" class="ml-3">Settings</span>
+            </.link>
             <.link
               navigate={~p(/users/log_out)}
               class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center space-x-2"
