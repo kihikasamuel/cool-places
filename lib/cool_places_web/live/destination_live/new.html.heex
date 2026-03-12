@@ -142,7 +142,6 @@
           type="textarea"
           required
           field={f[:description]}
-          maxlength="100"
           rows="3"
           class="w-full p-4 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-cool-blue transition"
         />
@@ -222,12 +221,16 @@
             </button>
           </div>
         </div>
-        <p :for={err <- upload_errors(@uploads.destination_asset)} class="text-sm text-red-500">
+        <p :for={err <- upload_errors(@uploads.destination_asset)} class="text-sm text-red-500 mb-100">
           {error_to_string(err)}
+        </p>
+        <p :if={is_max_files_size_exceeded?(@uploads)} class="text-sm text-red-500 mb-100">
+          Maximum file size exceeded. Make sure each file is under 10MB and total size is under 100MB.
         </p>
       </div>
 
       <button
+        disabled={not is_valid_form?(@form, @uploads)}
         type="submit"
         phx-disable-with="Publishing..."
         class="w-full py-4 rounded-xl text-white bg-cool-blue hover:bg-cool-indigo transition font-extrabold"

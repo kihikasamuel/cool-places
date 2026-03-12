@@ -6,6 +6,10 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
   alias CoolPlaces.Utils.Uploads
   alias CoolPlaces.Wrappers.Google.PlacesSearch
 
+  # 10MB
+  @max_file_size 1024 * 1024
+  @max_files 10
+
   def mount(_params, _session, socket) do
     changeset = Destination.changeset(%Destination{}, %{"destination_assets" => []})
     countries = CoolPlaces.Countries.list_countries() |> Enum.map(&{&1.name, &1.id})
@@ -23,8 +27,8 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
       |> assign_form(changeset)
       |> allow_upload(:destination_asset,
         accept: ~w(.jpg .jpeg .png),
-        max_entries: 5,
-        max_file_size: 1_000_000,
+        max_entries: @max_files,
+        max_file_size: @max_file_size,
         auto_upload: true
       )
 
@@ -32,6 +36,11 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
   end
 
   def handle_event("validate", params, socket) do
+    params =
+      params
+      |> Map.put("user_id", socket.assigns.current_user.id)
+      |> Map.put("address", socket.assigns.selected_address)
+
     changeset = Destination.changeset(%Destination{}, params)
     {:noreply, socket |> assign_form(changeset)}
   end
@@ -113,12 +122,12 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
          |> put_flash(:info, "Your discovery has been published")
          |> redirect(to: ~p(/account/listing))}
 
-      {:error, %Ecto.Changeset{} = _changeset} ->
+      {:error, %Ecto.Changeset{} = changeset} ->
         {
           :noreply,
           socket
           |> put_flash(:error, "Error while publishing your discovery. Kindly, check the form!")
-          #  |> assign_form(changeset)
+          |> assign_form(changeset)
         }
     end
   end
@@ -152,5 +161,23 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     end)
     |> Enum.with_index()
     |> Map.new(fn {value, index} -> {index, value} end)
+  end
+
+  defp is_max_files_size_exceeded?(uploads) do
+    max_file_size = @max_file_size * @max_files
+
+    uploads.destination_asset.entries
+    |> Enum.reduce(0, fn entry, acc ->
+      acc + entry.client_size
+    end)
+    |> Kernel.>(max_file_size)
+  end
+
+  defp is_valid_form?(form, uploads) do
+    uploads_length_not_zero =
+      Enum.count(uploads.destination_asset.entries)
+      |> Kernel.>(0)
+
+    form.source.valid? and uploads_length_not_zero
   end
 end
