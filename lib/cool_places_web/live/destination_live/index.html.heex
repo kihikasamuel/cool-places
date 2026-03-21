@@ -7,13 +7,16 @@
     aria-label="Dark abstract travel background"
   >
   </div-->
-  <div
-    id="three-container"
-    phx-hook="ThreeJSHook"
-    style="background-color: #000; height: 500px;"
-    class="absolute inset-0"
-  >
-  </div>
+
+  <!-- <div class="absolute inset-0"> -->
+  <.three_scene
+    id="starfield-effect"
+    effect="celestial"
+    class="h-[calc(100vh-450px)] w-full p-0"
+    options={%{density: 1.0}}
+  />
+  <!-- </div> -->
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
     <div class="text-center">
       <h1 class="text-3xl sm:text-6xl lg:text-7xl font-extrabold leading-tight mb-4 max-w-4xl mx-auto">
@@ -28,7 +31,7 @@
 
 <section>
   <!-- Search/Booking Form -->
-  <div class="relative mt-16 md:mt-32 -mb-40 bg-white p-6 sm:p-10 rounded-3xl shadow-2xl max-w-5xl mx-auto">
+  <div class="relative -mt-16 md:-mt-32 -mb-40 bg-white p-6 sm:p-10 rounded-3xl shadow-2xl max-w-5xl mx-auto">
     <.simple_form for={@search_form} class="" phx-submit="search_destinations">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <!-- Destination -->
