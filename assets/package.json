@@ -1,17 +1,5 @@
 {
-  "name": "cool_places",
-  "version": "1.0.0",
-  "description": "To start your Phoenix server:",
-  "main": "tailwind.config.js",
-  "directories": {
-    "lib": "lib",
-    "test": "test"
-  },
   "author": "samcodes<Samuel Kihika>",
-  "license": "ISC",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "dependencies": {
     "@mdi/font": "^7.4.47",
     "alpinejs": "^3.15.2",
@@ -22,11 +10,14 @@
     "js-datepicker": "^5.18.3",
     "jspdf": "^4.0.0",
     "leaflet": "^1.9.4",
+    "live_three": "file:../deps/live_three",
     "material-icons": "^1.13.14",
     "swiper": "^12.0.3",
+    "three": "^0.183.2",
     "tiny-slider": "^2.9.4",
     "tobii": "^2.0.0-alpha"
   },
+  "description": "To start your Phoenix server:",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
     "browser-sync": "^3.0.4",
@@ -49,5 +40,16 @@
     "gulp-useref-plus": "0.0.8",
     "postcss": "^8.5.2",
     "sass": "^1.84.0"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "license": "ISC",
+  "main": "tailwind.config.js",
+  "name": "cool_places",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
 }

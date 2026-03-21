@@ -90,6 +90,8 @@ defmodule CoolPlacesWeb do
       # Core UI components
       import CoolPlacesWeb.CoreComponents
 
+      import LiveThree.Components
+
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
 
