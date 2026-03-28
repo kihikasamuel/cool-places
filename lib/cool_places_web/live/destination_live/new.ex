@@ -44,7 +44,6 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     changeset =
       Destination.changeset(%Destination{}, params)
       |> Map.put(:action, :validate)
-      |> IO.inspect(label: "VALIDATE")
 
     {:noreply, socket |> assign_form(changeset)}
   end
@@ -99,7 +98,6 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
             {:ok, "/uploads/destinations/#{file_name}"}
         end
       end)
-      |> IO.inspect(label: "uploaded file")
 
     socket =
       socket
@@ -108,7 +106,6 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     mapped_files =
       socket.assigns.uploaded_files
       |> parse_uploads()
-      |> IO.inspect(label: "mapped files")
 
     params =
       params
@@ -116,7 +113,6 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
       |> Map.put("user_id", socket.assigns.current_user.id)
       |> Map.put("address", socket.assigns.selected_address)
       |> Map.put("country_id", socket.assigns.selected_country_id)
-      |> IO.inspect(label: "params")
 
     publish_destination(socket, socket.assigns.live_action, params)
   end
@@ -140,12 +136,10 @@ defmodule CoolPlacesWeb.DestinationsLive.New do
     end
   end
 
-  defp publish_destination(socket, _, destination_params) do
-    IO.inspect(destination_params, label: "destination_params")
-
+  defp publish_destination(socket, _, _destination_params) do
     {:noreply,
      socket
-     |> put_flash(:info, "No change detected")
+     |> put_flash(:info, "Saved")
      |> redirect(to: ~p(/account/listing))}
   end
 
