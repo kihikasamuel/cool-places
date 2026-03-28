@@ -15,7 +15,7 @@ config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: CoolPlaces.Finch
 config :swoosh, local: false
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger, level: :debug
 
 config :cool_places, env: :prod
 
