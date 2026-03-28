@@ -162,4 +162,9 @@ if config_env() == :prod do
   # config :ueberauth, Ueberauth.Strategy.Twitter.OAuth,
   #   consumer_key: System.get_env("TWITTER_CONSUMER_KEY"),
   #   consumer_secret: System.get_env("TWITTER_CONSUMER_SECRET")
+
+  # waffle configuration for local file storage
+  config :waffle,
+    storage: Waffle.Storage.Local,
+    asset_host: System.get_env("ASSET_HOST")
 end
